@@ -1062,14 +1062,43 @@
 };
 
   window.postAnnouncement = async function() {
-    const title = document.getElementById('annTitle').value;
-    if (!title) return showToast('❌ Enter title');
-    if (supabase) {
-      const { error } = await supabase.from('announcements').insert([{ title, body: document.getElementById('annMessage').value, author_id: currentUser.id }]);
-      if (error) return showToast('❌ ' + error.message);
-    }
-    showToast('✅ Announcement posted!'); closeModal('announcementModal');
+  const title = document.getElementById('annTitle').value.trim();
+  const message = document.getElementById('annMessage').value.trim();
+  
+  if (!title) return showToast('❌ Please enter a title');
+  if (!message) return showToast('❌ Please enter a message');
+  
+  if (!supabase) {
+    return showToast('❌ Database not connected');
+  }
+  
+  const newAnnouncement = {
+    title: title,
+    body: message,
+    author_id: currentUser.id
   };
+  
+  const { data, error } = await supabase.from('announcements').insert([newAnnouncement]).select();
+  
+  if (error) {
+    console.error('Announcement insert error:', error);
+    return showToast('❌ ' + error.message);
+  }
+  
+  showToast('✅ Announcement posted successfully!');
+  closeModal('announcementModal');
+  
+  // Clear the form
+  document.getElementById('annTitle').value = '';
+  document.getElementById('annMessage').value = '';
+  
+  // 🔄 Refresh the announcements list
+  await renderAnnouncements();
+  
+  // Update notification counter
+  const { count } = await supabase.from('announcements').select('*', { count: 'exact', head: true });
+  document.getElementById('statNotif').textContent = count || 0;
+};
 
   function initSignature() {
     const canvas = document.getElementById('sigCanvas');
