@@ -800,6 +800,14 @@
     document.getElementById('statNotif').textContent = '0';
 
     renderMembers('online');
+    renderAnnouncements();
+    renderSites();
+    renderSchedules();
+    renderDtrEntries();
+    renderNotes();
+    renderRecommendations();
+    renderLeaveRequests();
+    
     document.querySelectorAll('[data-membertab]').forEach(t => {
       t.addEventListener('click', () => {
         document.querySelectorAll('[data-membertab]').forEach(x => x.classList.remove('active'));
@@ -808,66 +816,20 @@
       });
     });
 
-    document.querySelectorAll('[data-leavetab]').forEach(t => {
-      t.addEventListener('click', () => {
-        document.querySelectorAll('[data-leavetab]').forEach(x => x.classList.remove('active'));
-        t.classList.add('active');
-        const content = document.getElementById('leaveContent');
-        if (t.dataset.leavetab === 'request') {
-          content.innerHTML = document.getElementById('leaveForm').outerHTML + '<p style="font-size:12px;color:var(--muted);margin-top:10px">Requests show calendar days and Monday–Friday workdays. Leave is deducted only after approval. Holidays are not excluded.</p>';
-          // Re-attach event listener to the newly rendered form
-          document.getElementById('leaveForm')?.addEventListener('submit', handleLeaveSubmit);
-        } else {
-          content.innerHTML = '<p style="text-align:center;color:var(--muted);padding:20px">No requests found.</p>';
-        }
-      });
-    });
-
-    document.getElementById('scheduleForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const { error } = await supabase.from('schedules').insert([{
-        region: document.getElementById('schRegion').value, title: document.getElementById('schJob').value,
-        sch_date: document.getElementById('schDate').value, priority: document.getElementById('schPriority').value,
-        time_in: document.getElementById('schTimeIn').value, time_out: document.getElementById('schTimeOut').value,
-        notes: document.getElementById('schNotes').value, created_by: currentUser.id
-      }]);
-      if (error) return showToast('❌ ' + error.message);
-      showToast('✅ Schedule saved!'); e.target.reset();
-    });
-
+    document.getElementById('scheduleForm').addEventListener('submit', handleScheduleSubmit);
     document.getElementById('leaveForm')?.addEventListener('submit', handleLeaveSubmit);
-
-    document.getElementById('profileForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const { error } = await supabase.from('profiles').update({
-        full_name: document.getElementById('profName').value, id_no: document.getElementById('profId').value,
-        address: document.getElementById('profAddress').value, team: document.getElementById('profTeam').value,
-        phone: document.getElementById('profContact').value, area: document.getElementById('profArea').value
-      }).eq('user_id', currentUser.id);
-      if (error) return showToast('❌ ' + error.message);
-      showToast('✅ Profile updated!');
-    });
+    document.getElementById('profileForm').addEventListener('submit', handleProfileSubmit);
   }
 
-  async function handleLeaveSubmit(e) {
-    e.preventDefault();
-    const { error } = await supabase.from('leave_requests').insert([{
-      user_id: currentUser.id, type: document.getElementById('leaveType').value,
-      start_date: document.getElementById('leaveStart').value, end_date: document.getElementById('leaveEnd').value,
-      reason: document.getElementById('leaveReason').value
-    }]);
-    if (error) return showToast('❌ ' + error.message);
-    showToast('✅ Leave request submitted!'); e.target.reset();
-  }
-
+  // ============================================
+  // MEMBERS
+  // ============================================
   async function renderMembers(filter) {
     const list = document.getElementById('membersList');
     list.innerHTML = '<p style="text-align:center;color:var(--muted);padding:20px">Loading...</p>';
     
-    // Join profiles and user_roles to get approval status
     let query = supabase.from('profiles').select('user_id, full_name, area, user_roles(app_role, approval_status)');
     if (filter === 'pending') {
-      // We need to filter by the nested role status. Supabase JS handles this via filter on the foreign table
       query = query.eq('user_roles.approval_status', 'pending');
     } else {
       query = query.eq('user_roles.approval_status', 'approved');
@@ -892,6 +854,205 @@
     `}).join('') || '<p style="text-align:center;color:var(--muted);padding:20px">No members found</p>';
   }
 
+  // ============================================
+  // ANNOUNCEMENTS
+  // ============================================
+  async function renderAnnouncements() {
+    const list = document.getElementById('announcementsList');
+    list.innerHTML = '<p style="color:var(--muted);text-align:center;padding:20px">Loading announcements...</p>';
+    
+    const { data, error } = await supabase
+      .from('announcements')
+      .select(`id, title, body, created_at, profiles:author_id (full_name)`)
+      .order('created_at', { ascending: false });
+    
+    if (error) {
+      list.innerHTML = `<p style="color:var(--danger);text-align:center;padding:20px">❌ ${error.message}</p>`;
+      return;
+    }
+    
+    if (!data || data.length === 0) {
+      list.innerHTML = '<p style="color:var(--muted);text-align:center;padding:20px">📢 No announcements yet.</p>';
+      return;
+    }
+    
+    list.innerHTML = data.map(ann => {
+      const authorName = ann.profiles?.full_name || 'Unknown';
+      const date = new Date(ann.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      return `
+        <div class="card" style="margin-bottom:10px;background:var(--bg)">
+          <div style="font-weight:700;font-size:15px;color:var(--primary)">${ann.title}</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">By ${authorName} • ${date}</div>
+          <div style="font-size:14px;line-height:1.6;color:var(--text);margin-top:8px">${ann.body}</div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  window.postAnnouncement = async function() {
+    const title = document.getElementById('annTitle').value.trim();
+    const message = document.getElementById('annMessage').value.trim();
+    
+    if (!title) return showToast('❌ Please enter a title');
+    if (!message) return showToast('❌ Please enter a message');
+    
+    const { error } = await supabase.from('announcements').insert([{ title, body: message, author_id: currentUser.id }]);
+    
+    if (error) return showToast('❌ ' + error.message);
+    
+    showToast('✅ Announcement posted successfully!');
+    closeModal('announcementModal');
+    document.getElementById('annTitle').value = '';
+    document.getElementById('annMessage').value = '';
+    await renderAnnouncements();
+  };
+
+  // ============================================
+  // SITES
+  // ============================================
+  async function renderSites() {
+    const list = document.getElementById('sitesList');
+    list.innerHTML = '<p style="color:var(--muted);text-align:center;padding:20px">Loading sites...</p>';
+    
+    const { data, error } = await supabase.from('sites').select('*').order('created_at', { ascending: false });
+    
+    if (error) {
+      list.innerHTML = `<p style="color:var(--danger);text-align:center;padding:20px">❌ ${error.message}</p>`;
+      return;
+    }
+    
+    if (!data || data.length === 0) {
+      list.innerHTML = '<p style="color:var(--muted);text-align:center;padding:20px">📍 No sites added yet.</p>';
+      return;
+    }
+    
+    list.innerHTML = data.map(s => `
+      <div class="list-item">
+        <div class="avatar" style="background:var(--accent)">📍</div>
+        <div class="list-content">
+          <div class="list-title">${s.name}</div>
+          <div class="list-sub">${s.address || ''} ${s.city ? '• ' + s.city : ''} ${s.region ? '• ' + s.region : ''}</div>
+        </div>
+        <span class="chip success">Active</span>
+      </div>
+    `).join('');
+  }
+
+  window.addSite = async function() {
+    const name = document.getElementById('siteName').value.trim();
+    if (!name) return showToast('❌ Please enter a site name');
+    
+    const { error } = await supabase.from('sites').insert([{
+      name,
+      address: document.getElementById('siteAddress').value.trim(),
+      region: document.getElementById('siteArea').value,
+      city: document.getElementById('siteCity').value.trim(),
+      created_by: currentUser.id
+    }]);
+    
+    if (error) return showToast('❌ ' + error.message);
+    
+    showToast('✅ Site added successfully!');
+    closeModal('addSiteModal');
+    document.getElementById('siteName').value = '';
+    document.getElementById('siteAddress').value = '';
+    document.getElementById('siteCity').value = '';
+    await renderSites();
+  };
+
+  // ============================================
+  // SCHEDULES
+  // ============================================
+  async function renderSchedules() {
+    const { data, error } = await supabase.from('schedules').select('*').order('sch_date', { ascending: false });
+    if (error) return;
+    document.getElementById('statDtr').textContent = data?.length || 0;
+  }
+
+  async function handleScheduleSubmit(e) {
+    e.preventDefault();
+    const { error } = await supabase.from('schedules').insert([{
+      region: document.getElementById('schRegion').value,
+      title: document.getElementById('schJob').value,
+      sch_date: document.getElementById('schDate').value,
+      priority: document.getElementById('schPriority').value,
+      time_in: document.getElementById('schTimeIn').value,
+      time_out: document.getElementById('schTimeOut').value,
+      notes: document.getElementById('schNotes').value,
+      created_by: currentUser.id
+    }]);
+    if (error) return showToast('❌ ' + error.message);
+    showToast('✅ Schedule saved!');
+    e.target.reset();
+    await renderSchedules();
+  }
+
+  // ============================================
+  // DTR ENTRIES
+  // ============================================
+  async function renderDtrEntries() {
+    const { data, error } = await supabase.from('dtrs').select('*').eq('user_id', currentUser.id).order('entry_date', { ascending: false });
+    if (error) return;
+    document.getElementById('statDtr').textContent = data?.length || 0;
+  }
+
+  // ============================================
+  // NOTES & RECOMMENDATIONS
+  // ============================================
+  async function renderNotes() {
+    const { data } = await supabase.from('notes').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false });
+    // Render notes list if needed
+  }
+
+  async function renderRecommendations() {
+    const { data } = await supabase.from('recs').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false });
+    // Render recs list if needed
+  }
+
+  // ============================================
+  // LEAVE REQUESTS
+  // ============================================
+  async function renderLeaveRequests() {
+    const { data, error } = await supabase.from('leave_requests').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false });
+    if (error) return;
+    // Render leave list if needed
+  }
+
+  async function handleLeaveSubmit(e) {
+    e.preventDefault();
+    const { error } = await supabase.from('leave_requests').insert([{
+      user_id: currentUser.id,
+      type: document.getElementById('leaveType').value,
+      start_date: document.getElementById('leaveStart').value,
+      end_date: document.getElementById('leaveEnd').value,
+      reason: document.getElementById('leaveReason').value
+    }]);
+    if (error) return showToast('❌ ' + error.message);
+    showToast('✅ Leave request submitted!');
+    e.target.reset();
+    await renderLeaveRequests();
+  }
+
+  // ============================================
+  // PROFILE
+  // ============================================
+  async function handleProfileSubmit(e) {
+    e.preventDefault();
+    const { error } = await supabase.from('profiles').update({
+      full_name: document.getElementById('profName').value,
+      id_no: document.getElementById('profId').value,
+      address: document.getElementById('profAddress').value,
+      team: document.getElementById('profTeam').value,
+      phone: document.getElementById('profContact').value,
+      area: document.getElementById('profArea').value
+    }).eq('user_id', currentUser.id);
+    if (error) return showToast('❌ ' + error.message);
+    showToast('✅ Profile updated!');
+  }
+
+  // ============================================
+  // CHAT
+  // ============================================
   window.openChat = function(name) {
     document.getElementById('chatListCard').style.display = 'none';
     document.getElementById('chatWindow').classList.add('active');
@@ -913,30 +1074,15 @@
   };
   document.getElementById('chatInput')?.addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(); });
 
+  // ============================================
+  // REPORTS TABS
+  // ============================================
   function renderReportTab(tab) {
     const content = document.getElementById('reportContent');
     if (tab === 'service') {
       content.innerHTML = `<form onsubmit="event.preventDefault();showToast('✅ Service report submitted!')"><div class="form-group"><label>Site</label><select class="form-control"><option>Select a site</option></select></div><div class="form-group"><label>Report date</label><input type="date" class="form-control" /></div><div class="form-group"><label>Title</label><input type="text" class="form-control" /></div><div class="form-group"><label>Details</label><textarea class="form-control" rows="4"></textarea></div><div class="form-group"><label>Attach photos</label><input type="file" class="form-control" multiple accept="image/*" /></div><button type="submit" class="btn btn-primary">Submit report</button></form>`;
     } else if (tab === 'pms') {
-      content.innerHTML = `
-        <div class="tabs" style="margin-bottom:10px">
-          <button class="tab active" onclick="this.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));this.classList.add('active');document.getElementById('pmsUnitType').value='elevator'">Elevator Unit</button>
-          <button class="tab" onclick="this.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));this.classList.add('active');document.getElementById('pmsUnitType').value='escalator'">Escalator Unit</button>
-        </div>
-        <input type="hidden" id="pmsUnitType" value="elevator" />
-        <div class="form-group"><label>Region</label><select class="form-control"><option>Luzon</option><option>Visayas</option><option>Mindanao</option></select></div>
-        <div class="form-group"><label>Site</label><select class="form-control"><option>Choose a site</option></select></div>
-        <div class="form-group"><label>Checklist date</label><input type="date" class="form-control" /></div>
-        <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Select an area, then a site. Follow approved PMS procedures and company safety rules.</p>
-        <div style="margin-top:10px">
-          <div class="checklist-item"><input type="checkbox" id="c1"><label for="c1">Inspect elevator cabin</label></div>
-          <div class="checklist-item"><input type="checkbox" id="c2"><label for="c2">Check door operation</label></div>
-          <div class="checklist-item"><input type="checkbox" id="c3"><label for="c3">Test emergency brake</label></div>
-          <div class="checklist-item"><input type="checkbox" id="c4"><label for="c4">Verify safety sensors</label></div>
-          <div class="checklist-item"><input type="checkbox" id="c5"><label for="c5">Clean and lubricate</label></div>
-        </div>
-        <button class="btn btn-primary" style="margin-top:12px" onclick="showToast('✅ Checklist record saved!')">Save checklist record</button>
-      `;
+      content.innerHTML = `<div class="tabs" style="margin-bottom:10px"><button class="tab active">Elevator Unit</button><button class="tab">Escalator Unit</button></div><div class="form-group"><label>Region</label><select class="form-control"><option>Luzon</option><option>Visayas</option><option>Mindanao</option></select></div><div class="form-group"><label>Site</label><select class="form-control"><option>Choose a site</option></select></div><div class="form-group"><label>Checklist date</label><input type="date" class="form-control" /></div><div style="margin-top:10px"><div class="checklist-item"><input type="checkbox" id="c1"><label for="c1">Inspect elevator cabin</label></div><div class="checklist-item"><input type="checkbox" id="c2"><label for="c2">Check door operation</label></div><div class="checklist-item"><input type="checkbox" id="c3"><label for="c3">Test emergency brake</label></div><div class="checklist-item"><input type="checkbox" id="c4"><label for="c4">Verify safety sensors</label></div><div class="checklist-item"><input type="checkbox" id="c5"><label for="c5">Clean and lubricate</label></div></div><button class="btn btn-primary" style="margin-top:12px" onclick="showToast('✅ Checklist record saved!')">Save checklist record</button>`;
     } else {
       content.innerHTML = `<p style="color:var(--muted);text-align:center;padding:20px">Select a report type above.</p>`;
     }
@@ -950,13 +1096,16 @@
   });
   renderReportTab('service');
 
+  // ============================================
+  // DTR TABS
+  // ============================================
   function renderDtrTab(tab) {
     const content = document.getElementById('dtrContent');
     if (tab === 'fill') {
-      content.innerHTML = `<form onsubmit="event.preventDefault();showToast('✅ DTR entry added!')"><div class="form-group"><label>Date</label><input type="date" class="form-control" /></div><div class="form-group"><label>Work location</label><input type="text" class="form-control" /></div><div class="form-group"><label>Work description</label><textarea class="form-control" rows="2"></textarea></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="form-group"><label>Time in</label><input type="time" class="form-control" /></div><div class="form-group"><label>Time out</label><input type="time" class="form-control" /></div></div><div class="form-group"><label>Signature</label><canvas class="sig-canvas" id="sigCanvas"></canvas><div style="display:flex;gap:8px;margin-top:8px"><button type="button" class="btn btn-outline btn-sm" onclick="clearSignature()">Clear drawn signature</button><button type="button" class="btn btn-outline btn-sm" onclick="showToast('📷 Upload signature picture')">Upload signature picture</button></div></div><button type="submit" class="btn btn-primary">Add entry</button></form>`;
+      content.innerHTML = `<form onsubmit="event.preventDefault();showToast('✅ DTR entry added!')"><div class="form-group"><label>Date</label><input type="date" class="form-control" /></div><div class="form-group"><label>Work location</label><input type="text" class="form-control" /></div><div class="form-group"><label>Work description</label><textarea class="form-control" rows="2"></textarea></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="form-group"><label>Time in</label><input type="time" class="form-control" /></div><div class="form-group"><label>Time out</label><input type="time" class="form-control" /></div></div><div class="form-group"><label>Signature</label><canvas class="sig-canvas" id="sigCanvas"></canvas><div style="display:flex;gap:8px;margin-top:8px"><button type="button" class="btn btn-outline btn-sm" onclick="clearSignature()">Clear drawn signature</button></div></div><button type="submit" class="btn btn-primary">Add entry</button></form>`;
       setTimeout(initSignature, 100);
     } else {
-      content.innerHTML = `<div class="table-wrap"><table><thead><tr><th>Date</th><th>Employee</th><th>Site / job</th><th>Time</th><th>Hrs</th></tr></thead><tbody><tr><td colspan="5" style="text-align:center;color:var(--muted)">No DTR records found.</td></tr></tbody></table></div><div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-outline btn-sm" onclick="showToast('📷 Downloaded!')">📷 Download & Share JPEG</button><button class="btn btn-outline btn-sm" onclick="window.print()">🖨️ Print DTR</button></div>`;
+      content.innerHTML = `<div class="table-wrap"><table><thead><tr><th>Date</th><th>Employee</th><th>Site / job</th><th>Time</th><th>Hrs</th></tr></thead><tbody><tr><td colspan="5" style="text-align:center;color:var(--muted)">No DTR records found.</td></tr></tbody></table></div>`;
     }
   }
   document.querySelectorAll('[data-dtrtab]').forEach(t => {
@@ -968,6 +1117,9 @@
   });
   renderDtrTab('fill');
 
+  // ============================================
+  // NOTES TABS
+  // ============================================
   function renderNotesTab(tab) {
     const content = document.getElementById('notesContent');
     if (tab === 'notes') {
@@ -985,121 +1137,9 @@
   });
   renderNotesTab('notes');
 
-  async function renderSites() {
-  const list = document.getElementById('sitesList');
-  list.innerHTML = '<p style="color:var(--muted);text-align:center;padding:20px">Loading sites...</p>';
-  
-  if (!supabase) {
-    list.innerHTML = '<p style="color:var(--danger);text-align:center;padding:20px">❌ Database not connected</p>';
-    return;
-  }
-  
-  const { data, error } = await supabase
-    .from('sites')
-    .select('id, name, address, region, city, created_at')
-    .order('created_at', { ascending: false });
-  
-  if (error) {
-    list.innerHTML = `<p style="color:var(--danger);text-align:center;padding:20px">❌ ${error.message}</p>`;
-    return;
-  }
-  
-  if (!data || data.length === 0) {
-    list.innerHTML = '<p style="color:var(--muted);text-align:center;padding:20px">📍 No sites added yet. Click "+ Add site" to create one.</p>';
-    return;
-  }
-  
-  list.innerHTML = data.map(s => `
-    <div class="list-item">
-      <div class="avatar" style="background:var(--accent)">📍</div>
-      <div class="list-content">
-        <div class="list-title">${s.name}</div>
-        <div class="list-sub">${s.address || ''} ${s.city ? '• ' + s.city : ''} ${s.region ? '• ' + s.region : ''}</div>
-      </div>
-      <span class="chip success">Active</span>
-    </div>
-  `).join('');
-}
-  renderSites();
-
-  window.addSite = async function() {
-  const name = document.getElementById('siteName').value.trim();
-  if (!name) return showToast('❌ Please enter a site name');
-  
-  if (!supabase) {
-    return showToast('❌ Database not connected');
-  }
-  
-  const newSite = {
-    name: name,
-    address: document.getElementById('siteAddress').value.trim(),
-    region: document.getElementById('siteArea').value,
-    city: document.getElementById('siteCity').value.trim(),
-    created_by: currentUser.id
-  };
-  
-  const { data, error } = await supabase.from('sites').insert([newSite]).select();
-  
-  if (error) {
-    console.error('Site insert error:', error);
-    return showToast('❌ ' + error.message);
-  }
-  
-  showToast('✅ Site "' + name + '" added successfully!');
-  closeModal('addSiteModal');
-  
-  // Clear the form for next time
-  document.getElementById('siteName').value = '';
-  document.getElementById('siteAddress').value = '';
-  document.getElementById('siteCity').value = '';
-  
-  // 🔄 THIS IS THE KEY FIX - Actually refresh the list!
-  await renderSites();
-  
-  // Update the stats counter on the home page
-  const { count } = await supabase.from('sites').select('*', { count: 'exact', head: true });
-  document.getElementById('statSites').textContent = count || 0;
-};
-
-  window.postAnnouncement = async function() {
-  const title = document.getElementById('annTitle').value.trim();
-  const message = document.getElementById('annMessage').value.trim();
-  
-  if (!title) return showToast('❌ Please enter a title');
-  if (!message) return showToast('❌ Please enter a message');
-  
-  if (!supabase) {
-    return showToast('❌ Database not connected');
-  }
-  
-  const newAnnouncement = {
-    title: title,
-    body: message,
-    author_id: currentUser.id
-  };
-  
-  const { data, error } = await supabase.from('announcements').insert([newAnnouncement]).select();
-  
-  if (error) {
-    console.error('Announcement insert error:', error);
-    return showToast('❌ ' + error.message);
-  }
-  
-  showToast('✅ Announcement posted successfully!');
-  closeModal('announcementModal');
-  
-  // Clear the form
-  document.getElementById('annTitle').value = '';
-  document.getElementById('annMessage').value = '';
-  
-  // 🔄 Refresh the announcements list
-  await renderAnnouncements();
-  
-  // Update notification counter
-  const { count } = await supabase.from('announcements').select('*', { count: 'exact', head: true });
-  document.getElementById('statNotif').textContent = count || 0;
-};
-
+  // ============================================
+  // SIGNATURE PAD
+  // ============================================
   function initSignature() {
     const canvas = document.getElementById('sigCanvas');
     if (!canvas) return;
