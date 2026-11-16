@@ -985,20 +985,81 @@
   });
   renderNotesTab('notes');
 
-  function renderSites() {
-    document.getElementById('sitesList').innerHTML = '<p style="color:var(--muted);text-align:center;padding:20px">No sites added yet.</p>';
+  async function renderSites() {
+  const list = document.getElementById('sitesList');
+  list.innerHTML = '<p style="color:var(--muted);text-align:center;padding:20px">Loading sites...</p>';
+  
+  if (!supabase) {
+    list.innerHTML = '<p style="color:var(--danger);text-align:center;padding:20px">❌ Database not connected</p>';
+    return;
   }
+  
+  const { data, error } = await supabase
+    .from('sites')
+    .select('id, name, address, region, city, created_at')
+    .order('created_at', { ascending: false });
+  
+  if (error) {
+    list.innerHTML = `<p style="color:var(--danger);text-align:center;padding:20px">❌ ${error.message}</p>`;
+    return;
+  }
+  
+  if (!data || data.length === 0) {
+    list.innerHTML = '<p style="color:var(--muted);text-align:center;padding:20px">📍 No sites added yet. Click "+ Add site" to create one.</p>';
+    return;
+  }
+  
+  list.innerHTML = data.map(s => `
+    <div class="list-item">
+      <div class="avatar" style="background:var(--accent)">📍</div>
+      <div class="list-content">
+        <div class="list-title">${s.name}</div>
+        <div class="list-sub">${s.address || ''} ${s.city ? '• ' + s.city : ''} ${s.region ? '• ' + s.region : ''}</div>
+      </div>
+      <span class="chip success">Active</span>
+    </div>
+  `).join('');
+}
   renderSites();
 
   window.addSite = async function() {
-    const name = document.getElementById('siteName').value;
-    if (!name) return showToast('❌ Enter site name');
-    if (supabase) {
-      const { error } = await supabase.from('sites').insert([{ name, address: document.getElementById('siteAddress').value, region: document.getElementById('siteArea').value, city: document.getElementById('siteCity').value, created_by: currentUser.id }]);
-      if (error) return showToast('❌ ' + error.message);
-    }
-    showToast('✅ Site added!'); closeModal('addSiteModal'); renderSites();
+  const name = document.getElementById('siteName').value.trim();
+  if (!name) return showToast('❌ Please enter a site name');
+  
+  if (!supabase) {
+    return showToast('❌ Database not connected');
+  }
+  
+  const newSite = {
+    name: name,
+    address: document.getElementById('siteAddress').value.trim(),
+    region: document.getElementById('siteArea').value,
+    city: document.getElementById('siteCity').value.trim(),
+    created_by: currentUser.id
   };
+  
+  const { data, error } = await supabase.from('sites').insert([newSite]).select();
+  
+  if (error) {
+    console.error('Site insert error:', error);
+    return showToast('❌ ' + error.message);
+  }
+  
+  showToast('✅ Site "' + name + '" added successfully!');
+  closeModal('addSiteModal');
+  
+  // Clear the form for next time
+  document.getElementById('siteName').value = '';
+  document.getElementById('siteAddress').value = '';
+  document.getElementById('siteCity').value = '';
+  
+  // 🔄 THIS IS THE KEY FIX - Actually refresh the list!
+  await renderSites();
+  
+  // Update the stats counter on the home page
+  const { count } = await supabase.from('sites').select('*', { count: 'exact', head: true });
+  document.getElementById('statSites').textContent = count || 0;
+};
 
   window.postAnnouncement = async function() {
     const title = document.getElementById('annTitle').value;
