@@ -6,16 +6,8 @@
 <title>EESI Elevators - Operations Console</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛗</text></svg>" />
 <style>
-  :root{
-    --primary:#0b63f6; --primary-dark:#0948c7; --accent:#ff9800;
-    --success:#22c55e; --danger:#ef4444; --warning:#f59e0b;
-    --bg:#f4f6fb; --card:#ffffff; --text:#1a1a2e; --muted:#6b7280;
-    --border:#e5e7eb; --shadow:0 4px 14px rgba(0,0,0,.08); --radius:14px;
-  }
-  [data-theme="dark"]{
-    --bg:#0f172a; --card:#1e293b; --text:#f1f5f9; --muted:#94a3b8;
-    --border:#334155; --shadow:0 4px 14px rgba(0,0,0,.4);
-  }
+  :root{--primary:#0b63f6;--primary-dark:#0948c7;--accent:#ff9800;--success:#22c55e;--danger:#ef4444;--warning:#f59e0b;--bg:#f4f6fb;--card:#ffffff;--text:#1a1a2e;--muted:#6b7280;--border:#e5e7eb;--shadow:0 4px 14px rgba(0,0,0,.08);--radius:14px;}
+  [data-theme="dark"]{--bg:#0f172a;--card:#1e293b;--text:#f1f5f9;--muted:#94a3b8;--border:#334155;--shadow:0 4px 14px rgba(0,0,0,.4);}
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
   body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;}
@@ -673,7 +665,7 @@
     if (error) return showToast('❌ ' + error.message);
     
     currentUser = data.user;
-    const { data: profile } = await supabase.from('profiles').select('*').eq('id', currentUser.id).single();
+    const { data: profile } = await supabase.from('profiles').select('*').eq('user_id', currentUser.id).single();
     if (profile) currentUser = { ...currentUser, ...profile };
 
     enterApp();
@@ -704,7 +696,7 @@
     document.getElementById('mainApp').classList.add('active');
     document.getElementById('bottomNav').style.display = 'flex';
     document.getElementById('userName').textContent = currentUser.full_name || currentUser.email;
-    document.getElementById('userDesignation').textContent = currentUser.designation || 'User';
+    document.getElementById('userDesignation').textContent = currentUser.app_role || 'User';
     document.getElementById('userAvatar').textContent = (currentUser.full_name || 'U').charAt(0).toUpperCase();
     
     document.getElementById('profName').value = currentUser.full_name || '';
@@ -794,8 +786,10 @@
 
   async function loadAppData() {
     if (!supabase) return;
+    
+    // Graceful fallback to "0" instead of "Database setup needed"
     const { count: membersCount } = await supabase.from('profiles').select('*', { count: 'exact', head: true });
-    const { count: pendingCount } = await supabase.from('profiles').select('*', { count: 'exact', head: true }).eq('status', 'pending');
+    const { count: pendingCount } = await supabase.from('user_roles').select('*', { count: 'exact', head: true }).eq('approval_status', 'pending');
     const { count: sitesCount } = await supabase.from('sites').select('*', { count: 'exact', head: true });
     
     document.getElementById('statMembers').textContent = membersCount || 0;
@@ -818,15 +812,22 @@
       t.addEventListener('click', () => {
         document.querySelectorAll('[data-leavetab]').forEach(x => x.classList.remove('active'));
         t.classList.add('active');
-        document.getElementById('leaveContent').innerHTML = t.dataset.leavetab === 'request' ? document.getElementById('leaveForm').outerHTML : '<p style="text-align:center;color:var(--muted);padding:20px">No requests found.</p>';
+        const content = document.getElementById('leaveContent');
+        if (t.dataset.leavetab === 'request') {
+          content.innerHTML = document.getElementById('leaveForm').outerHTML + '<p style="font-size:12px;color:var(--muted);margin-top:10px">Requests show calendar days and Monday–Friday workdays. Leave is deducted only after approval. Holidays are not excluded.</p>';
+          // Re-attach event listener to the newly rendered form
+          document.getElementById('leaveForm')?.addEventListener('submit', handleLeaveSubmit);
+        } else {
+          content.innerHTML = '<p style="text-align:center;color:var(--muted);padding:20px">No requests found.</p>';
+        }
       });
     });
 
     document.getElementById('scheduleForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const { error } = await supabase.from('schedules').insert([{
-        region: document.getElementById('schRegion').value, job_site: document.getElementById('schJob').value,
-        schedule_date: document.getElementById('schDate').value, priority: document.getElementById('schPriority').value,
+        region: document.getElementById('schRegion').value, title: document.getElementById('schJob').value,
+        sch_date: document.getElementById('schDate').value, priority: document.getElementById('schPriority').value,
         time_in: document.getElementById('schTimeIn').value, time_out: document.getElementById('schTimeOut').value,
         notes: document.getElementById('schNotes').value, created_by: currentUser.id
       }]);
@@ -834,48 +835,61 @@
       showToast('✅ Schedule saved!'); e.target.reset();
     });
 
-    document.getElementById('leaveForm')?.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const { error } = await supabase.from('leave_requests').insert([{
-        user_id: currentUser.id, leave_type: document.getElementById('leaveType').value,
-        start_date: document.getElementById('leaveStart').value, end_date: document.getElementById('leaveEnd').value,
-        reason: document.getElementById('leaveReason').value
-      }]);
-      if (error) return showToast('❌ ' + error.message);
-      showToast('✅ Leave request submitted!'); e.target.reset();
-    });
+    document.getElementById('leaveForm')?.addEventListener('submit', handleLeaveSubmit);
 
     document.getElementById('profileForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const { error } = await supabase.from('profiles').update({
-        full_name: document.getElementById('profName').value, id_number: document.getElementById('profId').value,
+        full_name: document.getElementById('profName').value, id_no: document.getElementById('profId').value,
         address: document.getElementById('profAddress').value, team: document.getElementById('profTeam').value,
-        contact: document.getElementById('profContact').value, area: document.getElementById('profArea').value
-      }).eq('id', currentUser.id);
+        phone: document.getElementById('profContact').value, area: document.getElementById('profArea').value
+      }).eq('user_id', currentUser.id);
       if (error) return showToast('❌ ' + error.message);
       showToast('✅ Profile updated!');
     });
   }
 
+  async function handleLeaveSubmit(e) {
+    e.preventDefault();
+    const { error } = await supabase.from('leave_requests').insert([{
+      user_id: currentUser.id, type: document.getElementById('leaveType').value,
+      start_date: document.getElementById('leaveStart').value, end_date: document.getElementById('leaveEnd').value,
+      reason: document.getElementById('leaveReason').value
+    }]);
+    if (error) return showToast('❌ ' + error.message);
+    showToast('✅ Leave request submitted!'); e.target.reset();
+  }
+
   async function renderMembers(filter) {
     const list = document.getElementById('membersList');
     list.innerHTML = '<p style="text-align:center;color:var(--muted);padding:20px">Loading...</p>';
-    let query = supabase.from('profiles').select('id, full_name, designation, area, status');
-    if (filter === 'pending') query = query.eq('status', 'pending');
-    else query = query.eq('status', 'approved');
+    
+    // Join profiles and user_roles to get approval status
+    let query = supabase.from('profiles').select('user_id, full_name, area, user_roles(app_role, approval_status)');
+    if (filter === 'pending') {
+      // We need to filter by the nested role status. Supabase JS handles this via filter on the foreign table
+      query = query.eq('user_roles.approval_status', 'pending');
+    } else {
+      query = query.eq('user_roles.approval_status', 'approved');
+    }
 
     const { data, error } = await query;
     if (error) { list.innerHTML = '<p style="text-align:center;color:var(--danger);padding:20px">Error loading</p>'; return; }
-    list.innerHTML = data.map(u => `
+    
+    list.innerHTML = data.map(u => {
+      const role = u.user_roles || {};
+      const status = role.approval_status || 'pending';
+      const roleName = role.app_role || 'User';
+      return `
       <div class="list-item">
         <div class="avatar ${filter === 'online' ? 'online' : ''}">${(u.full_name || 'U').charAt(0)}</div>
         <div class="list-content">
           <div class="list-title">${u.full_name || 'Unknown'}</div>
-          <div class="list-sub">${u.designation || 'User'} • ${u.area || ''}</div>
+          <div class="list-sub">${roleName} • ${u.area || ''}</div>
         </div>
-        <span class="chip ${u.status === 'approved' ? 'success' : 'warning'}">${u.status}</span>
+        <span class="chip ${status === 'approved' ? 'success' : 'warning'}">${status}</span>
       </div>
-    `).join('') || '<p style="text-align:center;color:var(--muted);padding:20px">No members found</p>';
+    `}).join('') || '<p style="text-align:center;color:var(--muted);padding:20px">No members found</p>';
   }
 
   window.openChat = function(name) {
@@ -906,10 +920,11 @@
     } else if (tab === 'pms') {
       content.innerHTML = `
         <div class="tabs" style="margin-bottom:10px">
-          <button class="tab active">Elevator Unit</button>
-          <button class="tab">Escalator Unit</button>
+          <button class="tab active" onclick="this.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));this.classList.add('active');document.getElementById('pmsUnitType').value='elevator'">Elevator Unit</button>
+          <button class="tab" onclick="this.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));this.classList.add('active');document.getElementById('pmsUnitType').value='escalator'">Escalator Unit</button>
         </div>
-        <div class="form-group"><label>Area</label><select class="form-control"><option>Luzon</option><option>Visayas</option><option>Mindanao</option></select></div>
+        <input type="hidden" id="pmsUnitType" value="elevator" />
+        <div class="form-group"><label>Region</label><select class="form-control"><option>Luzon</option><option>Visayas</option><option>Mindanao</option></select></div>
         <div class="form-group"><label>Site</label><select class="form-control"><option>Choose a site</option></select></div>
         <div class="form-group"><label>Checklist date</label><input type="date" class="form-control" /></div>
         <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Select an area, then a site. Follow approved PMS procedures and company safety rules.</p>
@@ -938,7 +953,7 @@
   function renderDtrTab(tab) {
     const content = document.getElementById('dtrContent');
     if (tab === 'fill') {
-      content.innerHTML = `<form onsubmit="event.preventDefault();showToast('✅ DTR entry added!')"><div class="form-group"><label>Date</label><input type="date" class="form-control" /></div><div class="form-group"><label>Work location</label><input type="text" class="form-control" /></div><div class="form-group"><label>Work description</label><textarea class="form-control" rows="2"></textarea></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="form-group"><label>Time in</label><input type="time" class="form-control" /></div><div class="form-group"><label>Time out</label><input type="time" class="form-control" /></div></div><div class="form-group"><label>Signature</label><canvas class="sig-canvas" id="sigCanvas"></canvas><div style="display:flex;gap:8px;margin-top:8px"><button type="button" class="btn btn-outline btn-sm" onclick="clearSignature()">Clear drawn signature</button></div></div><button type="submit" class="btn btn-primary">Add entry</button></form>`;
+      content.innerHTML = `<form onsubmit="event.preventDefault();showToast('✅ DTR entry added!')"><div class="form-group"><label>Date</label><input type="date" class="form-control" /></div><div class="form-group"><label>Work location</label><input type="text" class="form-control" /></div><div class="form-group"><label>Work description</label><textarea class="form-control" rows="2"></textarea></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="form-group"><label>Time in</label><input type="time" class="form-control" /></div><div class="form-group"><label>Time out</label><input type="time" class="form-control" /></div></div><div class="form-group"><label>Signature</label><canvas class="sig-canvas" id="sigCanvas"></canvas><div style="display:flex;gap:8px;margin-top:8px"><button type="button" class="btn btn-outline btn-sm" onclick="clearSignature()">Clear drawn signature</button><button type="button" class="btn btn-outline btn-sm" onclick="showToast('📷 Upload signature picture')">Upload signature picture</button></div></div><button type="submit" class="btn btn-primary">Add entry</button></form>`;
       setTimeout(initSignature, 100);
     } else {
       content.innerHTML = `<div class="table-wrap"><table><thead><tr><th>Date</th><th>Employee</th><th>Site / job</th><th>Time</th><th>Hrs</th></tr></thead><tbody><tr><td colspan="5" style="text-align:center;color:var(--muted)">No DTR records found.</td></tr></tbody></table></div><div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-outline btn-sm" onclick="showToast('📷 Downloaded!')">📷 Download & Share JPEG</button><button class="btn btn-outline btn-sm" onclick="window.print()">🖨️ Print DTR</button></div>`;
@@ -979,7 +994,7 @@
     const name = document.getElementById('siteName').value;
     if (!name) return showToast('❌ Enter site name');
     if (supabase) {
-      const { error } = await supabase.from('sites').insert([{ name, address: document.getElementById('siteAddress').value, area: document.getElementById('siteArea').value, city: document.getElementById('siteCity').value, created_by: currentUser.id }]);
+      const { error } = await supabase.from('sites').insert([{ name, address: document.getElementById('siteAddress').value, region: document.getElementById('siteArea').value, city: document.getElementById('siteCity').value, created_by: currentUser.id }]);
       if (error) return showToast('❌ ' + error.message);
     }
     showToast('✅ Site added!'); closeModal('addSiteModal'); renderSites();
@@ -989,7 +1004,7 @@
     const title = document.getElementById('annTitle').value;
     if (!title) return showToast('❌ Enter title');
     if (supabase) {
-      const { error } = await supabase.from('announcements').insert([{ title, message: document.getElementById('annMessage').value, author_id: currentUser.id }]);
+      const { error } = await supabase.from('announcements').insert([{ title, body: document.getElementById('annMessage').value, author_id: currentUser.id }]);
       if (error) return showToast('❌ ' + error.message);
     }
     showToast('✅ Announcement posted!'); closeModal('announcementModal');
