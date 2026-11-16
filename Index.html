@@ -655,21 +655,26 @@
   }
 
   async function handleLogin(e) {
-    e.preventDefault();
-    const email = document.getElementById('loginEmail').value;
-    const password = document.getElementById('loginPassword').value;
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
 
-    if (!supabase) return showToast('❌ Supabase not configured correctly.');
+  if (!supabase) return showToast('❌ Supabase not configured correctly.');
 
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) return showToast('❌ ' + error.message);
-    
-    currentUser = data.user;
-    const { data: profile } = await supabase.from('profiles').select('*').eq('user_id', currentUser.id).single();
-    if (profile) currentUser = { ...currentUser, ...profile };
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error) return showToast('❌ ' + error.message);
+  
+  currentUser = data.user;
+  
+  // ✅ FIX: Fetch profile AND role separately to avoid recursion/schema errors
+  const { data: profile } = await supabase.from('profiles').select('*').eq('user_id', currentUser.id).single();
+  const { data: role } = await supabase.from('user_roles').select('*').eq('user_id', currentUser.id).single();
+  
+  if (profile) currentUser = { ...currentUser, ...profile };
+  if (role) currentUser = { ...currentUser, app_role: role.app_role, approval_status: role.approval_status };
 
-    enterApp();
-  }
+  enterApp();
+}
 
   async function handleRegister(e) {
     e.preventDefault();
@@ -825,34 +830,45 @@
   // MEMBERS
   // ============================================
   async function renderMembers(filter) {
-    const list = document.getElementById('membersList');
-    list.innerHTML = '<p style="text-align:center;color:var(--muted);padding:20px">Loading...</p>';
-    
-    let query = supabase.from('profiles').select('user_id, full_name, area, user_roles(app_role, approval_status)');
-    if (filter === 'pending') {
-      query = query.eq('user_roles.approval_status', 'pending');
-    } else {
-      query = query.eq('user_roles.approval_status', 'approved');
-    }
-
-    const { data, error } = await query;
-    if (error) { list.innerHTML = '<p style="text-align:center;color:var(--danger);padding:20px">Error loading</p>'; return; }
-    
-    list.innerHTML = data.map(u => {
-      const role = u.user_roles || {};
-      const status = role.approval_status || 'pending';
-      const roleName = role.app_role || 'User';
-      return `
-      <div class="list-item">
-        <div class="avatar ${filter === 'online' ? 'online' : ''}">${(u.full_name || 'U').charAt(0)}</div>
-        <div class="list-content">
-          <div class="list-title">${u.full_name || 'Unknown'}</div>
-          <div class="list-sub">${roleName} • ${u.area || ''}</div>
-        </div>
-        <span class="chip ${status === 'approved' ? 'success' : 'warning'}">${status}</span>
-      </div>
-    `}).join('') || '<p style="text-align:center;color:var(--muted);padding:20px">No members found</p>';
+  const list = document.getElementById('membersList');
+  list.innerHTML = '<p style="text-align:center;color:var(--muted);padding:20px">Loading...</p>';
+  
+  // ✅ FIX: Use explicit select for user_roles to avoid schema cache issues
+  let query = supabase.from('profiles').select(`
+    user_id, 
+    full_name, 
+    area, 
+    user_roles!inner(app_role, approval_status)
+  `);
+  
+  if (filter === 'pending') {
+    query = query.eq('user_roles.approval_status', 'pending');
+  } else {
+    query = query.eq('user_roles.approval_status', 'approved');
   }
+
+  const { data, error } = await query;
+  if (error) { 
+    console.error('Member fetch error:', error);
+    list.innerHTML = '<p style="text-align:center;color:var(--danger);padding:20px">Error loading members</p>'; 
+    return; 
+  }
+  
+  list.innerHTML = data.map(u => {
+    const role = u.user_roles || {};
+    const status = role.approval_status || 'pending';
+    const roleName = role.app_role || 'User';
+    return `
+    <div class="list-item">
+      <div class="avatar ${filter === 'online' ? 'online' : ''}">${(u.full_name || 'U').charAt(0)}</div>
+      <div class="list-content">
+        <div class="list-title">${u.full_name || 'Unknown'}</div>
+        <div class="list-sub">${roleName} • ${u.area || ''}</div>
+      </div>
+      <span class="chip ${status === 'approved' ? 'success' : 'warning'}">${status}</span>
+    </div>
+  `}).join('') || '<p style="text-align:center;color:var(--muted);padding:20px">No members found</p>';
+}
 
   // ============================================
   // ANNOUNCEMENTS
