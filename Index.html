@@ -7,49 +7,22 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛗</text></svg>" />
 <style>
   :root{
-    --primary:#0b63f6;
-    --primary-dark:#0948c7;
-    --accent:#ff9800;
-    --success:#22c55e;
-    --danger:#ef4444;
-    --warning:#f59e0b;
-    --bg:#f4f6fb;
-    --card:#ffffff;
-    --text:#1a1a2e;
-    --muted:#6b7280;
-    --border:#e5e7eb;
-    --shadow:0 4px 14px rgba(0,0,0,.08);
-    --radius:14px;
+    --primary:#0b63f6; --primary-dark:#0948c7; --accent:#ff9800;
+    --success:#22c55e; --danger:#ef4444; --warning:#f59e0b;
+    --bg:#f4f6fb; --card:#ffffff; --text:#1a1a2e; --muted:#6b7280;
+    --border:#e5e7eb; --shadow:0 4px 14px rgba(0,0,0,.08); --radius:14px;
   }
   [data-theme="dark"]{
-    --bg:#0f172a;
-    --card:#1e293b;
-    --text:#f1f5f9;
-    --muted:#94a3b8;
-    --border:#334155;
-    --shadow:0 4px 14px rgba(0,0,0,.4);
+    --bg:#0f172a; --card:#1e293b; --text:#f1f5f9; --muted:#94a3b8;
+    --border:#334155; --shadow:0 4px 14px rgba(0,0,0,.4);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
-  body{
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
-    background:var(--bg);color:var(--text);
-    font-size:15px;line-height:1.5;
-    -webkit-font-smoothing:antialiased;
-  }
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;}
   button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
   input,select,textarea{font-family:inherit;font-size:15px}
-
-  /* ===== Auth Screen ===== */
-  .auth-screen{
-    min-height:100vh;display:flex;align-items:center;justify-content:center;
-    background:linear-gradient(135deg,#0b63f6 0%,#0948c7 100%);
-    padding:20px;
-  }
-  .auth-card{
-    background:#fff;border-radius:20px;padding:32px 28px;
-    width:100%;max-width:400px;box-shadow:0 20px 60px rgba(0,0,0,.25);
-  }
+  .auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0b63f6 0%,#0948c7 100%);padding:20px;}
+  .auth-card{background:#fff;border-radius:20px;padding:32px 28px;width:100%;max-width:400px;box-shadow:0 20px 60px rgba(0,0,0,.25);}
   .auth-logo{text-align:center;margin-bottom:24px}
   .auth-logo h1{font-size:28px;color:var(--primary);font-weight:800;letter-spacing:-.5px}
   .auth-logo p{color:var(--muted);font-size:13px;margin-top:4px}
@@ -58,15 +31,9 @@
   .auth-tab.active{background:#fff;color:var(--primary);box-shadow:0 2px 6px rgba(0,0,0,.08)}
   .form-group{margin-bottom:14px}
   .form-group label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text)}
-  .form-control{
-    width:100%;padding:12px 14px;border:1.5px solid var(--border);
-    border-radius:10px;background:#fff;color:var(--text);transition:.2s;
-  }
+  .form-control{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;background:#fff;color:var(--text);transition:.2s;}
   .form-control:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(11,99,246,.15)}
-  .btn{
-    width:100%;padding:13px;border-radius:10px;font-weight:600;font-size:15px;
-    transition:.2s;display:flex;align-items:center;justify-content:center;gap:8px;
-  }
+  .btn{width:100%;padding:13px;border-radius:10px;font-weight:600;font-size:15px;transition:.2s;display:flex;align-items:center;justify-content:center;gap:8px;}
   .btn-primary{background:var(--primary);color:#fff}
   .btn-primary:hover{background:var(--primary-dark)}
   .btn-outline{background:#fff;color:var(--text);border:1.5px solid var(--border)}
@@ -78,115 +45,50 @@
   .social-btns{display:flex;flex-direction:column;gap:8px}
   .auth-links{text-align:center;margin-top:16px;font-size:13px}
   .auth-links a{color:var(--primary);font-weight:600;text-decoration:none}
-
-  /* ===== Main App ===== */
   .app{display:none;min-height:100vh;padding-bottom:80px}
   .app.active{display:block}
-  .topbar{
-    position:sticky;top:0;z-index:100;background:var(--primary);color:#fff;
-    padding:14px 16px;display:flex;align-items:center;justify-content:space-between;
-    box-shadow:0 2px 10px rgba(0,0,0,.1);
-  }
+  .topbar{position:sticky;top:0;z-index:100;background:var(--primary);color:#fff;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 10px rgba(0,0,0,.1);}
   .topbar-title{font-weight:700;font-size:17px;display:flex;align-items:center;gap:8px}
   .topbar-actions{display:flex;gap:8px;align-items:center}
-  .icon-btn{
-    width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.15);
-    display:flex;align-items:center;justify-content:center;font-size:18px;position:relative;
-  }
+  .icon-btn{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:18px;position:relative;}
   .icon-btn:hover{background:rgba(255,255,255,.25)}
-  .badge{
-    position:absolute;top:-2px;right:-2px;background:var(--danger);color:#fff;
-    font-size:10px;min-width:18px;height:18px;border-radius:9px;
-    display:flex;align-items:center;justify-content:center;padding:0 4px;font-weight:700;
-  }
-
+  .badge{position:absolute;top:-2px;right:-2px;background:var(--danger);color:#fff;font-size:10px;min-width:18px;height:18px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 4px;font-weight:700;}
   .container{padding:16px;max-width:1200px;margin:0 auto}
-
-  /* ===== Cards ===== */
-  .card{
-    background:var(--card);border-radius:var(--radius);padding:18px;
-    box-shadow:var(--shadow);margin-bottom:14px;
-  }
+  .card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);margin-bottom:14px;}
   .card-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-
-  /* ===== Stats Grid ===== */
   .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
-  .stat-card{
-    background:var(--card);border-radius:12px;padding:14px;text-align:center;
-    box-shadow:var(--shadow);
-  }
+  .stat-card{background:var(--card);border-radius:12px;padding:14px;text-align:center;box-shadow:var(--shadow);}
   .stat-value{font-size:22px;font-weight:800;color:var(--primary)}
   .stat-label{font-size:11px;color:var(--muted);margin-top:4px;font-weight:600}
-
-  /* ===== Quick Access ===== */
   .quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-  .quick-item{
-    background:var(--card);border-radius:12px;padding:14px 8px;text-align:center;
-    box-shadow:var(--shadow);transition:.2s;
-  }
+  .quick-item{background:var(--card);border-radius:12px;padding:14px 8px;text-align:center;box-shadow:var(--shadow);transition:.2s;}
   .quick-item:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.12)}
   .quick-icon{font-size:24px;margin-bottom:4px}
   .quick-label{font-size:11px;font-weight:600;color:var(--text)}
-
-  /* ===== Sections ===== */
   .section{display:none}
   .section.active{display:block}
-
-  /* ===== Lists ===== */
-  .list-item{
-    display:flex;align-items:center;gap:12px;padding:12px;
-    border-bottom:1px solid var(--border);
-  }
+  .list-item{display:flex;align-items:center;gap:12px;padding:12px;border-bottom:1px solid var(--border);}
   .list-item:last-child{border-bottom:none}
-  .avatar{
-    width:40px;height:40px;border-radius:50%;background:var(--primary);
-    color:#fff;display:flex;align-items:center;justify-content:center;
-    font-weight:700;font-size:15px;flex-shrink:0;
-  }
-  .avatar.online::after{
-    content:'';position:absolute;bottom:0;right:0;width:12px;height:12px;
-    background:var(--success);border:2px solid var(--card);border-radius:50%;
-  }
-  .avatar{position:relative}
+  .avatar{width:40px;height:40px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;flex-shrink:0;position:relative;}
+  .avatar.online::after{content:'';position:absolute;bottom:0;right:0;width:12px;height:12px;background:var(--success);border:2px solid var(--card);border-radius:50%;}
   .list-content{flex:1;min-width:0}
   .list-title{font-weight:600;font-size:14px}
   .list-sub{font-size:12px;color:var(--muted);margin-top:2px}
-
-  /* ===== Bottom Nav ===== */
-  .bottom-nav{
-    position:fixed;bottom:0;left:0;right:0;background:var(--card);
-    border-top:1px solid var(--border);display:flex;justify-content:space-around;
-    padding:8px 0;z-index:100;box-shadow:0 -2px 10px rgba(0,0,0,.05);
-  }
-  .nav-item{
-    flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;
-    padding:6px;color:var(--muted);font-size:11px;font-weight:600;transition:.2s;
-  }
+  .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:8px 0;z-index:100;box-shadow:0 -2px 10px rgba(0,0,0,.05);}
+  .nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px;color:var(--muted);font-size:11px;font-weight:600;transition:.2s;}
   .nav-item.active{color:var(--primary)}
   .nav-item .nav-icon{font-size:20px}
-
-  /* ===== Modal ===== */
-  .modal-overlay{
-    display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);
-    z-index:1000;align-items:center;justify-content:center;padding:20px;
-  }
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;align-items:center;justify-content:center;padding:20px;}
   .modal-overlay.active{display:flex}
-  .modal{
-    background:var(--card);border-radius:16px;padding:20px;
-    width:100%;max-width:500px;max-height:90vh;overflow-y:auto;
-  }
+  .modal{background:var(--card);border-radius:16px;padding:20px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;}
   .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
   .modal-title{font-size:18px;font-weight:700}
   .close-btn{font-size:24px;color:var(--muted);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center}
   .close-btn:hover{background:var(--bg)}
-
-  /* ===== Tables ===== */
   .table-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--border)}
   table{width:100%;border-collapse:collapse;font-size:13px}
   th,td{padding:10px;text-align:left;border-bottom:1px solid var(--border)}
   th{background:var(--bg);font-weight:700;font-size:12px;color:var(--muted);text-transform:uppercase}
-
-  /* ===== Chat ===== */
   .chat-list{display:flex;flex-direction:column;gap:2px}
   .chat-item{display:flex;gap:12px;padding:12px;cursor:pointer;border-radius:10px}
   .chat-item:hover{background:var(--bg)}
@@ -195,7 +97,6 @@
   .chat-name{font-weight:600;font-size:14px}
   .chat-msg{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .chat-time{font-size:11px;color:var(--muted)}
-
   .chat-window{display:none;flex-direction:column;height:calc(100vh - 140px)}
   .chat-window.active{display:flex}
   .chat-header{padding:12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;background:var(--card)}
@@ -203,67 +104,34 @@
   .msg{max-width:75%;padding:10px 14px;border-radius:16px;font-size:14px;word-wrap:break-word}
   .msg.in{background:var(--card);align-self:flex-start;border-bottom-left-radius:4px;box-shadow:var(--shadow)}
   .msg.out{background:var(--primary);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
-  .chat-input-bar{padding:10px;background:var(--card);border-top:1px solid var(--border);display:flex;gap:8px;align-items:center}
-  .chat-input{flex:1;padding:10px 14px;border-radius:20px;border:1px solid var(--border);background:var(--bg);color:var(--text)}
+  .chat-input-bar{padding:10px;background:var(--card);border-top:1px solid var(--border);display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+  .chat-input{flex:1;padding:10px 14px;border-radius:20px;border:1px solid var(--border);background:var(--bg);color:var(--text);min-width:150px;}
   .send-btn{width:40px;height:40px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px}
-
-  /* ===== Tabs ===== */
   .tabs{display:flex;gap:4px;background:var(--bg);padding:4px;border-radius:10px;margin-bottom:14px;overflow-x:auto}
   .tab{padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--muted);white-space:nowrap}
   .tab.active{background:var(--card);color:var(--primary);box-shadow:0 1px 3px rgba(0,0,0,.08)}
-
-  /* ===== Chips ===== */
   .chip{display:inline-block;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:600;background:var(--bg);color:var(--text)}
   .chip.success{background:#dcfce7;color:#166534}
   .chip.warning{background:#fef3c7;color:#92400e}
   .chip.danger{background:#fee2e2;color:#991b1b}
   .chip.info{background:#dbeafe;color:#1e40af}
-
-  /* ===== Checklist ===== */
   .checklist-item{display:flex;align-items:center;gap:10px;padding:10px;border-bottom:1px solid var(--border)}
   .checklist-item input[type="checkbox"]{width:20px;height:20px;accent-color:var(--primary)}
-
-  /* ===== Signature ===== */
   .sig-canvas{border:2px dashed var(--border);border-radius:10px;background:#fff;touch-action:none;width:100%;height:180px}
-
-  /* ===== Toast ===== */
-  .toast{
-    position:fixed;top:20px;left:50%;transform:translateX(-50%);
-    background:var(--text);color:var(--card);padding:12px 20px;border-radius:10px;
-    box-shadow:0 10px 30px rgba(0,0,0,.3);z-index:2000;font-size:14px;font-weight:600;
-    opacity:0;transition:.3s;pointer-events:none;
-  }
+  .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--card);padding:12px 20px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.3);z-index:2000;font-size:14px;font-weight:600;opacity:0;transition:.3s;pointer-events:none;}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-
-  /* ===== Loading ===== */
-  .spinner{width:20px;height:20px;border:3px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin 1s linear infinite}
-  @keyframes spin{to{transform:rotate(360deg)}}
-
-  /* ===== Responsive ===== */
-  @media(max-width:480px){
-    .stats-grid{grid-template-columns:repeat(2,1fr)}
-    .quick-grid{grid-template-columns:repeat(3,1fr)}
-  }
-
-  /* ===== Bible Verse ===== */
-  .verse-card{
-    background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
-    color:#fff;border-radius:var(--radius);padding:18px;margin-bottom:14px;
-  }
+  @media(max-width:480px){.stats-grid{grid-template-columns:repeat(2,1fr)}.quick-grid{grid-template-columns:repeat(3,1fr)}}
+  .verse-card{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border-radius:var(--radius);padding:18px;margin-bottom:14px;}
   .verse-text{font-style:italic;font-size:14px;line-height:1.6}
   .verse-ref{font-weight:700;margin-top:8px;font-size:13px;opacity:.9}
-
-  /* ===== No Internet ===== */
-  .offline-banner{
-    background:var(--danger);color:#fff;padding:8px;text-align:center;
-    font-size:13px;font-weight:600;display:none;
-  }
+  .offline-banner{background:var(--danger);color:#fff;padding:8px;text-align:center;font-size:13px;font-weight:600;display:none;}
   .offline-banner.show{display:block}
+  .img-upload-box{border:2px dashed var(--border);border-radius:10px;padding:20px;text-align:center;color:var(--muted);cursor:pointer;margin-bottom:10px;}
+  .img-upload-box:hover{background:var(--bg);}
 </style>
 </head>
 <body>
 
-<!-- Offline Banner -->
 <div class="offline-banner" id="offlineBanner">⚠️ No Internet Connection. Please check your network.</div>
 
 <!-- ============ AUTH SCREEN ============ -->
@@ -273,22 +141,19 @@
       <h1>🛗 EESI ELEVATORS</h1>
       <p>Operations Console</p>
     </div>
-
     <div class="auth-tabs">
       <button class="auth-tab active" data-tab="login">Sign In</button>
       <button class="auth-tab" data-tab="register">Register</button>
     </div>
-
-    <!-- Login Form (Pre-filled for Admin Setup) -->
     <form id="loginForm">
       <div class="form-group">
         <label>Email</label>
-        <!-- PRE-FILLED FOR ADMIN: Change or remove value after first setup -->
+        <!-- PRE-FILLED FOR ADMIN SETUP -->
         <input type="email" class="form-control" id="loginEmail" value="barnayjarodel14@gmail.com" required />
       </div>
       <div class="form-group">
         <label>Password</label>
-        <!-- PRE-FILLED FOR ADMIN: Change or remove value after first setup -->
+        <!-- PRE-FILLED FOR ADMIN SETUP -->
         <input type="password" class="form-control" id="loginPassword" value="469070" required />
       </div>
       <button type="submit" class="btn btn-primary">Log In</button>
@@ -301,14 +166,12 @@
         <a href="#" onclick="showModal('forgotModal');return false">Forgot password?</a>
       </div>
     </form>
-
-    <!-- Register Form -->
     <form id="registerForm" style="display:none">
-      <div class="form-group"><label>Full Name</label><input type="text" class="form-control" id="regName" required /></div>
+      <div class="form-group"><label>Full name</label><input type="text" class="form-control" id="regName" required /></div>
       <div class="form-group"><label>ID No.</label><input type="text" class="form-control" id="regId" required /></div>
       <div class="form-group"><label>Address</label><input type="text" class="form-control" id="regAddress" required /></div>
       <div class="form-group"><label>Team</label><input type="text" class="form-control" id="regTeam" required /></div>
-      <div class="form-group"><label>Contact / Cellphone</label><input type="tel" class="form-control" id="regContact" required /></div>
+      <div class="form-group"><label>Contact / cellphone</label><input type="tel" class="form-control" id="regContact" required /></div>
       <div class="form-group">
         <label>Area / Region</label>
         <select class="form-control" id="regArea" required>
@@ -319,7 +182,7 @@
       <div class="form-group"><label>Email</label><input type="email" class="form-control" id="regEmail" required /></div>
       <div class="form-group"><label>Password</label><input type="password" class="form-control" id="regPassword" required minlength="6" /></div>
       <div class="form-group">
-        <label>Requested Designation</label>
+        <label>Requested designation</label>
         <select class="form-control" id="regDesignation" required>
           <option value="">Select</option>
           <option>Technician</option>
@@ -327,7 +190,7 @@
           <option>Admin</option>
         </select>
       </div>
-      <button type="submit" class="btn btn-primary">Submit Registration</button>
+      <button type="submit" class="btn btn-primary">Submit registration</button>
       <p style="text-align:center;margin-top:10px;font-size:12px;color:var(--muted)">Registration requires administrator approval.</p>
     </form>
   </div>
@@ -335,17 +198,11 @@
 
 <!-- ============ MAIN APP ============ -->
 <div class="app" id="mainApp">
-  <!-- Top Bar -->
   <div class="topbar">
-    <div class="topbar-title">
-      <span>🛗</span>
-      <span>EESI ELEVATORS</span>
-    </div>
+    <div class="topbar-title"><span>🛗</span><span>EESI ELEVATORS INC.</span></div>
     <div class="topbar-actions">
       <button class="icon-btn" onclick="toggleTheme()" title="Theme">🌙</button>
-      <button class="icon-btn" onclick="showSection('notifications')" title="Notifications">
-        🔔<span class="badge" id="notifBadge">0</span>
-      </button>
+      <button class="icon-btn" onclick="showSection('notifications')" title="Notifications">🔔<span class="badge" id="notifBadge">0</span></button>
       <button class="icon-btn" onclick="showModal('settingsModal')" title="Settings">⋮</button>
     </div>
   </div>
@@ -361,28 +218,34 @@
           <div style="font-size:12px;opacity:.8" id="userDesignation">Administrator</div>
         </div>
       </div>
-      <div style="margin-top:12px;font-size:12px;opacity:.9" id="dateTime">Loading...</div>
+      <div style="margin-top:12px;font-size:12px;opacity:.9;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+        <span id="dateTime">Loading time…</span>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-sm" style="background:rgba(255,255,255,.2);color:#fff" onclick="showToast('📍 Location shared!')">📍 Share Location</button>
+          <button class="btn btn-sm" style="background:rgba(255,255,255,.2);color:#fff" onclick="showToast('🔄 Weather refreshed!')">🔄 Refresh Weather</button>
+        </div>
+      </div>
     </div>
 
     <!-- Bible Verse -->
     <div class="verse-card">
-      <div class="verse-text" id="verseText">"For I know the plans I have for you," declares the LORD, "plans to prosper you and not to harm you, plans to give you hope and a future."</div>
-      <div class="verse-ref" id="verseRef">— Jeremiah 29:11</div>
+      <div class="verse-text">"For I know the plans I have for you," declares the LORD, "plans to prosper you and not to harm you, plans to give you hope and a future."</div>
+      <div class="verse-ref">— Jeremiah 29:11</div>
     </div>
 
     <!-- Stats -->
     <div class="stats-grid">
       <div class="stat-card"><div class="stat-value" id="statMembers">0</div><div class="stat-label">👥 Members</div></div>
       <div class="stat-card"><div class="stat-value" id="statOnline">0</div><div class="stat-label">🟢 Online</div></div>
-      <div class="stat-card"><div class="stat-value" id="statSites">0</div><div class="stat-label">📍 Sites</div></div>
       <div class="stat-card"><div class="stat-value" id="statPending">0</div><div class="stat-label">⏳ Pending</div></div>
+      <div class="stat-card"><div class="stat-value" id="statSites">0</div><div class="stat-label">📍 Sites</div></div>
       <div class="stat-card"><div class="stat-value" id="statDtr">0</div><div class="stat-label">⏰ DTR</div></div>
-      <div class="stat-card"><div class="stat-value" id="statNotif">0</div><div class="stat-label">🔔 Notifs</div></div>
+      <div class="stat-card"><div class="stat-value" id="statNotif">0</div><div class="stat-label">🔔 Notifications</div></div>
     </div>
 
     <!-- Quick Access -->
     <div class="card">
-      <div class="card-title">⚡ Quick Access</div>
+      <div class="card-title">⚡ Quick access</div>
       <div class="quick-grid">
         <button class="quick-item" onclick="showSection('admin')"><div class="quick-icon">⚙️</div><div class="quick-label">Admin</div></button>
         <button class="quick-item" onclick="showSection('livemap')"><div class="quick-icon">🗺️</div><div class="quick-label">Live Map</div></button>
@@ -391,7 +254,7 @@
         <button class="quick-item" onclick="showSection('schedule')"><div class="quick-icon">📅</div><div class="quick-label">Schedule</div></button>
         <button class="quick-item" onclick="showSection('sites')"><div class="quick-icon">📍</div><div class="quick-label">Sites</div></button>
         <button class="quick-item" onclick="showSection('dtr')"><div class="quick-icon">⏰</div><div class="quick-label">DTR</div></button>
-        <button class="quick-item" onclick="showSection('notes')"><div class="quick-icon">📌</div><div class="quick-label">Notes</div></button>
+        <button class="quick-item" onclick="showSection('notes')"><div class="quick-icon">📌</div><div class="quick-label">Notes & Recs</div></button>
         <button class="quick-item" onclick="showSection('profile')"><div class="quick-icon">👤</div><div class="quick-label">Profile</div></button>
         <button class="quick-item" onclick="showSection('search')"><div class="quick-icon">🔍</div><div class="quick-label">Search</div></button>
         <button class="quick-item" onclick="showSection('leave')"><div class="quick-icon">🌴</div><div class="quick-label">Leave</div></button>
@@ -402,41 +265,35 @@
     <!-- Timeline -->
     <div class="card">
       <div class="card-title">📋 Timeline</div>
-      <div id="timelineContent" style="color:var(--muted);font-size:13px;text-align:center;padding:20px">
-        Timeline items will appear here.
-      </div>
+      <div id="timelineContent" style="color:var(--muted);font-size:13px;text-align:center;padding:20px">Timeline items will appear here.</div>
     </div>
   </div>
 
   <!-- ===== SECTIONS ===== -->
-
-  <!-- Members -->
   <div class="section" id="section-members">
     <div class="container">
       <div class="card">
         <div class="card-title">👥 Members</div>
         <div class="tabs">
-          <button class="tab active" data-membertab="online">🟢 Online</button>
+          <button class="tab active" data-membertab="online">Online</button>
           <button class="tab" data-membertab="offline">Offline</button>
-          <button class="tab" data-membertab="pending">⏳ Pending</button>
+          <button class="tab" data-membertab="pending">⏳ Pending registrations</button>
         </div>
         <div id="membersList"></div>
       </div>
     </div>
   </div>
 
-  <!-- Announcements -->
   <div class="section" id="section-announcements">
     <div class="container">
       <div class="card">
         <div class="card-title">📢 Announcements</div>
         <div id="announcementsList"></div>
-        <button class="btn btn-primary" style="margin-top:12px" onclick="showModal('announcementModal')">+ Post Announcement</button>
+        <button class="btn btn-primary" style="margin-top:12px" onclick="showModal('announcementModal')">+ Post announcement</button>
       </div>
     </div>
   </div>
 
-  <!-- Schedule -->
   <div class="section" id="section-schedule">
     <div class="container">
       <div class="card">
@@ -448,7 +305,7 @@
               <option>Visayas</option><option>Luzon</option><option>Mindanao</option>
             </select>
           </div>
-          <div class="form-group"><label>Job / Site</label><input type="text" class="form-control" id="schJob" required /></div>
+          <div class="form-group"><label>Job / site</label><input type="text" class="form-control" id="schJob" required /></div>
           <div class="form-group"><label>Date</label><input type="date" class="form-control" id="schDate" required /></div>
           <div class="form-group">
             <label>Priority</label>
@@ -457,63 +314,59 @@
             </select>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <div class="form-group"><label>Time In</label><input type="time" class="form-control" id="schTimeIn" required /></div>
-            <div class="form-group"><label>Time Out</label><input type="time" class="form-control" id="schTimeOut" required /></div>
+            <div class="form-group"><label>Time in</label><input type="time" class="form-control" id="schTimeIn" required /></div>
+            <div class="form-group"><label>Time out</label><input type="time" class="form-control" id="schTimeOut" required /></div>
           </div>
-          <div class="form-group"><label>Assign Personnel</label><input type="text" class="form-control" id="schPersonnel" placeholder="Multi-select" /></div>
+          <div class="form-group"><label>Assign Personnel (Multi-select categorized by Region / Team)</label><input type="text" class="form-control" id="schPersonnel" /></div>
           <div class="form-group"><label>Notes</label><textarea class="form-control" id="schNotes" rows="2"></textarea></div>
-          <button type="submit" class="btn btn-primary">Save Schedule</button>
+          <button type="submit" class="btn btn-primary">Save schedule</button>
         </form>
       </div>
     </div>
   </div>
 
-  <!-- Reports -->
   <div class="section" id="section-reports">
     <div class="container">
       <div class="card">
         <div class="card-title">📄 Reports</div>
         <div class="tabs">
-          <button class="tab active" data-reptab="service">Service Report</button>
-          <button class="tab" data-reptab="delivery">Delivery</button>
+          <button class="tab active" data-reptab="service">Services Report</button>
+          <button class="tab" data-reptab="delivery">Delivery Report</button>
           <button class="tab" data-reptab="pms">PMS Checklist</button>
-          <button class="tab" data-reptab="records">Records</button>
+          <button class="tab" data-reptab="records">📋 PMS Records</button>
         </div>
         <div id="reportContent"></div>
       </div>
     </div>
   </div>
 
-  <!-- Sites -->
   <div class="section" id="section-sites">
     <div class="container">
       <div class="card">
-        <div class="card-title">📍 Work Sites</div>
-        <button class="btn btn-primary" onclick="showModal('addSiteModal')">+ Add Site</button>
+        <div class="card-title">📍 Work sites</div>
+        <button class="btn btn-primary" onclick="showModal('addSiteModal')">+ Add site</button>
         <div id="sitesList" style="margin-top:14px"></div>
       </div>
     </div>
   </div>
 
-  <!-- DTR -->
   <div class="section" id="section-dtr">
     <div class="container">
       <div class="card">
         <div class="card-title">⏰ Daily Time Record</div>
         <div class="tabs">
           <button class="tab active" data-dtrtab="fill">✏️ Fill DTR</button>
-          <button class="tab" data-dtrtab="preview">📄 Preview</button>
+          <button class="tab" data-dtrtab="preview">📄 Preview Half-Sheet</button>
         </div>
         <div id="dtrContent"></div>
       </div>
     </div>
   </div>
 
-  <!-- Notes -->
   <div class="section" id="section-notes">
     <div class="container">
       <div class="card">
-        <div class="card-title">📌 Notes & Recommendations</div>
+        <div class="card-title">📌 Notes & recommendations</div>
         <div class="tabs">
           <button class="tab active" data-notetab="notes">Notes</button>
           <button class="tab" data-notetab="recs">Recommendations</button>
@@ -523,41 +376,38 @@
     </div>
   </div>
 
-  <!-- Admin -->
   <div class="section" id="section-admin">
     <div class="container">
       <div class="card">
-        <div class="card-title">⚙️ Admin Panel</div>
-        <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Approve new accounts from the Pending page. Change designations and areas — changes apply immediately.</p>
-        <button class="btn btn-primary" onclick="showSection('members')">Open Pending Registrations</button>
+        <div class="card-title">⚙️ Admin</div>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Approve new accounts from the <b>Pending</b> page. Change designations and areas below — changes apply immediately on the member's device.</p>
+        <button class="btn btn-primary" onclick="showSection('members')">Open pending registrations</button>
       </div>
     </div>
   </div>
 
-  <!-- Live Map -->
   <div class="section" id="section-livemap">
     <div class="container">
       <div class="card">
-        <div class="card-title">🗺️ Live Employee Locations</div>
+        <div class="card-title">🗺️ Live employee locations</div>
         <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Visible to administrators only.</p>
-        <div id="mapContainer" style="height:400px;background:var(--bg);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--muted)">
-          🗺️ Map Loading...
-        </div>
+        <div id="mapContainer" style="height:400px;background:var(--bg);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--muted)">🗺️ Map Loading...</div>
       </div>
     </div>
   </div>
 
-  <!-- Profile -->
   <div class="section" id="section-profile">
     <div class="container">
       <div class="card">
-        <div class="card-title">👤 Personal Information</div>
+        <div class="card-title">👤 Personal information</div>
+        <div class="img-upload-box" onclick="showToast('📷 Cover picture upload clicked')">📷 Cover picture (Click to upload)</div>
+        <div class="img-upload-box" onclick="showToast('📷 Profile picture upload clicked')" style="max-width:150px;margin:0 auto 14px">👤 Profile picture</div>
         <form id="profileForm">
-          <div class="form-group"><label>Full Name</label><input type="text" class="form-control" id="profName" /></div>
+          <div class="form-group"><label>Full name</label><input type="text" class="form-control" id="profName" /></div>
           <div class="form-group"><label>ID No.</label><input type="text" class="form-control" id="profId" /></div>
           <div class="form-group"><label>Address</label><input type="text" class="form-control" id="profAddress" /></div>
           <div class="form-group"><label>Team</label><input type="text" class="form-control" id="profTeam" /></div>
-          <div class="form-group"><label>Contact / Cellphone</label><input type="tel" class="form-control" id="profContact" /></div>
+          <div class="form-group"><label>Contact / cellphone</label><input type="tel" class="form-control" id="profContact" /></div>
           <div class="form-group">
             <label>Area / Region</label>
             <select class="form-control" id="profArea">
@@ -565,44 +415,51 @@
             </select>
           </div>
           <div class="form-group"><label>Email</label><input type="email" class="form-control" id="profEmail" /></div>
-          <button type="submit" class="btn btn-primary">Save Profile</button>
+          <button type="submit" class="btn btn-primary">Save profile</button>
         </form>
       </div>
-
       <div class="card">
-        <div class="card-title">🌴 Annual Leave Balance</div>
-        <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Workdays are Monday–Friday. Holidays are not excluded.</p>
-        <div id="leaveBalance">Loading balances...</div>
-        <button class="btn btn-primary" style="margin-top:10px" onclick="showSection('leave')">Request Leave</button>
+        <div class="card-title">🌴 Annual leave balance</div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Approved leave for the current calendar year. Workdays are Monday to Friday; holidays are not excluded.</p>
+        <div id="leaveBalance" style="margin-bottom:10px">Loading balances…</div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-primary" onclick="showSection('leave')">Request leave</button>
+          <button class="btn btn-outline" onclick="showToast('🔄 Balance refreshed')">Refresh balance</button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Leave -->
   <div class="section" id="section-leave">
     <div class="container">
       <div class="card">
-        <div class="card-title">🌴 Request Leave</div>
-        <form id="leaveForm">
-          <div class="form-group">
-            <label>Leave Type</label>
-            <select class="form-control" id="leaveType" required>
-              <option>Sick leave</option><option>Emergency leave</option><option>Vacation leave</option>
-            </select>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <div class="form-group"><label>Start Date</label><input type="date" class="form-control" id="leaveStart" required /></div>
-            <div class="form-group"><label>End Date</label><input type="date" class="form-control" id="leaveEnd" required /></div>
-          </div>
-          <div class="form-group"><label>Reason</label><textarea class="form-control" id="leaveReason" rows="3" required></textarea></div>
-          <button type="submit" class="btn btn-primary">Submit Request</button>
-        </form>
-        <p style="font-size:12px;color:var(--muted);margin-top:10px">Leave is deducted only after approval.</p>
+        <div class="card-title">🌴 Leave</div>
+        <div class="tabs">
+          <button class="tab active" data-leavetab="request">Request leave</button>
+          <button class="tab" data-leavetab="my">My leave requests</button>
+          <button class="tab" data-leavetab="review">Requests to review</button>
+        </div>
+        <div id="leaveContent">
+          <form id="leaveForm">
+            <div class="form-group">
+              <label>Leave type</label>
+              <select class="form-control" id="leaveType" required>
+                <option>Sick leave</option><option>Emergency leave</option><option>Vacation leave</option>
+              </select>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <div class="form-group"><label>Start date</label><input type="date" class="form-control" id="leaveStart" required /></div>
+              <div class="form-group"><label>End date</label><input type="date" class="form-control" id="leaveEnd" required /></div>
+            </div>
+            <div class="form-group"><label>Reason</label><textarea class="form-control" id="leaveReason" rows="3" required></textarea></div>
+            <button type="submit" class="btn btn-primary">Submit request</button>
+          </form>
+          <p style="font-size:12px;color:var(--muted);margin-top:10px">Requests show calendar days and Monday–Friday workdays. Leave is deducted only after approval. Holidays are not excluded.</p>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Search -->
   <div class="section" id="section-search">
     <div class="container">
       <div class="card">
@@ -614,20 +471,22 @@
             <select class="form-control"><option>All equipment</option><option>Elevator</option><option>Escalator / Moving walkway</option></select>
           </div>
           <div class="form-group">
-            <label>Record Type</label>
-            <select class="form-control"><option>All types</option><option>Service Report</option><option>Delivery Report</option><option>PMS Checklist</option><option>Recommendation</option><option>Note</option></select>
+            <label>Record type</label>
+            <select class="form-control"><option>All types</option><option>Service Report</option><option>Delivery Report</option><option>PMS Checklist Record</option><option>Recommendation</option><option>Note</option></select>
           </div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-          <div class="form-group"><label>Date From</label><input type="date" class="form-control" /></div>
-          <div class="form-group"><label>Date To</label><input type="date" class="form-control" /></div>
+          <div class="form-group"><label>Date from</label><input type="date" class="form-control" /></div>
+          <div class="form-group"><label>Date to</label><input type="date" class="form-control" /></div>
         </div>
-        <button class="btn btn-primary">Search</button>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-primary">Search</button>
+          <button class="btn btn-outline">Clear filters</button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Notifications -->
   <div class="section" id="section-notifications">
     <div class="container">
       <div class="card">
@@ -637,7 +496,6 @@
     </div>
   </div>
 
-  <!-- Chat -->
   <div class="section" id="section-chat">
     <div class="container">
       <div class="card" id="chatListCard">
@@ -649,19 +507,24 @@
           <button class="tab">Archived</button>
         </div>
         <div class="chat-list" id="chatList"></div>
-        <button class="btn btn-primary" style="margin-top:12px" onclick="showModal('newGroupModal')">+ New Message</button>
+        <button class="btn btn-primary" style="margin-top:12px" onclick="showModal('newGroupModal')">+ New message</button>
       </div>
       <div class="chat-window" id="chatWindow">
         <div class="chat-header">
           <button onclick="closeChatWindow()" style="font-size:20px">←</button>
           <div class="chat-avatar" id="chatWinAvatar">U</div>
           <div style="flex:1"><div style="font-weight:700" id="chatWinName">User</div><div style="font-size:11px;color:var(--muted)">Online</div></div>
-          <button class="icon-btn" style="background:var(--bg)">📞</button>
-          <button class="icon-btn" style="background:var(--bg)">🎥</button>
+          <button class="icon-btn" style="background:var(--bg);width:32px;height:32px;font-size:16px">📞</button>
+          <button class="icon-btn" style="background:var(--bg);width:32px;height:32px;font-size:16px">🎥</button>
+          <button class="icon-btn" style="background:var(--bg);width:32px;height:32px;font-size:16px">ⓘ</button>
         </div>
         <div class="chat-messages" id="chatMessages"></div>
         <div class="chat-input-bar">
+          <button class="icon-btn" style="background:var(--bg);width:36px;height:36px;font-size:16px" onclick="showToast('📷 Camera opened')">📷</button>
+          <button class="icon-btn" style="background:var(--bg);width:36px;height:36px;font-size:16px" onclick="showToast('🖼 Photo picker opened')">🖼</button>
+          <button class="icon-btn" style="background:var(--bg);width:36px;height:36px;font-size:16px" onclick="showToast('📎 File picker opened')">📎</button>
           <input type="text" class="chat-input" id="chatInput" placeholder="Type a message..." />
+          <button class="icon-btn" style="background:var(--bg);width:36px;height:36px;font-size:16px" onclick="showToast('😊 Emoji picker')">😊</button>
           <button class="send-btn" onclick="sendMessage()">➤</button>
         </div>
       </div>
@@ -679,102 +542,105 @@
 </div>
 
 <!-- ============ MODALS ============ -->
-
-<!-- Forgot Password -->
 <div class="modal-overlay" id="forgotModal">
   <div class="modal">
-    <div class="modal-header"><div class="modal-title">Forgot Password</div><button class="close-btn" onclick="closeModal('forgotModal')">✕</button></div>
-    <div class="form-group"><label>Email</label><input type="email" class="form-control" placeholder="Enter your email" /></div>
-    <button class="btn btn-primary">Send Reset Link</button>
+    <div class="modal-header"><div class="modal-title">Choose a new password</div><button class="close-btn" onclick="closeModal('forgotModal')">✕</button></div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:14px">Enter a new password for your account.</p>
+    <div class="form-group"><label>New password</label><input type="password" class="form-control" /></div>
+    <button class="btn btn-primary">Update password</button>
+    <button class="btn btn-outline" style="margin-top:8px" onclick="closeModal('forgotModal')">Back to log in</button>
   </div>
 </div>
 
-<!-- Settings -->
 <div class="modal-overlay" id="settingsModal">
   <div class="modal">
     <div class="modal-header"><div class="modal-title">⚙️ Settings</div><button class="close-btn" onclick="closeModal('settingsModal')">✕</button></div>
     <div class="card-title">🔔 Notifications</div>
-    <div class="form-group"><label>Sound</label><select class="form-control"><option>Classic polyphonic</option><option>Bright chime</option><option>Digital pulse</option><option>Retro ringtone</option><option>Soft marimba</option><option>Warm bell</option><option>Off</option></select></div>
-    <div class="form-group"><label>Alert Duration</label><select class="form-control"><option>5 seconds</option><option>10 seconds</option><option>15 seconds</option><option>30 seconds</option><option>1 minute</option></select></div>
+    <div class="form-group"><label>Sound</label><select class="form-control"><option>Off</option><option>Classic polyphonic</option><option>Bright chime</option><option>Digital pulse</option><option>Retro ringtone</option><option>Soft marimba</option><option>Warm bell</option></select></div>
+    <div class="form-group"><label>Alert duration</label><select class="form-control"><option>Off</option><option>5 seconds</option><option>10 seconds</option><option>15 seconds</option><option>30 seconds</option><option>1 minute</option></select></div>
     <div class="card-title" style="margin-top:16px">🎨 Display</div>
     <div class="form-group"><label>Background</label><select class="form-control" onchange="setTheme(this.value)"><option value="light">Light</option><option value="dark">Dark</option></select></div>
-    <div class="form-group"><label>Font Size</label><select class="form-control"><option>Small</option><option selected>Regular</option><option>Large</option></select></div>
+    <div class="form-group"><label>Text size</label><select class="form-control"><option>Small</option><option selected>Regular</option><option>Large</option></select></div>
     <div class="card-title" style="margin-top:16px">🔒 Privacy & Safety</div>
     <button class="btn btn-outline" style="margin-bottom:8px">🔐 App Lock (PIN)</button>
-    <button class="btn btn-outline" style="margin-bottom:8px" onclick="showModal('changePwModal')">🔑 Change Password</button>
-    <button class="btn btn-danger" onclick="logout()">🚪 Sign Out</button>
+    <button class="btn btn-outline" style="margin-bottom:8px" onclick="showModal('changePwModal');closeModal('settingsModal')">🔑 Change password</button>
+    <button class="btn btn-danger" onclick="logout()">🚪 Sign out</button>
   </div>
 </div>
 
-<!-- Change Password -->
 <div class="modal-overlay" id="changePwModal">
   <div class="modal">
     <div class="modal-header"><div class="modal-title">Change Password</div><button class="close-btn" onclick="closeModal('changePwModal')">✕</button></div>
     <div class="form-group"><label>Current Password</label><input type="password" class="form-control" /></div>
     <div class="form-group"><label>New Password</label><input type="password" class="form-control" /></div>
     <div class="form-group"><label>Re-type New Password</label><input type="password" class="form-control" /></div>
-    <button class="btn btn-primary">Update Password</button>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-outline" onclick="closeModal('changePwModal')">Cancel</button>
+      <button class="btn btn-primary">Update Password</button>
+    </div>
   </div>
 </div>
 
-<!-- Add Site -->
 <div class="modal-overlay" id="addSiteModal">
   <div class="modal">
-    <div class="modal-header"><div class="modal-title">📍 Add Site</div><button class="close-btn" onclick="closeModal('addSiteModal')">✕</button></div>
-    <div class="form-group"><label>Site Name</label><input type="text" class="form-control" id="siteName" /></div>
-    <div class="form-group"><label>Address / Map Search</label><input type="text" class="form-control" id="siteAddress" /></div>
+    <div class="modal-header"><div class="modal-title">📍 Add site</div><button class="close-btn" onclick="closeModal('addSiteModal')">✕</button></div>
+    <div class="form-group"><label>Site name</label><input type="text" class="form-control" id="siteName" /></div>
+    <div class="form-group"><label>Address / map search</label><input type="text" class="form-control" id="siteAddress" /></div>
     <div class="form-group">
       <label>Area</label>
       <select class="form-control" id="siteArea"><option>Visayas</option><option>Luzon</option><option>Mindanao</option></select>
     </div>
     <div class="form-group"><label>City / Province</label><input type="text" class="form-control" id="siteCity" /></div>
-    <button class="btn btn-primary" onclick="addSite()">Add Site</button>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-outline" onclick="closeModal('addSiteModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="addSite()">Add site</button>
+    </div>
   </div>
 </div>
 
-<!-- Announcement -->
 <div class="modal-overlay" id="announcementModal">
   <div class="modal">
-    <div class="modal-header"><div class="modal-title">📢 Post Announcement</div><button class="close-btn" onclick="closeModal('announcementModal')">✕</button></div>
+    <div class="modal-header"><div class="modal-title">📢 Post announcement</div><button class="close-btn" onclick="closeModal('announcementModal')">✕</button></div>
     <div class="form-group"><label>Title</label><input type="text" class="form-control" id="annTitle" /></div>
     <div class="form-group"><label>Message</label><textarea class="form-control" id="annMessage" rows="4"></textarea></div>
-    <button class="btn btn-primary" onclick="postAnnouncement()">Post Announcement</button>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-outline" onclick="closeModal('announcementModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="postAnnouncement()">Post announcement</button>
+    </div>
   </div>
 </div>
 
-<!-- New Group -->
 <div class="modal-overlay" id="newGroupModal">
   <div class="modal">
-    <div class="modal-header"><div class="modal-title">👥 New Group</div><button class="close-btn" onclick="closeModal('newGroupModal')">✕</button></div>
-    <div class="form-group"><label>Group Name</label><input type="text" class="form-control" /></div>
+    <div class="modal-header"><div class="modal-title">👥 New message</div><button class="close-btn" onclick="closeModal('newGroupModal')">✕</button></div>
+    <div class="form-group"><label>Group name</label><input type="text" class="form-control" /></div>
     <div class="form-group"><label>Members</label><input type="text" class="form-control" placeholder="Select members" /></div>
-    <button class="btn btn-primary">Create Group</button>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-outline" onclick="closeModal('newGroupModal')">Cancel</button>
+      <button class="btn btn-primary">Create group</button>
+    </div>
   </div>
 </div>
 
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <!-- ============ SCRIPTS ============ -->
 <script type="module">
-  // ===== Supabase Client =====
   import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-  // TODO: Replace with your actual Supabase credentials after deployment
-  const SUPABASE_URL = 'https://YOUR-PROJECT.supabase.co';
-  const SUPABASE_ANON_KEY = 'YOUR-ANON-KEY';
+  // ✅ CORRECTED SUPABASE CREDENTIALS
+  const SUPABASE_URL = 'https://subzomvuyxvzhhlpsyrf.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN1YnpvbXZ1eXh2emhobHBzeXJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI5Mzg1ODUsImV4cCI6MjEwODUxNDU4NX0.6TvyrcixlyV51Fc-mRKxM71yvBhZ9PEW6IwHlpuNRFY';
 
   let supabase = null;
   try {
     supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   } catch (e) {
-    console.warn('Supabase not configured yet.');
+    console.warn('Supabase init error:', e);
   }
 
-  // ===== State =====
   let currentUser = null;
 
-  // ===== Init =====
   window.addEventListener('DOMContentLoaded', () => {
     initAuth();
     initNavigation();
@@ -782,7 +648,6 @@
     initOfflineDetection();
   });
 
-  // ===== Auth =====
   function initAuth() {
     document.querySelectorAll('.auth-tab').forEach(tab => {
       tab.addEventListener('click', () => {
@@ -793,7 +658,6 @@
         document.getElementById('registerForm').style.display = isLogin ? 'none' : 'block';
       });
     });
-
     document.getElementById('loginForm').addEventListener('submit', handleLogin);
     document.getElementById('registerForm').addEventListener('submit', handleRegister);
   }
@@ -803,54 +667,36 @@
     const email = document.getElementById('loginEmail').value;
     const password = document.getElementById('loginPassword').value;
 
-    if (!supabase || SUPABASE_URL === 'https://YOUR-PROJECT.supabase.co') {
-      return showToast('❌ Supabase not configured. Please update SUPABASE_URL and SUPABASE_ANON_KEY in the code.');
-    }
+    if (!supabase) return showToast('❌ Supabase not configured correctly.');
 
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) return showToast('❌ ' + error.message);
     
     currentUser = data.user;
-    
-    // Fetch user profile
     const { data: profile } = await supabase.from('profiles').select('*').eq('id', currentUser.id).single();
-    if (profile) {
-      currentUser = { ...currentUser, ...profile };
-    }
+    if (profile) currentUser = { ...currentUser, ...profile };
 
     enterApp();
   }
 
   async function handleRegister(e) {
     e.preventDefault();
-    if (!supabase || SUPABASE_URL === 'https://YOUR-PROJECT.supabase.co') {
-      return showToast('❌ Supabase not configured.');
-    }
-    
     const email = document.getElementById('regEmail').value;
     const password = document.getElementById('regPassword').value;
     const fullName = document.getElementById('regName').value;
 
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: { full_name: fullName }
-      }
+    const { error } = await supabase.auth.signUp({
+      email, password,
+      options: { data: { full_name: fullName } }
     });
-
     if (error) return showToast('❌ ' + error.message);
     showToast('✅ Registration submitted! Awaiting admin approval.');
-    setTimeout(() => {
-      document.querySelector('.auth-tab[data-tab="login"]').click();
-    }, 1500);
+    setTimeout(() => document.querySelector('.auth-tab[data-tab="login"]').click(), 1500);
   }
 
   window.socialLogin = function(provider) {
-    if (!supabase || SUPABASE_URL === 'https://YOUR-PROJECT.supabase.co') {
-      return showToast('❌ Supabase not configured.');
-    }
-    supabase.auth.signInWithOAuth({ provider });
+    if (supabase) supabase.auth.signInWithOAuth({ provider });
+    else showToast('❌ Supabase not configured.');
   };
 
   function enterApp() {
@@ -861,7 +707,6 @@
     document.getElementById('userDesignation').textContent = currentUser.designation || 'User';
     document.getElementById('userAvatar').textContent = (currentUser.full_name || 'U').charAt(0).toUpperCase();
     
-    // Populate profile form
     document.getElementById('profName').value = currentUser.full_name || '';
     document.getElementById('profEmail').value = currentUser.email || '';
     document.getElementById('profArea').value = currentUser.area || 'Luzon';
@@ -880,92 +725,66 @@
     closeModal('settingsModal');
   };
 
-  // ===== Navigation =====
   function initNavigation() {
     document.querySelectorAll('.nav-item').forEach(item => {
       item.addEventListener('click', () => {
         document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
         item.classList.add('active');
-        const nav = item.dataset.nav;
-        showSection(nav);
+        showSection(item.dataset.nav);
       });
     });
   }
 
   window.showSection = function(name) {
-    document.querySelectorAll('.section').forEach(s => {
-      s.style.display = 'none';
-      s.classList.remove('active');
-    });
-    
+    document.querySelectorAll('.section').forEach(s => { s.style.display = 'none'; s.classList.remove('active'); });
     if (name === 'home') {
       document.querySelector('.container').style.display = 'block';
     } else {
       document.querySelector('.container').style.display = 'none';
       const sec = document.getElementById('section-' + name);
-      if (sec) {
-        sec.style.display = 'block';
-        sec.classList.add('active');
-      }
+      if (sec) { sec.style.display = 'block'; sec.classList.add('active'); }
     }
-    
     document.querySelectorAll('.nav-item').forEach(i => {
       i.classList.toggle('active', i.dataset.nav === name || (name === 'home' && i.dataset.nav === 'home'));
     });
     window.scrollTo(0, 0);
   };
 
-  // ===== DateTime =====
   function initDateTime() {
     function update() {
       const now = new Date();
-      const opts = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-      document.getElementById('dateTime').textContent = now.toLocaleDateString('en-US', opts);
+      document.getElementById('dateTime').textContent = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
     }
     update();
     setInterval(update, 60000);
   }
 
-  // ===== Offline Detection =====
   function initOfflineDetection() {
     const banner = document.getElementById('offlineBanner');
-    function update() {
-      banner.classList.toggle('show', !navigator.onLine);
-    }
+    function update() { banner.classList.toggle('show', !navigator.onLine); }
     window.addEventListener('online', update);
     window.addEventListener('offline', update);
     update();
   }
 
-  // ===== Theme =====
   window.toggleTheme = function() {
     const current = document.documentElement.getAttribute('data-theme');
-    const next = current === 'dark' ? 'light' : 'dark';
-    setTheme(next);
+    setTheme(current === 'dark' ? 'light' : 'dark');
   };
 
   window.setTheme = function(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('eesi-theme', theme);
   };
-
   const savedTheme = localStorage.getItem('eesi-theme');
   if (savedTheme) setTheme(savedTheme);
 
-  // ===== Modals =====
-  window.showModal = function(id) {
-    document.getElementById(id).classList.add('active');
-  };
-  window.closeModal = function(id) {
-    document.getElementById(id).classList.remove('active');
-  };
+  window.showModal = function(id) { document.getElementById(id).classList.add('active'); };
+  window.closeModal = function(id) { document.getElementById(id).classList.remove('active'); };
   document.querySelectorAll('.modal-overlay').forEach(m => {
-    m.addEventListener('click', e => {
-      if (e.target === m) m.classList.remove('active');
-    });
+    m.addEventListener('click', e => { if (e.target === m) m.classList.remove('active'); });
   });
 
-  // ===== Toast =====
   window.showToast = function(msg) {
     const t = document.getElementById('toast');
     t.textContent = msg;
@@ -973,25 +792,20 @@
     setTimeout(() => t.classList.remove('show'), 2500);
   };
 
-  // ===== Real Data Loader (Replaces Demo Data) =====
   async function loadAppData() {
-    if (!supabase || SUPABASE_URL === 'https://YOUR-PROJECT.supabase.co') return;
-
-    // Fetch Stats
+    if (!supabase) return;
     const { count: membersCount } = await supabase.from('profiles').select('*', { count: 'exact', head: true });
     const { count: pendingCount } = await supabase.from('profiles').select('*', { count: 'exact', head: true }).eq('status', 'pending');
     const { count: sitesCount } = await supabase.from('sites').select('*', { count: 'exact', head: true });
     
     document.getElementById('statMembers').textContent = membersCount || 0;
-    document.getElementById('statOnline').textContent = '0'; // Requires real-time presence setup
+    document.getElementById('statOnline').textContent = '0'; 
     document.getElementById('statSites').textContent = sitesCount || 0;
     document.getElementById('statPending').textContent = pendingCount || 0;
     document.getElementById('statDtr').textContent = '0';
     document.getElementById('statNotif').textContent = '0';
 
     renderMembers('online');
-    
-    // Tab listeners
     document.querySelectorAll('[data-membertab]').forEach(t => {
       t.addEventListener('click', () => {
         document.querySelectorAll('[data-membertab]').forEach(x => x.classList.remove('active'));
@@ -1000,49 +814,44 @@
       });
     });
 
-    // Forms
+    document.querySelectorAll('[data-leavetab]').forEach(t => {
+      t.addEventListener('click', () => {
+        document.querySelectorAll('[data-leavetab]').forEach(x => x.classList.remove('active'));
+        t.classList.add('active');
+        document.getElementById('leaveContent').innerHTML = t.dataset.leavetab === 'request' ? document.getElementById('leaveForm').outerHTML : '<p style="text-align:center;color:var(--muted);padding:20px">No requests found.</p>';
+      });
+    });
+
     document.getElementById('scheduleForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const { error } = await supabase.from('schedules').insert([{
-        region: document.getElementById('schRegion').value,
-        job_site: document.getElementById('schJob').value,
-        schedule_date: document.getElementById('schDate').value,
-        priority: document.getElementById('schPriority').value,
-        time_in: document.getElementById('schTimeIn').value,
-        time_out: document.getElementById('schTimeOut').value,
-        notes: document.getElementById('schNotes').value,
-        created_by: currentUser.id
+        region: document.getElementById('schRegion').value, job_site: document.getElementById('schJob').value,
+        schedule_date: document.getElementById('schDate').value, priority: document.getElementById('schPriority').value,
+        time_in: document.getElementById('schTimeIn').value, time_out: document.getElementById('schTimeOut').value,
+        notes: document.getElementById('schNotes').value, created_by: currentUser.id
       }]);
       if (error) return showToast('❌ ' + error.message);
-      showToast('✅ Schedule saved!');
-      e.target.reset();
+      showToast('✅ Schedule saved!'); e.target.reset();
     });
 
-    document.getElementById('leaveForm').addEventListener('submit', async (e) => {
+    document.getElementById('leaveForm')?.addEventListener('submit', async (e) => {
       e.preventDefault();
       const { error } = await supabase.from('leave_requests').insert([{
-        user_id: currentUser.id,
-        leave_type: document.getElementById('leaveType').value,
-        start_date: document.getElementById('leaveStart').value,
-        end_date: document.getElementById('leaveEnd').value,
+        user_id: currentUser.id, leave_type: document.getElementById('leaveType').value,
+        start_date: document.getElementById('leaveStart').value, end_date: document.getElementById('leaveEnd').value,
         reason: document.getElementById('leaveReason').value
       }]);
       if (error) return showToast('❌ ' + error.message);
-      showToast('✅ Leave request submitted!');
-      e.target.reset();
+      showToast('✅ Leave request submitted!'); e.target.reset();
     });
 
     document.getElementById('profileForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const { error } = await supabase.from('profiles').update({
-        full_name: document.getElementById('profName').value,
-        id_number: document.getElementById('profId').value,
-        address: document.getElementById('profAddress').value,
-        team: document.getElementById('profTeam').value,
-        contact: document.getElementById('profContact').value,
-        area: document.getElementById('profArea').value
+        full_name: document.getElementById('profName').value, id_number: document.getElementById('profId').value,
+        address: document.getElementById('profAddress').value, team: document.getElementById('profTeam').value,
+        contact: document.getElementById('profContact').value, area: document.getElementById('profArea').value
       }).eq('id', currentUser.id);
-      
       if (error) return showToast('❌ ' + error.message);
       showToast('✅ Profile updated!');
     });
@@ -1051,18 +860,12 @@
   async function renderMembers(filter) {
     const list = document.getElementById('membersList');
     list.innerHTML = '<p style="text-align:center;color:var(--muted);padding:20px">Loading...</p>';
-    
     let query = supabase.from('profiles').select('id, full_name, designation, area, status');
-    if (filter === 'online') query = query.eq('status', 'approved'); // Simplified for now
-    else if (filter === 'offline') query = query.eq('status', 'approved'); 
-    else if (filter === 'pending') query = query.eq('status', 'pending');
+    if (filter === 'pending') query = query.eq('status', 'pending');
+    else query = query.eq('status', 'approved');
 
     const { data, error } = await query;
-    if (error) {
-      list.innerHTML = '<p style="text-align:center;color:var(--danger);padding:20px">Error loading members</p>';
-      return;
-    }
-
+    if (error) { list.innerHTML = '<p style="text-align:center;color:var(--danger);padding:20px">Error loading</p>'; return; }
     list.innerHTML = data.map(u => `
       <div class="list-item">
         <div class="avatar ${filter === 'online' ? 'online' : ''}">${(u.full_name || 'U').charAt(0)}</div>
@@ -1082,12 +885,10 @@
     document.getElementById('chatWinAvatar').textContent = name.charAt(0);
     document.getElementById('chatMessages').innerHTML = '<div class="msg in">Chat loaded. Start typing!</div>';
   };
-
   window.closeChatWindow = function() {
     document.getElementById('chatListCard').style.display = 'block';
     document.getElementById('chatWindow').classList.remove('active');
   };
-
   window.sendMessage = function() {
     const input = document.getElementById('chatInput');
     if (!input.value.trim()) return;
@@ -1096,29 +897,22 @@
     input.value = '';
     msgs.scrollTop = msgs.scrollHeight;
   };
-
-  document.getElementById('chatInput')?.addEventListener('keypress', e => {
-    if (e.key === 'Enter') sendMessage();
-  });
+  document.getElementById('chatInput')?.addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(); });
 
   function renderReportTab(tab) {
     const content = document.getElementById('reportContent');
     if (tab === 'service') {
-      content.innerHTML = `
-        <form onsubmit="event.preventDefault();showToast('✅ Service report submitted!')">
-          <div class="form-group"><label>Site</label><select class="form-control"><option>Select a site</option></select></div>
-          <div class="form-group"><label>Report Date</label><input type="date" class="form-control" /></div>
-          <div class="form-group"><label>Title</label><input type="text" class="form-control" /></div>
-          <div class="form-group"><label>Details</label><textarea class="form-control" rows="4"></textarea></div>
-          <div class="form-group"><label>Attach Photos</label><input type="file" class="form-control" multiple accept="image/*" /></div>
-          <button type="submit" class="btn btn-primary">Submit Report</button>
-        </form>
-      `;
+      content.innerHTML = `<form onsubmit="event.preventDefault();showToast('✅ Service report submitted!')"><div class="form-group"><label>Site</label><select class="form-control"><option>Select a site</option></select></div><div class="form-group"><label>Report date</label><input type="date" class="form-control" /></div><div class="form-group"><label>Title</label><input type="text" class="form-control" /></div><div class="form-group"><label>Details</label><textarea class="form-control" rows="4"></textarea></div><div class="form-group"><label>Attach photos</label><input type="file" class="form-control" multiple accept="image/*" /></div><button type="submit" class="btn btn-primary">Submit report</button></form>`;
     } else if (tab === 'pms') {
       content.innerHTML = `
+        <div class="tabs" style="margin-bottom:10px">
+          <button class="tab active">Elevator Unit</button>
+          <button class="tab">Escalator Unit</button>
+        </div>
         <div class="form-group"><label>Area</label><select class="form-control"><option>Luzon</option><option>Visayas</option><option>Mindanao</option></select></div>
         <div class="form-group"><label>Site</label><select class="form-control"><option>Choose a site</option></select></div>
-        <div class="form-group"><label>Checklist Date</label><input type="date" class="form-control" /></div>
+        <div class="form-group"><label>Checklist date</label><input type="date" class="form-control" /></div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Select an area, then a site. Follow approved PMS procedures and company safety rules.</p>
         <div style="margin-top:10px">
           <div class="checklist-item"><input type="checkbox" id="c1"><label for="c1">Inspect elevator cabin</label></div>
           <div class="checklist-item"><input type="checkbox" id="c2"><label for="c2">Check door operation</label></div>
@@ -1126,13 +920,12 @@
           <div class="checklist-item"><input type="checkbox" id="c4"><label for="c4">Verify safety sensors</label></div>
           <div class="checklist-item"><input type="checkbox" id="c5"><label for="c5">Clean and lubricate</label></div>
         </div>
-        <button class="btn btn-primary" style="margin-top:12px" onclick="showToast('✅ Checklist saved!')">Save Checklist Record</button>
+        <button class="btn btn-primary" style="margin-top:12px" onclick="showToast('✅ Checklist record saved!')">Save checklist record</button>
       `;
     } else {
       content.innerHTML = `<p style="color:var(--muted);text-align:center;padding:20px">Select a report type above.</p>`;
     }
   }
-
   document.querySelectorAll('[data-reptab]').forEach(t => {
     t.addEventListener('click', () => {
       document.querySelectorAll('[data-reptab]').forEach(x => x.classList.remove('active'));
@@ -1145,30 +938,12 @@
   function renderDtrTab(tab) {
     const content = document.getElementById('dtrContent');
     if (tab === 'fill') {
-      content.innerHTML = `
-        <form onsubmit="event.preventDefault();showToast('✅ DTR entry added!')">
-          <div class="form-group"><label>Date</label><input type="date" class="form-control" /></div>
-          <div class="form-group"><label>Work Location</label><input type="text" class="form-control" /></div>
-          <div class="form-group"><label>Work Description</label><textarea class="form-control" rows="2"></textarea></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <div class="form-group"><label>Time In</label><input type="time" class="form-control" /></div>
-            <div class="form-group"><label>Time Out</label><input type="time" class="form-control" /></div>
-          </div>
-          <div class="form-group"><label>Signature</label>
-            <canvas class="sig-canvas" id="sigCanvas"></canvas>
-            <div style="display:flex;gap:8px;margin-top:8px">
-              <button type="button" class="btn btn-outline btn-sm" onclick="clearSignature()">Clear</button>
-            </div>
-          </div>
-          <button type="submit" class="btn btn-primary">Add Entry</button>
-        </form>
-      `;
+      content.innerHTML = `<form onsubmit="event.preventDefault();showToast('✅ DTR entry added!')"><div class="form-group"><label>Date</label><input type="date" class="form-control" /></div><div class="form-group"><label>Work location</label><input type="text" class="form-control" /></div><div class="form-group"><label>Work description</label><textarea class="form-control" rows="2"></textarea></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="form-group"><label>Time in</label><input type="time" class="form-control" /></div><div class="form-group"><label>Time out</label><input type="time" class="form-control" /></div></div><div class="form-group"><label>Signature</label><canvas class="sig-canvas" id="sigCanvas"></canvas><div style="display:flex;gap:8px;margin-top:8px"><button type="button" class="btn btn-outline btn-sm" onclick="clearSignature()">Clear drawn signature</button></div></div><button type="submit" class="btn btn-primary">Add entry</button></form>`;
       setTimeout(initSignature, 100);
     } else {
-      content.innerHTML = `<p style="color:var(--muted);text-align:center;padding:20px">No DTR records found.</p>`;
+      content.innerHTML = `<div class="table-wrap"><table><thead><tr><th>Date</th><th>Employee</th><th>Site / job</th><th>Time</th><th>Hrs</th></tr></thead><tbody><tr><td colspan="5" style="text-align:center;color:var(--muted)">No DTR records found.</td></tr></tbody></table></div><div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-outline btn-sm" onclick="showToast('📷 Downloaded!')">📷 Download & Share JPEG</button><button class="btn btn-outline btn-sm" onclick="window.print()">🖨️ Print DTR</button></div>`;
     }
   }
-
   document.querySelectorAll('[data-dtrtab]').forEach(t => {
     t.addEventListener('click', () => {
       document.querySelectorAll('[data-dtrtab]').forEach(x => x.classList.remove('active'));
@@ -1181,25 +956,11 @@
   function renderNotesTab(tab) {
     const content = document.getElementById('notesContent');
     if (tab === 'notes') {
-      content.innerHTML = `
-        <form onsubmit="event.preventDefault();showToast('✅ Note saved!')">
-          <div class="form-group"><label>Title</label><input type="text" class="form-control" /></div>
-          <div class="form-group"><label>Content</label><textarea class="form-control" rows="4"></textarea></div>
-          <button type="submit" class="btn btn-primary">Save Note</button>
-        </form>
-      `;
+      content.innerHTML = `<form onsubmit="event.preventDefault();showToast('✅ Note saved!')"><div class="form-group"><label>Title</label><input type="text" class="form-control" /></div><div class="form-group"><label>Content</label><textarea class="form-control" rows="4"></textarea></div><button type="submit" class="btn btn-primary">Save note</button></form>`;
     } else {
-      content.innerHTML = `
-        <form onsubmit="event.preventDefault();showToast('✅ Recommendation submitted!')">
-          <div class="form-group"><label>Condition</label><select class="form-control"><option>Good</option><option>Fair</option><option>Needs Replacement</option></select></div>
-          <div class="form-group"><label>Part</label><input type="text" class="form-control" /></div>
-          <div class="form-group"><label>Reason</label><textarea class="form-control" rows="3"></textarea></div>
-          <button type="submit" class="btn btn-primary">Submit Recommendation</button>
-        </form>
-      `;
+      content.innerHTML = `<form onsubmit="event.preventDefault();showToast('✅ Recommendation submitted!')"><div class="form-group"><label>Condition</label><select class="form-control"><option>Select</option><option>Good</option><option>Fair</option><option>Needs Replacement</option></select></div><div class="form-group"><label>Part</label><input type="text" class="form-control" /></div><div class="form-group"><label>Reason</label><textarea class="form-control" rows="3"></textarea></div><div class="form-group"><label>Site</label><input type="text" class="form-control" /></div><div class="form-group"><label>Specific location</label><input type="text" class="form-control" /></div><button type="submit" class="btn btn-primary">Submit recommendation</button></form>`;
     }
   }
-
   document.querySelectorAll('[data-notetab]').forEach(t => {
     t.addEventListener('click', () => {
       document.querySelectorAll('[data-notetab]').forEach(x => x.classList.remove('active'));
@@ -1217,71 +978,40 @@
   window.addSite = async function() {
     const name = document.getElementById('siteName').value;
     if (!name) return showToast('❌ Enter site name');
-    
-    if (supabase && SUPABASE_URL !== 'https://YOUR-PROJECT.supabase.co') {
-      const { error } = await supabase.from('sites').insert([{
-        name: name,
-        address: document.getElementById('siteAddress').value,
-        area: document.getElementById('siteArea').value,
-        city: document.getElementById('siteCity').value,
-        created_by: currentUser.id
-      }]);
+    if (supabase) {
+      const { error } = await supabase.from('sites').insert([{ name, address: document.getElementById('siteAddress').value, area: document.getElementById('siteArea').value, city: document.getElementById('siteCity').value, created_by: currentUser.id }]);
       if (error) return showToast('❌ ' + error.message);
     }
-    
-    showToast('✅ Site added!');
-    closeModal('addSiteModal');
-    renderSites();
+    showToast('✅ Site added!'); closeModal('addSiteModal'); renderSites();
   };
 
   window.postAnnouncement = async function() {
     const title = document.getElementById('annTitle').value;
     if (!title) return showToast('❌ Enter title');
-    
-    if (supabase && SUPABASE_URL !== 'https://YOUR-PROJECT.supabase.co') {
-      const { error } = await supabase.from('announcements').insert([{
-        title: title,
-        message: document.getElementById('annMessage').value,
-        author_id: currentUser.id
-      }]);
+    if (supabase) {
+      const { error } = await supabase.from('announcements').insert([{ title, message: document.getElementById('annMessage').value, author_id: currentUser.id }]);
       if (error) return showToast('❌ ' + error.message);
     }
-    
-    showToast('✅ Announcement posted!');
-    closeModal('announcementModal');
+    showToast('✅ Announcement posted!'); closeModal('announcementModal');
   };
 
-  // ===== Signature Pad =====
   function initSignature() {
     const canvas = document.getElementById('sigCanvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    canvas.width = canvas.offsetWidth;
-    canvas.height = 180;
-    ctx.strokeStyle = '#0b63f6';
-    ctx.lineWidth = 2;
-    ctx.lineCap = 'round';
-
+    canvas.width = canvas.offsetWidth; canvas.height = 180;
+    ctx.strokeStyle = '#0b63f6'; ctx.lineWidth = 2; ctx.lineCap = 'round';
     let drawing = false;
     function getPos(e) {
       const rect = canvas.getBoundingClientRect();
-      const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-      const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
-      return { x, y };
+      return { x: (e.touches ? e.touches[0].clientX : e.clientX) - rect.left, y: (e.touches ? e.touches[0].clientY : e.clientY) - rect.top };
     }
     function start(e) { drawing = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); e.preventDefault(); }
     function move(e) { if (!drawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); e.preventDefault(); }
     function end() { drawing = false; }
-
-    canvas.addEventListener('mousedown', start);
-    canvas.addEventListener('mousemove', move);
-    canvas.addEventListener('mouseup', end);
-    canvas.addEventListener('mouseleave', end);
-    canvas.addEventListener('touchstart', start);
-    canvas.addEventListener('touchmove', move);
-    canvas.addEventListener('touchend', end);
+    canvas.addEventListener('mousedown', start); canvas.addEventListener('mousemove', move); canvas.addEventListener('mouseup', end); canvas.addEventListener('mouseleave', end);
+    canvas.addEventListener('touchstart', start); canvas.addEventListener('touchmove', move); canvas.addEventListener('touchend', end);
   }
-
   window.clearSignature = function() {
     const canvas = document.getElementById('sigCanvas');
     if (canvas) canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
