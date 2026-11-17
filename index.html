@@ -1469,6 +1469,7 @@ let editingAnnouncementId = null;
 let authRun = 0;
 let settingsAutoCloseTimer = null;
 let recoveryMode = false;
+let isRegistering = false;
 let realtimeChannel = null;
 let presenceChannel = null;
 let retryTimer = null;
@@ -1918,25 +1919,29 @@ $("loginForm").addEventListener("submit", async e => {
 $("registerForm").addEventListener("submit", async e => {
   e.preventDefault();
   $("registerButton").disabled = true; setAuthStatus("Creating account…");
-  const fullName = $("regName").value.trim(), email = $("regEmail").value.trim(), password = $("regPassword").value;
-  const requestedRole = $("regRole").value, idNo = $("regId").value.trim(), address = $("regAddress").value.trim();
-  const team = $("regTeam").value.trim(), phone = $("regPhone").value.trim(), area = $("regArea").value;
+  isRegistering = true;
+  try {
+    const fullName = $("regName").value.trim(), email = $("regEmail").value.trim(), password = $("regPassword").value;
+    const requestedRole = $("regRole").value, idNo = $("regId").value.trim(), address = $("regAddress").value.trim();
+    const team = $("regTeam").value.trim(), phone = $("regPhone").value.trim(), area = $("regArea").value;
 
-  const { data, error } = await client.auth.signUp({ email, password, options: { data: { full_name: fullName }, emailRedirectTo: APP_REDIRECT_URL } });
-  $("regPassword").value = ""; $("registerButton").disabled = false;
-  if (error) return setAuthStatus("Registration failed: " + error.message);
-  if (!data.user) return setAuthStatus("Account creation did not return a user.");
+    const { data, error } = await client.auth.signUp({ email, password, options: { data: { full_name: fullName }, emailRedirectTo: APP_REDIRECT_URL } });
+    $("regPassword").value = ""; $("registerButton").disabled = false;
+    if (error) return setAuthStatus("Registration failed: " + error.message);
+    if (!data.user) return setAuthStatus("Account creation did not return a user.");
 
-  const { error: reqError } = await client.from("registration_requests").insert({
-    user_id: data.user.id, full_name: fullName, email, requested_role: requestedRole,
-    status: "pending", id_no: idNo || null, address: address || null, team: team || null, phone: phone || null, area: area || null
-  });
-  if (reqError) return setAuthStatus("Account created, but approval request failed: " + reqError.message);
-  if (data.session) await client.auth.signOut();
-  $("registerForm").reset(); showLoginForm();
-  setAuthStatus("Registration submitted. Wait for approval before signing in.");
+    const { error: reqError } = await client.from("registration_requests").insert({
+      user_id: data.user.id, full_name: fullName, email, requested_role: requestedRole,
+      status: "pending", id_no: idNo || null, address: address || null, team: team || null, phone: phone || null, area: area || null
+    });
+    if (reqError) return setAuthStatus("Account created, but approval request failed: " + reqError.message);
+    if (data.session) await client.auth.signOut();
+    $("registerForm").reset(); showLoginForm();
+    setAuthStatus("Registration submitted. Wait for approval before signing in.");
+  } finally {
+    isRegistering = false;
+  }
 });
-
 $("forgotButton").addEventListener("click", async () => {
   const email = $("email").value.trim();
   if (!email) { setAuthStatus("Enter your email first."); $("email").focus(); return; }
@@ -2064,7 +2069,7 @@ client.auth.onAuthStateChange((event, session) => {
   if (event === "PASSWORD_RECOVERY") { recoveryMode = true; showAuth("Choose a new password."); showResetForm(); return; }
   if (event === "SIGNED_OUT" || !session) { authRun++; state.booted = false; teardownLive(); resetState(); showAuth("Sign in to continue."); return; }
   if (recoveryMode) return;
-  if (event === "SIGNED_IN") setTimeout(() => boot(session), 0);
+  if (event === "SIGNED_IN" && !isRegistering) setTimeout(() => boot(session), 0);
 });
 
 async function start() {
