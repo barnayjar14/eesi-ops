@@ -846,36 +846,205 @@ body.light .warn{background:rgba(245,166,35,.12)!important;color:#8a5a00!importa
 body.light .seg button.active{background:#1e6cf2!important;color:#fff!important}
 body.light .deco-band{filter:saturate(.95)}
 
-<style id="style-modes">/* Mode layer: dark and light palettes, switched by Settings > Background */
-body.light{
-body::before,body::after{display:none!important}
-body{background:linear-gradient(180deg,#f3f7fc,#e4edf8)!important;color:#0f1f3d!important}
-header{background:#ffffff!important;color:#0f1f3d!important;border-bottom:1px solid rgba(30,108,242,.22)!important;box-shadow:none!important}
-header::after{display:none!important}
-header .brand,.brand{color:#0f1f3d!important;-webkit-text-fill-color:#0f1f3d!important;background:none!important;text-shadow:none!important}
-nav.bottom{background:#ffffff!important;border-top:1px solid rgba(30,108,242,.22)!important;box-shadow:none!important}
-nav.bottom button{color:#4a5a78!important;background:transparent!important;border-color:transparent!important;text-shadow:none!important}
-nav.bottom button.active{color:#1e6cf2!important;background:rgba(30,108,242,.10)!important;border-radius:999px!important}
-nav.bottom button.active::before{background:#1e6cf2!important;box-shadow:none!important}
-.card,.item,.stat,.tile,.person,table,.msgr-bub,.sheet,#settingsMenu,.toast,.ticker,.emoji-pop,.msg-context-btn{background:#ffffff!important;color:#0f1f3d!important;border-color:rgba(30,108,242,.22)!important;box-shadow:none!important;text-shadow:none!important}
-.card::before,.card::after,.item::before,.item::after,.stat::before,.stat::after,.tile::before,.tile::after{display:none!important}
-.sheet::before{background:#1e6cf2!important;box-shadow:none!important}
-input,select,textarea,.msgr-search,.composer-input{background:#ffffff!important;color:#0f1f3d!important;border:1px solid rgba(30,108,242,.22)!important;box-shadow:none!important}
-input::placeholder,textarea::placeholder{color:#4a5a78!important}
-label{color:#4a5a78!important;text-shadow:none!important}
-.muted,.stat span,.thread-preview,.thread-time,.msgr-time,.chat-head small,.story small{color:#4a5a78!important}
-h1,h2,h3,.title,.sheet h2,.info-head h2,.auth-card h2{background:none!important;-webkit-text-fill-color:#0f1f3d!important;color:#0f1f3d!important;text-shadow:none!important}
-.title::after{display:none!important}
-.stat strong{background:none!important;-webkit-text-fill-color:#1e6cf2!important;color:#1e6cf2!important;filter:none!important}
-th{background:rgba(30,108,242,.10)!important;color:#4a5a78!important;text-shadow:none!important}
-td{color:#0f1f3d!important}
-.btn,.chat-send{background:#1e6cf2!important;color:#ffffff!important;border:1px solid #1e6cf2!important;box-shadow:none!important;text-shadow:none!important}
-.gray{background:#e6ecf5!important;color:#0f1f3d!important;border:1px solid rgba(30,108,242,.22)!important}
-.msgr-row.mine .msgr-bub{background:#1e6cf2!important;color:#ffffff!important;border-color:transparent!important;box-shadow:none!important}
-.badge,.badge-role{background:rgba(30,108,242,.10)!important;border:1px solid rgba(30,108,242,.22)!important;color:#1e6cf2!important;text-shadow:none!important}
-.avatar{background:#1e6cf2!important;color:#ffffff!important}
+/* Hide dark mode artifacts */
+body.light::before,
+body.light::after {
+    display: none !important;
 }
-</style>
+
+/* Main Body */
+body.light {
+    background: linear-gradient(180deg, #f3f7fc, #e4edf8) !important;
+    color: #0f1f3d !important;
+}
+
+/* Header */
+body.light header {
+    background: #ffffff !important;
+    color: #0f1f3d !important;
+    border-bottom: 1px solid rgba(30, 108, 242, .22) !important;
+    box-shadow: none !important;
+}
+
+body.light header::after {
+    display: none !important;
+}
+
+body.light header .brand,
+body.light .brand {
+    color: #0f1f3d !important;
+    -webkit-text-fill-color: #0f1f3d !important;
+    background: none !important;
+    text-shadow: none !important;
+}
+
+/* Navigation */
+body.light nav.bottom {
+    background: #ffffff !important;
+    border-top: 1px solid rgba(30, 108, 242, .22) !important;
+    box-shadow: none !important;
+}
+
+body.light nav.bottom button {
+    color: #4a5a78 !important;
+    background: transparent !important;
+    border-color: transparent !important;
+    text-shadow: none !important;
+}
+
+body.light nav.bottom button.active {
+    color: #1e6cf2 !important;
+    background: rgba(30, 108, 242, .10) !important;
+    border-radius: 999px !important;
+}
+
+body.light nav.bottom button.active::before {
+    background: #1e6cf2 !important;
+    box-shadow: none !important;
+}
+
+/* Cards & Components */
+body.light .card,
+body.light .item,
+body.light .stat,
+body.light .tile,
+body.light .person,
+body.light table,
+body.light .msgr-bub,
+body.light .sheet,
+body.light #settingsMenu,
+body.light .toast,
+body.light .ticker,
+body.light .emoji-pop,
+body.light .msg-context-btn {
+    background: #ffffff !important;
+    color: #0f1f3d !important;
+    border-color: rgba(30, 108, 242, .22) !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+}
+
+body.light .card::before,
+body.light .card::after,
+body.light .item::before,
+body.light .item::after,
+body.light .stat::before,
+body.light .stat::after,
+body.light .tile::before,
+body.light .tile::after {
+    display: none !important;
+}
+
+body.light .sheet::before {
+    background: #1e6cf2 !important;
+    box-shadow: none !important;
+}
+
+/* Inputs */
+body.light input,
+body.light select,
+body.light textarea,
+body.light .msgr-search,
+body.light .composer-input {
+    background: #ffffff !important;
+    color: #0f1f3d !important;
+    border: 1px solid rgba(30, 108, 242, .22) !important;
+    box-shadow: none !important;
+}
+
+body.light input::placeholder,
+body.light textarea::placeholder {
+    color: #4a5a78 !important;
+}
+
+body.light label {
+    color: #4a5a78 !important;
+    text-shadow: none !important;
+}
+
+/* Text Colors */
+body.light .muted,
+body.light .stat span,
+body.light .thread-preview,
+body.light .thread-time,
+body.light .msgr-time,
+body.light .chat-head small,
+body.light .story small {
+    color: #4a5a78 !important;
+}
+
+body.light h1,
+body.light h2,
+body.light h3,
+body.light .title,
+body.light .sheet h2,
+body.light .info-head h2,
+body.light .auth-card h2 {
+    background: none !important;
+    -webkit-text-fill-color: #0f1f3d !important;
+    color: #0f1f3d !important;
+    text-shadow: none !important;
+}
+
+body.light .title::after {
+    display: none !important;
+}
+
+body.light .stat strong {
+    background: none !important;
+    -webkit-text-fill-color: #1e6cf2 !important;
+    color: #1e6cf2 !important;
+    filter: none !important;
+}
+
+/* Tables */
+body.light th {
+    background: rgba(30, 108, 242, .10) !important;
+    color: #4a5a78 !important;
+    text-shadow: none !important;
+}
+
+body.light td {
+    color: #0f1f3d !important;
+}
+
+/* Buttons */
+body.light .btn,
+body.light .chat-send {
+    background: #1e6cf2 !important;
+    color: #ffffff !important;
+    border: 1px solid #1e6cf2 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+}
+
+body.light .gray {
+    background: #e6ecf5 !important;
+    color: #0f1f3d !important;
+    border: 1px solid rgba(30, 108, 242, .22) !important;
+}
+
+/* Messages */
+body.light .msgr-row.mine .msgr-bub {
+    background: #1e6cf2 !important;
+    color: #ffffff !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Badges & Avatars */
+body.light .badge,
+body.light .badge-role {
+    background: rgba(30, 108, 242, .10) !important;
+    border: 1px solid rgba(30, 108, 242, .22) !important;
+    color: #1e6cf2 !important;
+    text-shadow: none !important;
+}
+
+body.light .avatar {
+    background: #1e6cf2 !important;
+    color: #ffffff !important;
+}
 </style>
 </head>
 <body>
