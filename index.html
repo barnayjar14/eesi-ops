@@ -1929,10 +1929,20 @@ $("registerForm").addEventListener("submit", async e => {
     $("regPassword").value = ""; $("registerButton").disabled = false;
     if (error) return setAuthStatus("Registration failed: " + error.message);
     if (!data.user) return setAuthStatus("Account creation did not return a user.");
+    if (data.user.identities && data.user.identities.length === 0) {
+      return setAuthStatus("This email is already registered. Wait for approval or sign in.");
+    }
 
-    const { error: reqError } = await client.from("registration_requests").insert({
-      user_id: data.user.id, full_name: fullName, email, requested_role: requestedRole,
-      status: "pending", id_no: idNo || null, address: address || null, team: team || null, phone: phone || null, area: area || null
+    const { error: reqError } = await client.rpc("submit_registration_request", {
+      p_user_id: data.user.id,
+      p_full_name: fullName,
+      p_email: email,
+      p_requested_role: requestedRole,
+      p_id_no: idNo || null,
+      p_address: address || null,
+      p_team: team || null,
+      p_phone: phone || null,
+      p_area: area || null
     });
     if (reqError) return setAuthStatus("Account created, but approval request failed: " + reqError.message);
     if (data.session) await client.auth.signOut();
