@@ -8,7 +8,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20356%20196%22%3E%3Cpolygon%20points%3D%2210%2C58%20178%2C14%20346%2C58%22%20fill%3D%22%231e6cf2%22%20stroke%3D%22%23111%22%20stroke-width%3D%228%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%2258%22%20width%3D%22350%22%20height%3D%22134%22%20fill%3D%22%23ffe500%22%20stroke%3D%22%23111%22%20stroke-width%3D%228%22%2F%3E%3Cg%20fill%3D%22%231e6cf2%22%3E%3Crect%20x%3D%2211%22%20y%3D%2266%22%20width%3D%2276.75%22%20height%3D%22118%22%2F%3E%3Crect%20x%3D%2296.75%22%20y%3D%2266%22%20width%3D%2276.75%22%20height%3D%22118%22%2F%3E%3Crect%20x%3D%22182.5%22%20y%3D%2266%22%20width%3D%2276.75%22%20height%3D%22118%22%2F%3E%3Crect%20x%3D%22268.25%22%20y%3D%2266%22%20width%3D%2276.75%22%20height%3D%22118%22%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%22%23fff%22%20font-family%3D%22Arial%20Black%2CArial%2Csans-serif%22%20font-weight%3D%22900%22%20font-size%3D%22104%22%20text-anchor%3D%22middle%22%3E%3Ctext%20x%3D%2249.4%22%20y%3D%22160%22%3EE%3C%2Ftext%3E%3Ctext%20x%3D%22135.1%22%20y%3D%22160%22%3EE%3C%2Ftext%3E%3Ctext%20x%3D%22220.9%22%20y%3D%22160%22%3ES%3C%2Ftext%3E%3Ctext%20x%3D%22306.6%22%20y%3D%22160%22%3EI%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fsvg%3E">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./icons/icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -17,7 +20,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ==================================================================
-   EESI OPS · FANTASY × ROBOTIC × CODEX THEME
+   EESI OPS · EESI OPS · THEME
    ================================================================== */
 :root{
   --cyan:#00f0ff;
@@ -471,7 +474,9 @@ th{background:rgba(0,240,255,.06);font-family:'Orbitron',sans-serif;font-weight:
   border-radius:12px;padding:2px 8px;font-size:13px;box-shadow:0 0 12px rgba(0,240,255,.4);
   display:flex;align-items:center;gap:2px;z-index:10;cursor:pointer;color:var(--text);
 }
-.msgr-row:not(.mine) .msg-reaction-badge{right:auto;left:8px}
+.msgr-row .msg-reaction-badge{right:10px;left:auto}
+.pin-above{font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--gold);padding:0 40px;margin:0 0 4px;display:flex}
+.pin-above.mine{justify-content:flex-end}
 .msg-reaction-badge:hover{background:rgba(0,240,255,.15)}
 
 #messageContextMenu{
@@ -675,6 +680,202 @@ body.compact .person{padding:8px;margin:4px 0}
 
 .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .inline-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+
+/* ===== v2: compact layout that fits Android, iOS and web ===== */
+html,body{max-width:100vw}
+img,video,canvas,iframe{max-width:100%}
+@supports(padding:max(0px)){nav.bottom{padding-bottom:max(6px,env(safe-area-inset-bottom))}}
+body.compact header{padding:8px 10px;gap:6px}
+body.compact .ct{padding:10px}
+body.compact .title{font-size:17px;margin-bottom:10px}
+body.compact .card{padding:10px 12px;margin-bottom:8px}
+body.compact .item{padding:8px 10px;margin-bottom:6px}
+body.compact .person{padding:6px;margin:3px 0}
+body.compact .field{margin-bottom:8px}
+body.compact .muted{font-size:12px}
+body.compact input,body.compact select,body.compact textarea{padding:7px 9px;font-size:15px}
+body.compact button,body.compact .btn{padding:7px 12px;font-size:13px}
+body.compact .small-btn{padding:4px 8px;font-size:12px}
+body.compact .grid{gap:6px}
+body.compact .inline-actions{gap:6px}
+body.compact nav.bottom button{padding:4px 0;font-size:11px}
+body.compact nav.bottom button span{font-size:16px}
+@media(max-width:380px){
+  .grid{grid-template-columns:1fr 1fr}
+  nav.bottom button{font-size:10px}
+  .ct{padding:10px}
+}
+
+/* ===== v2: session decoration (schedules happening now or upcoming) ===== */
+.item.sess-now{border-color:#22c55e!important;box-shadow:0 0 0 1px #22c55e,0 0 22px rgba(34,197,94,.35)!important}
+.item.sess-soon{border-color:#f59e0b!important;box-shadow:0 0 0 1px #f59e0b,0 0 18px rgba(245,158,11,.3)!important}
+.sess-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.08em;padding:2px 8px;border-radius:999px;margin-left:6px;color:#04110a;vertical-align:middle}
+.sess-badge.now{background:#22c55e;animation:pulseDot 1.6s ease-in-out infinite}
+.sess-badge.soon{background:#f59e0b;color:#1f1300}
+
+/* ===== v2: PIN lock ===== */
+.pin-dots{display:flex;justify-content:center;gap:10px;margin:14px 0}
+.pin-dots span{width:14px;height:14px;border-radius:50%;border:2px solid var(--cyan);background:transparent}
+.pin-dots span.on{background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+.pin-input{width:100%;text-align:center;font-size:24px;letter-spacing:.5em;padding:10px}
+.pin-shake{animation:pinShake .4s}
+@keyframes pinShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+
+/* ===== v2: marquee always running ===== */
+.ticker span{will-change:transform}
+
+/* ===== v2: live map ===== */
+#liveMap{height:420px;width:100%;border-radius:8px;z-index:0}
+
+:root{--cyan:#2f8cff;--pink:#5aa9ff;--violet:#1e6cf2;--gold:#f5a623;--ember:#f59e0b;--void:#060e1f;--void-2:#0a1730;--panel:rgba(12,27,56,.92);--panel-2:rgba(9,21,44,.96);--border:rgba(47,140,255,.28);--border-hot:rgba(47,140,255,.7);--text:#e8f0ff;--muted:#8ea6cc;--green:#22c55e;--red:#ef4444;--amber:#f5a623;--blue:#2f8cff;--navy:#0a1a36;--sh:0 4px 14px rgba(0,0,0,.35)}
+*{font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif!important;letter-spacing:0!important}
+body::before,body::after{display:none!important}
+body{background:linear-gradient(180deg,#0a1426 0%,#050b18 100%)!important;background-attachment:scroll!important;color:#e8f0ff}
+header{background:linear-gradient(180deg,#0f2448 0%,#0b1b38 100%)!important;border-bottom:1px solid rgba(47,140,255,.25)!important;box-shadow:none!important}
+header::after{display:none!important}
+header .brand,.brand{color:#fff!important;background:none!important;-webkit-text-fill-color:#fff!important;text-shadow:none!important;font-weight:700!important}
+.card,.item,.stat,.tile,.person,table{background:linear-gradient(180deg,rgba(14,30,62,.95),rgba(9,21,44,.95))!important;border:1px solid rgba(47,140,255,.22)!important;border-radius:14px!important;box-shadow:var(--sh)!important}
+.card::before,.card::after,.item::before,.item::after,.stat::before,.stat::after,.tile::before,.tile::after{display:none!important}
+.card:hover,.item:hover,.person:hover,.tile:hover,.stat:hover{transform:none!important;border-color:rgba(47,140,255,.5)!important;box-shadow:0 6px 20px rgba(30,108,242,.18)!important}
+button{border-radius:10px!important;clip-path:none!important;box-shadow:none!important;color:#cfe0ff!important;background:rgba(47,140,255,.08)!important;border:1px solid rgba(47,140,255,.3)!important;font-weight:600!important;text-transform:none!important}
+button:hover:not(:disabled){filter:none!important;background:rgba(47,140,255,.16)!important;transform:none!important}
+button:active:not(:disabled){transform:scale(.98)!important}
+.btn{background:#1e6cf2!important;color:#fff!important;border:1px solid #1e6cf2!important;font-weight:700!important;box-shadow:0 4px 12px rgba(30,108,242,.35)!important}
+.btn::after{display:none!important}
+.btn:hover:not(:disabled){background:#2f7cff!important;border-color:#2f7cff!important}
+.red{background:rgba(239,68,68,.14)!important;color:#ff6b6b!important;border:1px solid rgba(239,68,68,.45)!important}
+.green{background:#22c55e!important;color:#06210f!important;border:0!important}
+.gray{background:rgba(148,163,184,.12)!important;color:#cfe0ff!important;border:1px solid rgba(148,163,184,.3)!important}
+.tab,.filter,.chip{background:rgba(12,27,56,.9)!important;color:#8ea6cc!important;border:1px solid rgba(47,140,255,.2)!important;border-radius:999px!important;font-weight:600!important;text-transform:none!important;box-shadow:none!important}
+.tab.active,.filter.active,.chip.active{background:#1e3f7a!important;color:#fff!important;border-color:rgba(47,140,255,.6)!important;box-shadow:none!important}
+label{color:#8ea6cc!important;text-transform:uppercase!important;font-size:11px!important;font-weight:600!important;letter-spacing:.06em!important;text-shadow:none!important}
+input,select,textarea{background:rgba(6,14,31,.8)!important;color:#e8f0ff!important;border:1px solid rgba(47,140,255,.25)!important;border-radius:10px!important}
+input:focus,select:focus,textarea:focus{border-color:#2f8cff!important;box-shadow:0 0 0 3px rgba(47,140,255,.18)!important}
+.title,.msgr-title,h1,h2,h3,.sheet h2,.auth-card h2{background:none!important;-webkit-text-fill-color:#fff!important;color:#fff!important;text-shadow:none!important;text-transform:uppercase!important;font-weight:700!important;letter-spacing:.02em!important}
+.title::after{display:none!important}
+.stat strong{background:none!important;-webkit-text-fill-color:#2f8cff!important;color:#2f8cff!important;filter:none!important;font-weight:800!important}
+.stat span{color:#8ea6cc!important;text-transform:none!important;font-size:12px!important;font-weight:500!important}
+.tile{color:#e8f0ff!important}
+.tile .ic{filter:none!important}
+.badge,.badge-role{background:rgba(47,140,255,.1)!important;border:1px solid rgba(47,140,255,.5)!important;color:#7fb8ff!important;border-radius:999px!important;font-weight:600!important;text-transform:uppercase!important;letter-spacing:.04em!important}
+.msgr-row.mine .msgr-bub{background:#1e6cf2!important;color:#fff!important;border:0!important;box-shadow:none!important}
+.msgr-bub{background:rgba(14,30,62,.95)!important;border:1px solid rgba(47,140,255,.22)!important;color:#e8f0ff!important;box-shadow:none!important;border-radius:14px!important}
+.msgr-search,.composer-input{background:rgba(6,14,31,.85)!important;border:1px solid rgba(47,140,255,.22)!important;border-radius:999px!important;box-shadow:none!important}
+.msgr-icon{background:rgba(47,140,255,.1)!important;color:#7fb8ff!important;border:1px solid rgba(47,140,255,.3)!important;border-radius:50%!important;box-shadow:none!important}
+.chat-send{background:#1e6cf2!important;color:#fff!important;box-shadow:none!important}
+nav.bottom{background:linear-gradient(180deg,#0c1d3d,#081429)!important;border-top:1px solid rgba(47,140,255,.25)!important;box-shadow:none!important}
+nav.bottom button{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;color:#7d93b8!important;font-size:11px!important;font-weight:600!important;text-transform:none!important}
+nav.bottom button.active{color:#fff!important;background:rgba(30,108,242,.35)!important;border-radius:999px!important}
+nav.bottom button.active::before{background:#2f8cff!important;box-shadow:none!important}
+.ticker{background:#0b1b38!important;color:#cfe0ff!important;border-bottom:1px solid rgba(47,140,255,.2)!important;font-weight:500!important;text-shadow:none!important}
+.ticker span{color:#cfe0ff!important}
+.sheet{background:#0b1b38!important;color:#e8f0ff!important;border:1px solid rgba(47,140,255,.3)!important;border-radius:18px 18px 0 0!important}
+.sheet::before{background:#2f8cff!important;box-shadow:none!important}
+.toast{background:#0f2448!important;color:#fff!important;border:1px solid rgba(47,140,255,.5)!important;border-radius:10px!important;font-weight:500!important}
+.live-dot{box-shadow:none!important}
+.avatar{background:#1e6cf2!important;color:#fff!important;border:2px solid rgba(47,140,255,.6)!important;box-shadow:none!important;font-weight:700!important}
+.photo{border:2px solid rgba(47,140,255,.4)!important;box-shadow:none!important}
+.cover{border-radius:14px!important;box-shadow:none!important}
+th{background:rgba(47,140,255,.08)!important;color:#8ea6cc!important;text-transform:uppercase!important;font-size:11px!important;font-weight:600!important;letter-spacing:.06em!important}
+td{color:#e8f0ff!important}
+.warn{background:rgba(245,166,35,.1)!important;color:#fcd34d!important;border-color:rgba(245,166,35,.4)!important}
+.muted{color:#8ea6cc!important;letter-spacing:0!important}
+
+/* ---- brand, logo, decoration, live map (v3) ---- */
+header .brand,.brand{white-space:nowrap!important;font-size:14px!important;letter-spacing:.04em!important;overflow:visible!important}
+.brand-long{display:inline!important}
+.hdr-logo{height:34px!important;width:auto!important;overflow:visible}
+.logo-wrap{position:relative;display:inline-block;flex:none;line-height:0}
+.logo-deco{position:absolute;top:-14px;right:-12px;font-size:16px;line-height:1;transform:rotate(16deg);pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35))}
+.auth-logo{width:88px!important;height:50px!important}
+.auth-logo .logo-wrap{display:block;width:100%;height:100%}
+.auth-logo svg{width:100%;height:100%;overflow:visible}
+.auth-logo .logo-deco{font-size:22px;top:-18px;right:-16px}
+#startLocationButton,#stopLocationButton{display:none!important}
+section.page:not(#page-chat)>.ct{display:flex;flex-direction:column;min-height:calc(100dvh - 210px)}
+section.page:not(#page-chat)>.ct>.deco-band{margin-top:auto}
+.deco-band{position:relative;overflow:hidden;margin:16px 0 8px;border-radius:14px;border:1px solid rgba(47,140,255,.28);background:linear-gradient(135deg,var(--dg1),var(--dg2));padding:14px 14px 18px;min-height:150px;display:flex;flex-direction:column;justify-content:center;gap:12px;box-shadow:var(--sh)}
+.deco-ribbon{color:#fff;font-weight:800;text-transform:uppercase;letter-spacing:.14em;font-size:12px;text-align:center;opacity:.92}
+.deco-icons{display:flex;flex-wrap:wrap;justify-content:center;gap:16px 22px}
+.deco-icons .d{font-size:30px;line-height:1.1;animation:decoFloat 3.2s ease-in-out infinite alternate;filter:drop-shadow(0 3px 6px rgba(0,0,0,.35))}
+@keyframes decoFloat{from{transform:translateY(0) rotate(-5deg)}to{transform:translateY(-7px) rotate(5deg)}}
+@media(prefers-reduced-motion:reduce){.deco-icons .d{animation:none}}
+.live-tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0}
+.seg{display:inline-flex;border:1px solid rgba(47,140,255,.35);border-radius:10px;overflow:hidden}
+.seg button{border:0!important;border-radius:0!important;margin:0!important;min-height:34px}
+.seg button.active{background:#1e6cf2!important;color:#fff!important}
+#liveMap{height:min(62vh,460px)!important;width:100%}
+
+
+body.light{background:linear-gradient(180deg,#eef4fb 0%,#dfe9f6 100%)!important;color:#13233f}
+body.light header{background:linear-gradient(180deg,#ffffff,#f3f7fc)!important;border-bottom:1px solid rgba(30,108,242,.22)!important}
+body.light header .brand,body.light .brand{color:#0f1f3d!important;-webkit-text-fill-color:#0f1f3d!important}
+body.light .card,body.light .item,body.light .stat,body.light .tile,body.light .person,body.light table{background:linear-gradient(180deg,#ffffff,#f6f9fd)!important;border:1px solid rgba(30,108,242,.2)!important;box-shadow:0 2px 10px rgba(19,35,63,.08)!important}
+body.light .card:hover,body.light .item:hover,body.light .person:hover,body.light .tile:hover,body.light .stat:hover{border-color:rgba(30,108,242,.45)!important;box-shadow:0 6px 20px rgba(30,108,242,.14)!important}
+body.light button{color:#1d4f9c!important;background:rgba(30,108,242,.07)!important;border:1px solid rgba(30,108,242,.3)!important}
+body.light button:hover:not(:disabled){background:rgba(30,108,242,.14)!important}
+body.light .btn{background:#1e6cf2!important;color:#fff!important;border:1px solid #1e6cf2!important}
+body.light .btn:hover:not(:disabled){background:#2f7cff!important;border-color:#2f7cff!important}
+body.light .red{background:rgba(239,68,68,.1)!important;color:#c81e1e!important;border:1px solid rgba(239,68,68,.45)!important}
+body.light .green{background:#22c55e!important;color:#06210f!important;border:0!important}
+body.light .gray{background:rgba(100,116,139,.1)!important;color:#1b3560!important;border:1px solid rgba(100,116,139,.3)!important}
+body.light .tab,body.light .filter,body.light .chip{background:#ffffff!important;color:#4d6283!important;border:1px solid rgba(30,108,242,.2)!important}
+body.light .tab.active,body.light .filter.active,body.light .chip.active{background:#1e6cf2!important;color:#fff!important;border-color:#1e6cf2!important}
+body.light label{color:#4d6283!important}
+body.light input,body.light select,body.light textarea{background:#ffffff!important;color:#13233f!important;border:1px solid rgba(30,108,242,.3)!important}
+body.light .title,body.light .msgr-title,body.light h1,body.light h2,body.light h3,body.light .sheet h2,body.light .auth-card h2{color:#0f1f3d!important;-webkit-text-fill-color:#0f1f3d!important}
+body.light .stat strong{color:#1e6cf2!important;-webkit-text-fill-color:#1e6cf2!important}
+body.light .stat span{color:#4d6283!important}
+body.light .tile{color:#13233f!important}
+body.light .badge,body.light .badge-role{background:rgba(30,108,242,.08)!important;border:1px solid rgba(30,108,242,.4)!important;color:#1d5fc4!important}
+body.light .msgr-row.mine .msgr-bub,body.light .chat-send{background:#1e6cf2!important;color:#fff!important}
+body.light .msgr-bub{background:#ffffff!important;border:1px solid rgba(30,108,242,.2)!important;color:#13233f!important}
+body.light .msgr-search,body.light .composer-input{background:#ffffff!important;border:1px solid rgba(30,108,242,.25)!important}
+body.light .msgr-icon{background:rgba(30,108,242,.08)!important;color:#1d5fc4!important;border:1px solid rgba(30,108,242,.3)!important}
+body.light nav.bottom{background:linear-gradient(180deg,#ffffff,#f3f7fc)!important;border-top:1px solid rgba(30,108,242,.22)!important}
+body.light nav.bottom button{color:#5b6f91!important;background:transparent!important}
+body.light nav.bottom button.active{color:#ffffff!important;background:#1e6cf2!important}
+body.light .ticker{background:#e9f0fa!important;color:#1b3560!important;border-bottom:1px solid rgba(30,108,242,.2)!important}
+body.light .ticker span{color:#1b3560!important}
+body.light .sheet,body.light #settingsMenu{background:#ffffff!important;color:#13233f!important;border:1px solid rgba(30,108,242,.25)!important}
+body.light .photo{border:2px solid rgba(30,108,242,.35)!important}
+body.light th{background:rgba(30,108,242,.07)!important;color:#4d6283!important}
+body.light td{color:#13233f!important}
+body.light .muted{color:#4d6283!important}
+body.light .warn{background:rgba(245,166,35,.12)!important;color:#8a5a00!important;border-color:rgba(245,166,35,.5)!important}
+body.light .seg button.active{background:#1e6cf2!important;color:#fff!important}
+body.light .deco-band{filter:saturate(.95)}
+
+<style id="style-modes">/* Mode layer: dark and light palettes, switched by Settings > Background */
+body.light{
+body::before,body::after{display:none!important}
+body{background:linear-gradient(180deg,#f3f7fc,#e4edf8)!important;color:#0f1f3d!important}
+header{background:#ffffff!important;color:#0f1f3d!important;border-bottom:1px solid rgba(30,108,242,.22)!important;box-shadow:none!important}
+header::after{display:none!important}
+header .brand,.brand{color:#0f1f3d!important;-webkit-text-fill-color:#0f1f3d!important;background:none!important;text-shadow:none!important}
+nav.bottom{background:#ffffff!important;border-top:1px solid rgba(30,108,242,.22)!important;box-shadow:none!important}
+nav.bottom button{color:#4a5a78!important;background:transparent!important;border-color:transparent!important;text-shadow:none!important}
+nav.bottom button.active{color:#1e6cf2!important;background:rgba(30,108,242,.10)!important;border-radius:999px!important}
+nav.bottom button.active::before{background:#1e6cf2!important;box-shadow:none!important}
+.card,.item,.stat,.tile,.person,table,.msgr-bub,.sheet,#settingsMenu,.toast,.ticker,.emoji-pop,.msg-context-btn{background:#ffffff!important;color:#0f1f3d!important;border-color:rgba(30,108,242,.22)!important;box-shadow:none!important;text-shadow:none!important}
+.card::before,.card::after,.item::before,.item::after,.stat::before,.stat::after,.tile::before,.tile::after{display:none!important}
+.sheet::before{background:#1e6cf2!important;box-shadow:none!important}
+input,select,textarea,.msgr-search,.composer-input{background:#ffffff!important;color:#0f1f3d!important;border:1px solid rgba(30,108,242,.22)!important;box-shadow:none!important}
+input::placeholder,textarea::placeholder{color:#4a5a78!important}
+label{color:#4a5a78!important;text-shadow:none!important}
+.muted,.stat span,.thread-preview,.thread-time,.msgr-time,.chat-head small,.story small{color:#4a5a78!important}
+h1,h2,h3,.title,.sheet h2,.info-head h2,.auth-card h2{background:none!important;-webkit-text-fill-color:#0f1f3d!important;color:#0f1f3d!important;text-shadow:none!important}
+.title::after{display:none!important}
+.stat strong{background:none!important;-webkit-text-fill-color:#1e6cf2!important;color:#1e6cf2!important;filter:none!important}
+th{background:rgba(30,108,242,.10)!important;color:#4a5a78!important;text-shadow:none!important}
+td{color:#0f1f3d!important}
+.btn,.chat-send{background:#1e6cf2!important;color:#ffffff!important;border:1px solid #1e6cf2!important;box-shadow:none!important;text-shadow:none!important}
+.gray{background:#e6ecf5!important;color:#0f1f3d!important;border:1px solid rgba(30,108,242,.22)!important}
+.msgr-row.mine .msgr-bub{background:#1e6cf2!important;color:#ffffff!important;border-color:transparent!important;box-shadow:none!important}
+.badge,.badge-role{background:rgba(30,108,242,.10)!important;border:1px solid rgba(30,108,242,.22)!important;color:#1e6cf2!important;text-shadow:none!important}
+.avatar{background:#1e6cf2!important;color:#ffffff!important}
+}
+</style>
 </style>
 </head>
 <body>
@@ -703,7 +904,7 @@ body.compact .person{padding:8px;margin:4px 0}
 <section id="authScreen" class="auth-screen">
   <div class="auth-wrap">
     <div class="auth-brand">
-      <div class="auth-logo"><svg viewBox="0 0 356 196" role="img" aria-label="EESI Elevators"><use href="#eesiLogo"/></svg></div>
+      <div class="auth-logo"><span class="logo-wrap"><svg viewBox="0 0 356 196" role="img" aria-label="EESI Elevators"><use href="#eesiLogo"/></svg><span class="logo-deco" aria-hidden="true"></span></span></div>
       <div>
         <div class="auth-brand-name">EESI ELEVATORS</div>
         <div class="auth-brand-sub">Operations console</div>
@@ -761,7 +962,7 @@ body.compact .person{padding:8px;margin:4px 0}
 
 <div id="app" class="hidden">
   <header>
-    <svg class="hdr-logo" viewBox="0 0 356 196" role="img" aria-label="EESI Elevators"><use href="#eesiLogo"/></svg>
+    <span class="logo-wrap"><svg class="hdr-logo" viewBox="0 0 356 196" role="img" aria-label="EESI Elevators"><use href="#eesiLogo"/></svg><span class="logo-deco" aria-hidden="true"></span></span>
     <div class="brand">EESI<span class="brand-long"> ELEVATORS INC.</span></div>
     <span id="liveDot" class="live-dot" data-live="0" title="Live sync status"></span>
     <button class="hbtn" type="button" onclick="go('notices')" aria-label="Notifications">🔔 <span id="bell"></span></button>
@@ -780,6 +981,7 @@ body.compact .person{padding:8px;margin:4px 0}
     </div>
     <label><input id="settingNotifications" type="checkbox" checked> In-app notifications</label>
     <label><input id="settingVibration" type="checkbox"> Vibration</label>
+    <button id="enablePushBtn" class="btn" type="button" style="margin:8px 0">Enable background notifications</button>
     <div id="builtInSoundPanel">
       <label for="settingSound">Sound</label>
       <select id="settingSound">
@@ -819,22 +1021,27 @@ body.compact .person{padding:8px;margin:4px 0}
     <button class="gray" type="button" onclick="previewNotificationSound()">Preview sound</button>
     <h3>Display</h3>
     <label for="settingTheme">Background</label>
-    <select id="settingTheme"><option value="dark">Dark (Codex)</option><option value="light">Light</option><option value="system">System</option></select>
+    <select id="settingTheme"><option value="dark">Dark</option><option value="light">Light</option><option value="system">System</option></select>
+    <label for="settingDecor">Decoration</label>
+    <select id="settingDecor"><option value="auto">Auto (by date)</option><option value="off">Off</option><option value="christmas">Christmas</option><option value="holyweek">Holy Week</option><option value="newyear">New Year</option><option value="valentine">Valentine's</option><option value="allsaints">All Saints</option><option value="session">Session</option><option value="event">Event</option></select>
     <label for="settingFont">Font</label>
-    <select id="settingFont"><option value="system">Codex (Rajdhani)</option><option value="arial">Arial</option><option value="georgia">Georgia</option></select>
+    <select id="settingFont"><option value="system">Rajdhani (Default)</option><option value="orbitron">Orbitron (Robotic)</option><option value="cinzel">Cinzel (Fantasy)</option><option value="segoe">Segoe UI / System</option><option value="arial">Arial</option><option value="verdana">Verdana</option><option value="trebuchet">Trebuchet MS</option><option value="georgia">Georgia</option><option value="times">Times New Roman</option><option value="courier">Courier New</option></select>
     <label for="settingWeight">Font weight</label>
     <select id="settingWeight"><option value="regular">Regular</option><option value="bold">Bold</option></select>
     <label for="settingStyle">Font style</label>
     <select id="settingStyle"><option value="regular">Regular</option><option value="italic">Italic</option></select>
     <label for="settingTextSize">Text size</label>
-    <select id="settingTextSize"><option value="small">Small</option><option value="regular">Regular</option><option value="large">Large</option></select>
+    <select id="settingTextSize"><option value="xs">Extra small</option><option value="small">Small</option><option value="regular">Regular</option><option value="large">Large</option></select>
     <label><input id="settingCompact" type="checkbox"> Compact layout</label>
     <button class="gray" type="button" onclick="resetDisplaySettings()">Reset display settings</button>
     <h3>Privacy &amp; Safety</h3>
     <div class="settings-row">
-      <span>App Lock (PIN)</span>
-      <label class="toggle"><input type="checkbox" id="settingAppLock" onchange="toggleAppLock()"><span class="slider"></span></label>
+      <span>App Lock (6-digit PIN)</span>
+      <span id="appLockState" class="muted">Off</span>
     </div>
+    <button id="setPinBtn" class="gray" type="button" onclick="openPinSetup(false)">Set PIN</button>
+    <button id="changePinBtn" class="gray hidden" type="button" onclick="openPinSetup(true)">Change PIN</button>
+    <button id="removePinBtn" class="red hidden" type="button" onclick="openPinSetup('remove')">Turn off PIN</button>
     <h3>Account</h3>
     <button class="gray" type="button" onclick="changePassword()">Change password</button>
     <button class="red" type="button" onclick="signOut()">Sign out</button>
@@ -852,9 +1059,7 @@ body.compact .person{padding:8px;margin:4px 0}
         <div id="liveWeather" class="muted">Loading weather…</div>
         <p id="locationStatus" class="muted hidden"></p>
         <div class="inline-actions">
-          <button class="gray small-btn" id="startLocationButton" type="button" onclick="startEmployeeLocationSharing()">📍 Share my location</button>
-          <button class="gray small-btn hidden" id="stopLocationButton" type="button">Stop sharing</button>
-          <button class="gray small-btn" id="refreshWeatherButton" type="button">🔄 Refresh weather</button>
+                              
         </div>
       </div>
       <div id="setupWarn" class="card warn hidden">
@@ -1324,8 +1529,8 @@ body.compact .person{padding:8px;margin:4px 0}
     <section class="page hidden" id="page-live-map">
       <div class="ct">
         <h1 class="title">🗺️ Live employee locations</h1>
-        <p class="muted">Visible to administrators only.</p>
-        <div class="card" style="padding:8px"><div id="liveMap" style="height:420px"></div></div>
+        <p class="muted">Administrators only. Refreshes every 5 seconds. Green dot = updated in the last 5 minutes, grey = stale.</p>
+        <div class="live-tools"><div class="seg"><button type="button" class="active" data-basemap="satellite" onclick="setBasemap('satellite')">Satellite</button><button type="button" data-basemap="terrain" onclick="setBasemap('terrain')">Terrain</button></div><button type="button" class="gray small-btn" onclick="fitLiveMapAll()">Fit all</button><button type="button" class="gray small-btn" onclick="loadLiveMap({ fit: false })">Refresh now</button></div><div class="card" style="padding:8px"><div id="liveMap"></div></div>
         <p id="liveLocationStatus" class="muted"></p>
         <div id="liveLocationList"></div>
       </div>
@@ -1388,6 +1593,31 @@ body.compact .person{padding:8px;margin:4px 0}
   <button class="msg-context-btn hidden" data-msg-act="delete" id="ctxDeleteBtn" style="color:var(--red);">🗑 Delete</button>
 </div>
 
+<div id="pinSetupOverlay" class="dialog hidden" style="z-index:250" role="dialog" aria-modal="true" aria-labelledby="pinSetupTitle">
+  <div class="card">
+    <h2 id="pinSetupTitle" style="margin-top:0;">Set PIN</h2>
+    <div id="pinCurrentField" class="field"><label for="pinCurrent">Current 6-digit PIN</label><input id="pinCurrent" class="pin-input" type="password" inputmode="numeric" autocomplete="off" maxlength="6"></div>
+    <div id="pinNewFields">
+      <div class="field"><label for="pinNew">New 6-digit PIN</label><input id="pinNew" class="pin-input" type="password" inputmode="numeric" autocomplete="off" maxlength="6"></div>
+      <div class="field"><label for="pinConfirm">Re-type new PIN</label><input id="pinConfirm" class="pin-input" type="password" inputmode="numeric" autocomplete="off" maxlength="6"></div>
+    </div>
+    <p id="pinSetupStatus" class="muted" role="status" style="min-height:20px;"></p>
+    <div class="inline-actions" style="justify-content:flex-end;margin-top:16px;">
+      <button class="gray" type="button" onclick="closePinSetup()">Cancel</button>
+      <button class="btn" type="button" onclick="submitPinSetup()">Save</button>
+    </div>
+  </div>
+</div>
+<div id="pinLockOverlay" class="dialog hidden" style="z-index:300" role="dialog" aria-modal="true" aria-labelledby="pinLockTitle">
+  <div class="card" style="text-align:center;">
+    <h2 id="pinLockTitle" style="margin-top:0;">App locked</h2>
+    <p class="muted">Enter your 6-digit PIN to continue.</p>
+    <div class="pin-dots" id="pinDots"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <input id="pinLockInput" class="pin-input" type="password" inputmode="numeric" autocomplete="off" maxlength="6" aria-label="PIN">
+    <p id="pinLockStatus" class="muted" role="status" style="min-height:20px;"></p>
+    <button class="gray" type="button" onclick="signOut()">Forgot PIN? Sign out</button>
+  </div>
+</div>
 <div id="changePasswordOverlay" class="dialog hidden" role="dialog" aria-modal="true" aria-labelledby="changePasswordTitle">
   <div class="card">
     <h2 id="changePasswordTitle" style="margin-top:0;">Change Password</h2>
@@ -1634,6 +1864,86 @@ async function showBackgroundNotification(title, body, vibratePattern = [200, 10
   }
 }
 
+/* ==================== BACKGROUND PUSH ==================== */
+const VAPID_PUBLIC_KEY = "BGSdet8Wo-y9GFLS_4NOKYXMk-__p911FH49fx8ObaQ_NToVfGoE8kER0rfd2Y98zOacll1zB-i81g4PWprZ6LY";
+const PUSH_READY = !!VAPID_PUBLIC_KEY && !VAPID_PUBLIC_KEY.startsWith("BGSdet8Wo-y9GFLS_4NOKYXMk-__p911FH49fx8ObaQ_NToVfGoE8kER0rfd2Y98zOacll1zB-i81g4PWprZ6LY");
+function urlBase64ToUint8Array(b64) {
+  const pad = "=".repeat((4 - b64.length % 4) % 4);
+  const raw = atob((b64 + pad).replace(/-/g, "+").replace(/_/g, "/"));
+  return Uint8Array.from(raw, c => c.charCodeAt(0));
+}
+function swKvPut(key, value) {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open("eesi-push", 1);
+    req.onupgradeneeded = () => req.result.createObjectStore("kv");
+    req.onerror = () => reject(req.error);
+    req.onsuccess = () => {
+      const tx = req.result.transaction("kv", "readwrite");
+      tx.objectStore("kv").put(value, key);
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => reject(tx.error);
+    };
+  });
+}
+// The service worker reads this to send replies from a notification. Sign-in token only: the refresh token stays with the app.
+async function syncPushSession(session) {
+  if (!session || !window.indexedDB) return;
+  try {
+    await swKvPut("session", {
+      url: SUPABASE_URL, key: SUPABASE_PUBLISHABLE_KEY,
+      token: session.access_token, userId: session.user.id,
+      name: (state.profile && state.profile.full_name) || session.user.email || "User"
+    });
+  } catch (e) {}
+}
+async function savePushSubscription(sub) {
+  const j = sub.toJSON();
+  const { error } = await client.rpc("save_push_subscription", {
+    p_endpoint: j.endpoint, p_p256dh: j.keys.p256dh, p_auth: j.keys.auth,
+    p_user_agent: navigator.userAgent.slice(0, 200)
+  });
+  if (error) throw error;
+}
+async function enablePush(silent) {
+  if (!("serviceWorker" in navigator) || !("PushManager" in window) || !("Notification" in window)) {
+    if (!silent) toast("Push is not supported here. On iPhone, add the app to the Home Screen first.");
+    return;
+  }
+  if (!PUSH_READY) { if (!silent) toast("Push key is not set in the app yet."); return; }
+  if (!state.userId) return;
+  try {
+    if (silent && Notification.permission !== "granted") return;
+    if (!silent) {
+      const perm = await Notification.requestPermission();
+      if (perm !== "granted") return toast("Notifications were blocked in browser settings.");
+    }
+    const reg = await navigator.serviceWorker.ready;
+    let sub = await reg.pushManager.getSubscription();
+    if (!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY) });
+    await savePushSubscription(sub);
+    if (!silent) toast("Background notifications on");
+  } catch (e) {
+    if (!silent) toast("Could not turn on notifications: " + (e.message || e));
+  }
+}
+async function openPushThread(id) {
+  if (!state.userId || !id) return;
+  if (!state.threads.some(t => t.id === id)) await loadThreads();
+  if (state.threads.some(t => t.id === id)) openThread(id);
+}
+function openStartupThread() {
+  const params = new URLSearchParams(location.search);
+  const id = params.get("thread");
+  if (!id) return;
+  history.replaceState(null, "", location.pathname);
+  openPushThread(id);
+}
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.addEventListener("message", e => {
+    if (e.data && e.data.type === "open-thread") openPushThread(e.data.threadId);
+  });
+}
+
 /* ==================== SOUND SETTINGS & RINGTONES ==================== */
 $("settingNotifications").checked = localStorage.getItem("eesi-notifications") !== "off";
 $("settingVibration").checked = localStorage.getItem("eesi-vibration") === "on";
@@ -1738,6 +2048,7 @@ $("settingCustomAlertDuration").addEventListener("change", () => {
   toast("Custom ringtone duration saved");
 });
 $("settingNotifications").addEventListener("change", saveNotificationSettings);
+$("enablePushBtn").addEventListener("click", () => enablePush(false));
 $("settingVibration").addEventListener("change", saveNotificationSettings);
 
 let settingSoundTimer = null, settingSoundTimeout = null, customSoundUrl = null, customSoundAudio = null, settingVibrationTimer = null, settingSoundContext = null;
@@ -1856,14 +2167,16 @@ function applyDisplaySettings() {
   const font = localStorage.getItem("eesi-font") || "system";
   const weight = localStorage.getItem("eesi-font-weight") || "regular";
   const style = localStorage.getItem("eesi-font-style") || "regular";
-  const fonts = { system: "'Rajdhani','Segoe UI',system-ui,sans-serif", arial: "Arial, sans-serif", georgia: "Georgia, serif" };
+  const fonts = { system: "'Rajdhani','Segoe UI',system-ui,sans-serif", orbitron: "'Orbitron',sans-serif", cinzel: "'Cinzel',serif", segoe: "'Segoe UI',system-ui,sans-serif", arial: "Arial, Helvetica, sans-serif", verdana: "Verdana, Geneva, sans-serif", trebuchet: "'Trebuchet MS',Helvetica,sans-serif", georgia: "Georgia, serif", times: "'Times New Roman',Times,serif", courier: "'Courier New',Courier,monospace" };
   document.body.style.fontFamily = fonts[font] || fonts.system;
   document.body.style.fontWeight = weight === "bold" ? "700" : "500";
   document.body.style.fontStyle = style === "italic" ? "italic" : "normal";
   $("settingFont").value = font; $("settingWeight").value = weight; $("settingStyle").value = style;
   const textSize = localStorage.getItem("eesi-text-size") || "regular";
   const compact = localStorage.getItem("eesi-compact") === "on";
-  document.body.style.fontSize = textSize === "small" ? "14px" : textSize === "large" ? "18px" : "15px";
+  document.body.style.fontSize = "15px";
+  const zoomMap = { xs: 0.8, small: 0.9, regular: 1, large: 1.15 };
+  $("app").style.zoom = zoomMap[textSize] || 1;
   document.body.classList.toggle("compact", compact);
   $("settingTextSize").value = textSize; $("settingCompact").checked = compact;
 }
@@ -1873,24 +2186,99 @@ window.resetDisplaySettings = function () {
 };
 $("settingTextSize").addEventListener("change", () => { localStorage.setItem("eesi-text-size", $("settingTextSize").value); applyDisplaySettings(); });
 $("settingCompact").addEventListener("change", () => { localStorage.setItem("eesi-compact", $("settingCompact").checked ? "on" : "off"); applyDisplaySettings(); });
+$("settingDecor").addEventListener("change", () => { localStorage.setItem("eesi-decor", $("settingDecor").value); renderDecor(); });
 $("settingFont").addEventListener("change", () => { localStorage.setItem("eesi-font", $("settingFont").value); applyDisplaySettings(); });
 $("settingWeight").addEventListener("change", () => { localStorage.setItem("eesi-font-weight", $("settingWeight").value); applyDisplaySettings(); });
 $("settingStyle").addEventListener("change", () => { localStorage.setItem("eesi-font-style", $("settingStyle").value); applyDisplaySettings(); });
 $("settingTheme").addEventListener("change", () => { localStorage.setItem("eesi-theme", $("settingTheme").value); applyTheme($("settingTheme").value); });
 
-function checkAppLock() {
-  $("settingAppLock").checked = localStorage.getItem("eesi-applock") === "on";
+const PIN_KEY = "eesi-pin-hash";
+let pinFailures = 0, pinLockedUntil = 0, lastHiddenAt = 0;
+function hasAppPin() { return !!localStorage.getItem(PIN_KEY); }
+function cleanPin(v) { return String(v || "").replace(/\D/g, "").slice(0, 6); }
+async function hashPin(pin, salt) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(salt + ":" + pin));
+  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
 }
-window.toggleAppLock = function () {
-  const enabled = $("settingAppLock").checked;
-  localStorage.setItem("eesi-applock", enabled ? "on" : "off");
-  toast(enabled ? "App Lock preference saved" : "App Lock disabled");
+async function savePin(pin) {
+  const salt = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random()).replace(/\$/g, "");
+  localStorage.setItem(PIN_KEY, salt + "$" + await hashPin(pin, salt));
+}
+async function verifyPin(pin) {
+  const stored = localStorage.getItem(PIN_KEY) || ""; const i = stored.indexOf("$");
+  if (i < 0) return false;
+  return (await hashPin(pin, stored.slice(0, i))) === stored.slice(i + 1);
+}
+function refreshPinSettings() {
+  const on = hasAppPin();
+  $("appLockState").textContent = on ? "On" : "Off";
+  $("setPinBtn").classList.toggle("hidden", on);
+  $("changePinBtn").classList.toggle("hidden", !on);
+  $("removePinBtn").classList.toggle("hidden", !on);
+}
+window.openPinSetup = function (mode) {
+  if (!window.isSecureContext || !crypto.subtle) return toast("PIN needs a secure (https) connection");
+  const remove = mode === "remove", changing = mode === true;
+  $("pinSetupOverlay").dataset.mode = remove ? "remove" : changing ? "change" : "set";
+  $("pinSetupTitle").textContent = remove ? "Turn off PIN" : changing ? "Change PIN" : "Set PIN";
+  $("pinCurrentField").classList.toggle("hidden", !(remove || changing));
+  $("pinNewFields").classList.toggle("hidden", remove);
+  ["pinCurrent", "pinNew", "pinConfirm"].forEach(id => $(id).value = "");
+  $("pinSetupStatus").textContent = "";
+  $("pinSetupOverlay").classList.remove("hidden");
+  $(remove || changing ? "pinCurrent" : "pinNew").focus();
 };
+window.closePinSetup = function () { $("pinSetupOverlay").classList.add("hidden"); ["pinCurrent", "pinNew", "pinConfirm"].forEach(id => $(id).value = ""); };
+window.submitPinSetup = async function () {
+  const mode = $("pinSetupOverlay").dataset.mode, status = $("pinSetupStatus");
+  const cur = cleanPin($("pinCurrent").value), nw = cleanPin($("pinNew").value), cf = cleanPin($("pinConfirm").value);
+  if (mode !== "set" && cur.length !== 6) { status.textContent = "Enter your current 6-digit PIN."; return; }
+  if (mode !== "set" && !(await verifyPin(cur))) { status.textContent = "Current PIN is wrong."; return; }
+  if (mode === "remove") { localStorage.removeItem(PIN_KEY); closePinSetup(); refreshPinSettings(); toast("App lock turned off"); return; }
+  if (nw.length !== 6) { status.textContent = "New PIN must be exactly 6 digits."; return; }
+  if (nw !== cf) { status.textContent = "PINs do not match."; return; }
+  if (nw === cur && mode === "change") { status.textContent = "Choose a PIN different from the current one."; return; }
+  await savePin(nw); closePinSetup(); refreshPinSettings(); toast(mode === "change" ? "PIN changed" : "App lock PIN set");
+};
+function updatePinDots() {
+  const n = cleanPin($("pinLockInput").value).length;
+  document.querySelectorAll("#pinDots span").forEach((s, i) => s.classList.toggle("on", i < n));
+}
+function showPinLock() {
+  if (!hasAppPin() || !state.userId) return;
+  $("pinLockInput").value = ""; updatePinDots(); $("pinLockStatus").textContent = "";
+  $("pinLockOverlay").classList.remove("hidden");
+  setTimeout(() => $("pinLockInput").focus(), 50);
+}
+$("pinLockInput").addEventListener("input", async () => {
+  const input = $("pinLockInput"); input.value = cleanPin(input.value); updatePinDots();
+  if (input.value.length !== 6) return;
+  const status = $("pinLockStatus");
+  const waitSec = Math.ceil((pinLockedUntil - Date.now()) / 1000);
+  if (waitSec > 0) { status.textContent = "Too many wrong tries. Wait " + waitSec + " seconds."; input.value = ""; updatePinDots(); return; }
+  if (await verifyPin(input.value)) {
+    pinFailures = 0; input.value = ""; updatePinDots(); status.textContent = "";
+    $("pinLockOverlay").classList.add("hidden"); return;
+  }
+  pinFailures++; input.value = ""; updatePinDots();
+  if (pinFailures >= 5) { pinFailures = 0; pinLockedUntil = Date.now() + 30000; status.textContent = "Too many wrong tries. Wait 30 seconds."; }
+  else status.textContent = "Wrong PIN. " + (5 - pinFailures) + " tries left.";
+  const card = document.querySelector("#pinLockOverlay .card");
+  card.classList.remove("pin-shake"); void card.offsetWidth; card.classList.add("pin-shake");
+});
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "hidden") { lastHiddenAt = Date.now(); return; }
+  if (lastHiddenAt && Date.now() - lastHiddenAt > 30000) showPinLock();
+});
+function checkAppLock() {
+  refreshPinSettings();
+  if (hasAppPin()) showPinLock();
+}
 
 /* ==================== AUTH UI ==================== */
 function setAuthStatus(msg) { $("authStatus").textContent = msg; }
 function showAuth(message) {
-  teardownLive();
+  teardownLive(); $("pinLockOverlay").classList.add("hidden");
   $("authScreen").classList.remove("hidden");
   $("app").classList.add("hidden");
   setAuthStatus(message || "Sign in to continue.");
@@ -2020,7 +2408,7 @@ async function bootInner(session) {
   $("roleLabel").textContent = roleLabel(state.role);
   updateAccess(); showApp(); checkAppLock(); requestNotificationPermission(); showDailyVerse();
   applyTheme(localStorage.getItem("eesi-theme") || "dark");
-  applyDisplaySettings(); startClock(); updateLiveWeather(14.5995, 120.9842);
+  applyDisplaySettings(); startClock(); updateLiveWeather(14.5995, 120.9842); startEmployeeLocationSharing(); renderDecor();
 
   await Promise.all([
     loadBlockedUsers(), loadProfiles(), loadRoles(), loadSites(), loadSchedules(), loadDtrs(),
@@ -2043,6 +2431,9 @@ async function boot(session) {
     renderReportSites();
     await loadAppNotifications();
     await loadApprovalNotifications();
+    syncPushSession(session);
+    enablePush(true);
+    openStartupThread();
   } finally {
     booting = false;
   }
@@ -2076,6 +2467,7 @@ function resetState() {
 }
 
 client.auth.onAuthStateChange((event, session) => {
+  if (session && event !== "SIGNED_OUT") syncPushSession(session);
   if (event === "PASSWORD_RECOVERY") { recoveryMode = true; showAuth("Choose a new password."); showResetForm(); return; }
   if (event === "SIGNED_OUT" || !session) { authRun++; state.booted = false; teardownLive(); resetState(); showAuth("Sign in to continue."); return; }
   if (recoveryMode) return;
@@ -2108,12 +2500,11 @@ function go(p) {
   if (["members", "pending"].includes(p) && !isManager()) return toast("Admin or Representative access only");
   if (p === "admin" && !isAdmin()) return toast("Administrator only");
   if (p === "live-map" && !isAdmin()) return toast("Administrator only");
-  if (p === "live-map") loadLiveMap();
+  if (p === "live-map") setTimeout(loadLiveMap, 50);
   if (!$("page-" + p)) return toast("Page not found");
   document.querySelectorAll(".page").forEach(el => el.classList.add("hidden"));
   $("page-" + p).classList.remove("hidden");
   page = p;
-  $("ticker").classList.toggle("hidden", p === "chat");
   $("settingsMenu").classList.add("hidden");
   document.querySelectorAll("nav.bottom button").forEach(btn => btn.classList.toggle("active", btn.dataset.page === p));
   if (p === "profile") renderProfile();
@@ -2216,7 +2607,7 @@ async function loadAnnouncements() {
   if (newAnnouncements.length > 0 && !isWithinSelfActionWindow()) {
     playSettingSound(true); vibrateForNotification(); toast("📢 New Announcement: " + newAnnouncements[0].title);
     showBackgroundNotification("📢 New Announcement", newAnnouncements[0].title + ": " + newAnnouncements[0].body, [300, 100, 300, 100, 300]);
-    tickerIndex = 0; updateAnnouncementTicker();
+    updateAnnouncementTicker();
   }
 }
 async function loadPending() {
@@ -2389,12 +2780,15 @@ function renderHome() {
 }
 const SYSTEM_ANNOUNCEMENTS = [{ title: "EESI ELEVATORS INC.", body: "REMINDERS: BE HONEST ALL THE TIME." }, { title: "SAFETY FIRST", body: "ALWAYS WEAR YOUR PPE AND FOLLOW SAFETY PROTOCOLS." }, { title: "CORE VALUE", body: "INTEGRITY AND EXCELLENCE IN EVERY JOB." }];
 let tickerIndex = 0, tickerTimer = null;
+let tickerKey = "";
 function updateAnnouncementTicker() {
-  const text = $("tickerText"); const allAnnouncements = [...SYSTEM_ANNOUNCEMENTS, ...(state.announcements || [])];
-  clearTimeout(tickerTimer); text.style.animation = "none";
-  tickerIndex = tickerIndex % allAnnouncements.length; const item = allAnnouncements[tickerIndex];
-  text.textContent = "📢 " + item.title + " — " + item.body; void text.offsetWidth; text.style.animation = "marquee 60s linear 1";
-  tickerTimer = setTimeout(() => { tickerIndex = (tickerIndex + 1) % allAnnouncements.length; updateAnnouncementTicker(); }, 60000);
+  const text = $("tickerText"); if (!text) return;
+  const all = [...SYSTEM_ANNOUNCEMENTS, ...(state.announcements || [])];
+  const line = all.map(a => "📢 " + (a.title || "") + " — " + (a.body || "")).join("     ◆     ") + "     ◆     ";
+  if (line === tickerKey) return;               // same content: keep the running animation going
+  tickerKey = line;
+  text.textContent = line;
+  text.style.animation = "marquee " + Math.max(20, Math.round(line.length * 0.18)) + "s linear infinite";
 }
 function face(p) { const src = safeUrl(p?.avatar_url); const initial = esc(((p?.full_name || "?")[0] || "?").toUpperCase()); return src ? '<img class="avatar" src="' + esc(src) + '" alt="">' : '<span class="avatar initial">' + initial + '</span>'; }
 function memberRow(p) {
@@ -2406,6 +2800,24 @@ function renderOnline() { if (!state.userId) return; const ids = onlineIds(); co
 function renderPending() { if (!isManager()) return; $("pending").innerHTML = state.pending.map(r => '<div class="item"><b>' + esc(r.full_name) + '</b> — ' + esc(roleLabel(r.requested_role)) + '<div class="muted">' + esc(r.email || "") + ' · requested ' + esc(fmtDate(r.created_at)) + '</div><div class="inline-actions"><button class="green small-btn" type="button" data-act="approve" data-id="' + esc(r.id) + '">Approve</button><button class="red small-btn" type="button" data-act="decline" data-id="' + esc(r.id) + '">Decline</button></div></div>').join("") || '<p class="muted">No pending registrations.</p>'; }
 function renderAnnouncements() { $("annList").innerHTML = state.announcements.map(a => '<div class="item"><b>' + esc(a.title) + '</b><div class="muted">' + esc(a.author_name || "Admin") + ' · ' + esc(fmtDate(a.created_at)) + '</div><div>' + esc((a.body || "").slice(0, 200)) + ((a.body || "").length > 200 ? "…" : "") + '</div><div class="inline-actions"><button class="gray small-btn" type="button" data-act="view-ann" data-id="' + esc(a.id) + '">View</button>' + (isManager() ? '<button class="btn small-btn" type="button" data-act="edit-ann" data-id="' + esc(a.id) + '">Edit</button><button class="red small-btn" type="button" data-act="del-ann" data-id="' + esc(a.id) + '">Delete</button>' : '') + '</div></div>').join("") || '<p class="muted">No announcements yet.</p>'; }
 
+function localDateKey(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+function sessionState(s) {
+  if (!s.scheduled_date || !s.time_in) return "";
+  const start = new Date(s.scheduled_date + "T" + s.time_in);
+  const end = s.time_out ? new Date(s.scheduled_date + "T" + s.time_out) : new Date(start.getTime() + 3600000);
+  if (isNaN(start)) return "";
+  const now = Date.now();
+  if (now >= start.getTime() && now <= end.getTime()) return "now";
+  const dayOk = s.scheduled_date === localDateKey(new Date()) || s.scheduled_date === localDateKey(new Date(now + 86400000));
+  if (start.getTime() > now && start.getTime() - now <= 86400000 && dayOk) return "soon";
+  return "";
+}
+function sessionBadge(s) {
+  const st = sessionState(s);
+  if (st === "now") return '<span class="sess-badge now">● NOW</span>';
+  if (st === "soon") return '<span class="sess-badge soon">⏳ UPCOMING</span>';
+  return "";
+}
 function renderSchedules() {
   const box = $("scheduleList"); if (!box) return;
   let filtered = [...state.schedules];
@@ -2424,7 +2836,8 @@ function renderSchedules() {
     const match = (s.notes || "").match(/^\[ASSIGNED:\s*([^\]]+)\]/);
     const assigned = match ? match[1] : "";
     const notes = (s.notes || "").replace(/^\[ASSIGNED:\s*[^\]]+\]\s*/, "");
-    return '<div class="item"><b>' + esc(s.title) + '</b> <span class="badge">' + esc(s.priority || "Normal") + '</span><div class="muted">' + esc(fmtDay(s.scheduled_date)) + (s.region ? ' · ' + esc(s.region) : '') + (s.time_in && s.time_out ? ' · ' + esc(s.time_in) + '–' + esc(s.time_out) : '') + '</div>' + (assigned ? '<div><b>Assigned:</b> ' + esc(assigned) + '</div>' : '') + (notes ? '<div>' + esc(notes) + '</div>' : '') + (isManager() ? '<div class="inline-actions"><button class="red small-btn" type="button" data-act="del-sched" data-id="' + esc(s.id) + '">Delete</button></div>' : '') + '</div>';
+    const sst = sessionState(s);
+    return '<div class="item' + (sst ? ' sess-' + sst : '') + '"><b>' + esc(s.title) + '</b> ' + sessionBadge(s) + ' <span class="badge">' + esc(s.priority || "Normal") + '</span><div class="muted">' + esc(fmtDay(s.scheduled_date)) + (s.region ? ' · ' + esc(s.region) : '') + (s.time_in && s.time_out ? ' · ' + esc(s.time_in) + '–' + esc(s.time_out) : '') + '</div>' + (assigned ? '<div><b>Assigned:</b> ' + esc(assigned) + '</div>' : '') + (notes ? '<div>' + esc(notes) + '</div>' : '') + (isManager() ? '<div class="inline-actions"><button class="red small-btn" type="button" data-act="del-sched" data-id="' + esc(s.id) + '">Delete</button></div>' : '') + '</div>';
   }).join("") || '<p class="muted">No schedules found.</p>';
 }
 function renderSites() { const box = $("siteList"); if (!box) return; box.innerHTML = state.sites.map(s => '<div class="item"><b>' + esc(s.name) + '</b><div class="muted">' + esc([s.address, s.city, s.region].filter(Boolean).join(" · ")) + '</div><div class="inline-actions"><button class="gray small-btn" type="button" data-act="map" data-id="' + esc(s.id) + '">📍 Map</button>' + (isManager() ? '<button class="red small-btn" type="button" data-act="del-site" data-id="' + esc(s.id) + '">Delete</button>' : '') + '</div></div>').join("") || '<p class="muted">No sites yet.</p>'; }
@@ -2764,7 +3177,7 @@ function renderMessages() {
     const reactionBadge = badgeHtml ? '<div class="msg-reaction-badge clickable" data-act="remove-my-reaction" data-id="' + esc(m.id) + '">' + badgeHtml + '</div>' : "";
     const edited = m.edited_at ? " (edited)" : "";
     const body = esc(m.body || "");
-    return '<div class="msgr-row' + (mine ? ' mine' : '') + '">' + avatar + '<div class="msgr-bub" data-message-id="' + esc(m.id) + '" data-own-message="' + (mine ? '1' : '0') + '" data-text="' + esc(m.body || '') + '" data-user-id="' + esc(m.user_id) + '">' + sender + reply + body + attach + reactionBadge + '<div style="display:flex;justify-content:flex-end;align-items:center;margin-top:4px;"><small class="msgr-time" style="margin:0;margin-right:auto;">' + esc(time) + edited + '</small></div></div></div>';
+    return (m.is_pinned && !m.deleted_at ? '<div class="pin-above' + (mine ? ' mine' : '') + '">📌 Pinned message</div>' : '') + '<div class="msgr-row' + (mine ? ' mine' : '') + '">' + avatar + '<div class="msgr-bub" data-message-id="' + esc(m.id) + '" data-own-message="' + (mine ? '1' : '0') + '" data-text="' + esc(m.body || '') + '" data-user-id="' + esc(m.user_id) + '">' + sender + reply + body + attach + reactionBadge + '<div style="display:flex;justify-content:flex-end;align-items:center;margin-top:4px;"><small class="msgr-time" style="margin:0;margin-right:auto;">' + esc(time) + edited + '</small></div></div></div>';
   }).join("") || '<p class="muted" style="text-align:center;padding:20px;">No messages yet.</p>';
   box.scrollTop = box.scrollHeight;
   updateSendBtn();
@@ -3072,7 +3485,7 @@ document.addEventListener("click", e => {
   if (bub && bub.dataset.messageId && !e.target.closest("a") && !e.target.closest(".msg-reaction-badge")) {
     if (String(bub.dataset.messageId).startsWith("temp-")) return;
     const r = bub.getBoundingClientRect();
-    openMessageMenu(bub, r.left + r.width / 2, r.bottom + 4);
+    openMessageMenu(bub, r.left + r.width / 2, r.top + 4);
     return;
   }
   if (!e.target.closest("#messageContextMenu")) closeMessageMenu();
@@ -3394,37 +3807,145 @@ $("closePmsRecordOverlay")?.addEventListener("click", () => $("pmsRecordOverlay"
 
 /* ==================== LIVE MAP / LOCATION ==================== */
 let locationWatchId = null;
-window.startEmployeeLocationSharing = async function () {
-  if (!navigator.geolocation) return toast("This device cannot share location.");
-  if (!state.userId) return toast("Sign in first");
-  $("startLocationButton").classList.add("hidden"); $("stopLocationButton").classList.remove("hidden");
+window.startEmployeeLocationSharing = function () {
+  if (!navigator.geolocation) { $("locationStatus").classList.remove("hidden"); $("locationStatus").textContent = "This device cannot share location."; return; }
+  if (!state.userId || locationWatchId != null) return;
   $("locationStatus").classList.remove("hidden"); $("locationStatus").textContent = "Sharing location…";
   locationWatchId = navigator.geolocation.watchPosition(async pos => {
+    if (pos.coords.accuracy > 100) { $("locationStatus").textContent = "Waiting for a better GPS fix (±" + Math.round(pos.coords.accuracy) + " m)…"; return; }
     const { latitude, longitude } = pos.coords;
     $("locationStatus").textContent = "Sharing: " + latitude.toFixed(4) + ", " + longitude.toFixed(4);
     await client.from("employee_locations").upsert({ user_id: state.userId, latitude, longitude, updated_at: new Date().toISOString() }, { onConflict: "user_id" });
-  }, err => { $("locationStatus").textContent = "Location error: " + err.message; }, { enableHighAccuracy: true, maximumAge: 15000, timeout: 20000 });
-  $("stopLocationButton").onclick = () => {
-    if (locationWatchId != null) navigator.geolocation.clearWatch(locationWatchId);
-    locationWatchId = null; $("stopLocationButton").classList.add("hidden"); $("startLocationButton").classList.remove("hidden");
-    $("locationStatus").textContent = "Location sharing stopped.";
-  };
+  }, err => { $("locationStatus").textContent = "Location error: " + err.message; }, { enableHighAccuracy: true, maximumAge: 0, timeout: 20000 });
 };
-async function loadLiveMap() {
-  const box = $("liveMap"); if (!box || !isAdmin()) return;
+
+/* ==================== DECORATION ==================== */
+const DECOR = {
+  christmas: { label: "Merry Christmas", icons: ["🎄", "⭐", "🎁", "❄️", "🔔", "🎅"], from: "#0d3b2e", to: "#7a1020", logo: "🎄" },
+  holyweek: { label: "Holy Week", icons: ["✝️", "🕊️", "🌿", "🕯️", "🌹", "🙏"], from: "#2b1846", to: "#5b2d6e", logo: "✝️" },
+  newyear: { label: "Happy New Year", icons: ["🎆", "🎇", "🥳", "✨", "🎉", "🎊"], from: "#0b1b38", to: "#7a4a00", logo: "🎆" },
+  valentine: { label: "Happy Valentine's", icons: ["❤️", "💖", "🌹", "💘", "💌", "💕"], from: "#4a0f24", to: "#8a1d45", logo: "💖" },
+  allsaints: { label: "All Saints' Day", icons: ["🕯️", "🌼", "🌾", "🕊️", "🙏", "🍂"], from: "#2a2014", to: "#5a4420", logo: "🕯️" },
+  session: { label: "Session", icons: ["📚", "🧠", "🎓", "💡", "✏️", "📝"], from: "#0b2a4a", to: "#1e6cf2", logo: "🎓" },
+  event: { label: "Event", icons: ["🎉", "🎤", "🎶", "🎟️", "🎈", "📣"], from: "#1d1640", to: "#2f8cff", logo: "🎉" },
+  default: { label: "EESI Elevators", icons: ["🛗", "⚡", "🔧", "✨"], from: "#0a1a36", to: "#1e4f9c", logo: "✨" }
+};
+function easterSunday(y) {
+  const a = y % 19, b = Math.floor(y / 100), c = y % 100, d = Math.floor(b / 4), e = b % 4;
+  const f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30;
+  const i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451);
+  const month = Math.floor((h + l - 7 * m + 114) / 31), day = ((h + l - 7 * m + 114) % 31) + 1;
+  return new Date(y, month - 1, day);
+}
+function autoDecorKey(now) {
+  const y = now.getFullYear(), t = new Date(y, now.getMonth(), now.getDate()).getTime();
+  const easter = easterSunday(y).getTime(), palm = easter - 7 * 864e5;
+  if (t >= palm && t <= easter) return "holyweek";
+  const md = (now.getMonth() + 1) * 100 + now.getDate();
+  if (md === 1231 || md <= 107) return "newyear";
+  if (md >= 1201 && md <= 1230) return "christmas";
+  if (md >= 201 && md <= 214) return "valentine";
+  if (md >= 1031 || md <= 1102) return "allsaints";
+  return "default";
+}
+function activeDecor() {
+  const pref = localStorage.getItem("eesi-decor") || "auto";
+  if (pref === "off") return null;
+  return DECOR[pref === "auto" ? autoDecorKey(new Date()) : pref] || DECOR.default;
+}
+function renderDecor() {
+  if (!$("settingDecor")) return;
+  $("settingDecor").value = localStorage.getItem("eesi-decor") || "auto";
+  const theme = activeDecor();
+  document.querySelectorAll(".deco-band").forEach(n => n.remove());
+  document.querySelectorAll(".logo-deco").forEach(n => { n.textContent = theme ? theme.logo : ""; });
+  if (!theme) return;
+  const band = '<div class="deco-band" style="--dg1:' + theme.from + ';--dg2:' + theme.to + '"><div class="deco-ribbon">' + esc(theme.label) + '</div><div class="deco-icons">' +
+    theme.icons.map((ic, i) => '<span class="d" style="animation-delay:' + (i * 0.35) + 's">' + ic + '</span>').join("") + '</div></div>';
+  document.querySelectorAll("section.page").forEach(sec => {
+    if (sec.id === "page-chat") return;
+    (sec.querySelector(":scope > .ct") || sec).insertAdjacentHTML("beforeend", band);
+  });
+}
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", renderDecor); else renderDecor();
+window.renderDecor = renderDecor;
+
+/* ==================== LIVE MAP ==================== */
+let liveMapInstance = null, liveMapLayer = null, liveBase = null, liveLabels = null;
+let liveFitted = false, liveBusy = false, liveLastPoints = [];
+const liveMarkers = new Map();
+const LIVE_REFRESH_MS = 5000, LIVE_STALE_MS = 5 * 60 * 1000;
+const LABELS_URL = "https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}";
+const BASEMAPS = {
+  satellite: { url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", opts: { maxZoom: 19, maxNativeZoom: 19, attribution: "Imagery &copy; Esri, Maxar, Earthstar Geographics" }, labels: true },
+  terrain: { url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}", opts: { maxZoom: 19, maxNativeZoom: 13, attribution: "Terrain &copy; Esri" }, labels: false }
+};
+function setBasemap(name) {
+  if (!liveMapInstance || !BASEMAPS[name]) return;
+  if (liveBase) liveMapInstance.removeLayer(liveBase);
+  if (liveLabels) { liveMapInstance.removeLayer(liveLabels); liveLabels = null; }
+  const b = BASEMAPS[name];
+  liveBase = L.tileLayer(b.url, b.opts).addTo(liveMapInstance);
+  if (b.labels) liveLabels = L.tileLayer(LABELS_URL, { maxZoom: 19, maxNativeZoom: 19 }).addTo(liveMapInstance);
+  localStorage.setItem("eesi-basemap", name);
+  document.querySelectorAll("[data-basemap]").forEach(btn => btn.classList.toggle("active", btn.dataset.basemap === name));
+}
+function ensureLiveMap() {
+  if (liveMapInstance || !window.L) return liveMapInstance;
+  liveMapInstance = L.map("liveMap").setView([12.8797, 121.774], 6);
+  liveMapLayer = L.layerGroup().addTo(liveMapInstance);
+  setBasemap(localStorage.getItem("eesi-basemap") || "satellite");
+  return liveMapInstance;
+}
+function fitLiveMap(points) {
+  if (!liveMapInstance || !points.length) return;
+  if (points.length === 1) liveMapInstance.setView(points[0], 16);
+  else liveMapInstance.fitBounds(points, { padding: [30, 30], maxZoom: 16 });
+}
+async function loadLiveMap(opts = {}) {
+  if (!$("liveMap") || !isAdmin() || liveBusy) return;
+  liveBusy = true;
   try {
     const { data, error } = await client.from("employee_locations").select("user_id,latitude,longitude,updated_at");
     if (error) throw error;
-    const centerQuery = (data && data.length) ? `${data[0].latitude},${data[0].longitude}` : "Philippines";
-    box.innerHTML = `<iframe width="100%" height="100%" style="border:0;border-radius:8px;" loading="lazy" allowfullscreen src="https://maps.google.com/maps?q=${centerQuery}&t=&z=12&ie=UTF8&iwloc=&output=embed"></iframe>`;
-    $("liveLocationStatus").textContent = (data || []).length + " location(s) reported.";
-    $("liveLocationList").innerHTML = (data || []).map(row => {
-      const p = profileOf(row.user_id);
-      return `<div class="item" style="display:flex;justify-content:space-between;align-items:center;"><div><b>${esc(p ? p.full_name : "Member")}</b><div class="muted">${esc(fmtDate(row.updated_at))}</div></div><a href="https://www.google.com/maps?q=${row.latitude},${row.longitude}" target="_blank" rel="noopener" class="btn small-btn" style="text-decoration:none;display:flex;align-items:center;">📍 Open Map</a></div>`;
-    }).join("") || '<p class="muted">No location data yet.</p>';
-  } catch (err) { box.innerHTML = `<p class="muted" style="padding:20px;">Could not load map: ${esc(err.message)}</p>`; }
+    if (!window.L) { $("liveLocationStatus").textContent = "Map library is still loading. Try again in a moment."; return; }
+    const map = ensureLiveMap();
+    const rows = (data || []).filter(r => Number.isFinite(+r.latitude) && Number.isFinite(+r.longitude));
+    const now = Date.now(), seen = new Set(), points = [], items = [];
+    rows.forEach(row => {
+      const p = profileOf(row.user_id), name = p ? p.full_name : "Member";
+      const fresh = now - new Date(row.updated_at).getTime() <= LIVE_STALE_MS;
+      const ll = [+row.latitude, +row.longitude];
+      const color = fresh ? "#22c55e" : "#94a3b8";
+      const popup = "<b>" + esc(name) + "</b><br>" + esc(fmtDate(row.updated_at)) + (fresh ? "" : " (stale)");
+      seen.add(row.user_id); points.push(ll); items.push({ row, name, fresh });
+      let m = liveMarkers.get(row.user_id);
+      if (!m) {
+        m = L.circleMarker(ll, { radius: 9, color: "#ffffff", weight: 2, fillColor: color, fillOpacity: 1 }).bindPopup(popup).addTo(liveMapLayer);
+        liveMarkers.set(row.user_id, m);
+      } else {
+        m.setLatLng(ll); m.setStyle({ fillColor: color }); m.setPopupContent(popup);
+      }
+    });
+    for (const [id, m] of liveMarkers) if (!seen.has(id)) { liveMapLayer.removeLayer(m); liveMarkers.delete(id); }
+    map.invalidateSize();
+    liveLastPoints = points;
+    if (opts.fit || !liveFitted) { fitLiveMap(points); liveFitted = points.length > 0; }
+    const freshCount = items.filter(i => i.fresh).length;
+    $("liveLocationStatus").textContent = rows.length + " location(s), " + freshCount + " updated in the last 5 minutes. Last refresh " + new Date().toLocaleTimeString() + ".";
+    $("liveLocationList").innerHTML = items.map(({ row, name, fresh }) =>
+      '<div class="item" style="display:flex;justify-content:space-between;align-items:center;gap:8px;"><div><b>' + esc(name) + '</b> <span class="sess-badge ' + (fresh ? "now" : "") + '"' + (fresh ? "" : ' style="background:#94a3b8;"') + '>' + (fresh ? "LIVE" : "STALE") + '</span>' +
+      '<div class="muted">' + esc(fmtDate(row.updated_at)) + '</div></div>' +
+      '<a href="https://www.google.com/maps?q=' + encodeURIComponent(row.latitude + "," + row.longitude) + '" target="_blank" rel="noopener">Open</a></div>'
+    ).join("") || '<p class="muted">No location data yet.</p>';
+  } catch (err) {
+    $("liveLocationStatus").textContent = "Could not load locations: " + err.message;
+  } finally { liveBusy = false; }
 }
 window.loadLiveMap = loadLiveMap;
+window.setBasemap = setBasemap;
+window.fitLiveMapAll = () => fitLiveMap(liveLastPoints);
+setInterval(() => { if (page === "live-map" && isAdmin()) loadLiveMap(); }, LIVE_REFRESH_MS);
 
 /* ==================== WEATHER + CLOCK ==================== */
 let clockTimer = null;
@@ -3442,6 +3963,8 @@ async function updateLiveWeather(lat = 14.5995, lon = 120.9842) {
   } catch (err) { el.textContent = "Weather unavailable."; }
 }
 $("refreshWeatherButton")?.addEventListener("click", () => { updateLiveWeather(); toast("Weather refreshed"); });
+updateLiveWeather();
+setInterval(() => updateLiveWeather(), 10000);
 
 /* ==================== PENDING / ADMIN ==================== */
 async function approveRequest(id, approve) {
@@ -3741,6 +4264,12 @@ window.removePhoto = async function (field) {
 });
 
 /* ==================== SERVICE WORKER & BOOT ==================== */
+setInterval(() => {
+  if (!state.userId) return;
+  if (presenceChannel) { try { presenceChannel.track({ user_id: state.userId, name: state.profile?.full_name || state.email, online_at: new Date().toISOString() }).catch(() => {}); } catch (e) {} }
+  renderOnline(); renderMembers(); renderHome(); renderChatList();
+}, 10000);
+setInterval(() => { if (state.userId && state.schedules && state.schedules.length) renderSchedules(); }, 60000);
 if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
   navigator.serviceWorker.register("./sw.js").catch(() => {});
 }
