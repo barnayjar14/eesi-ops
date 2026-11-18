@@ -1,12 +1,12 @@
 {
-  "name": "EESI Elevators Operations",
-  "short_name": "EESI Ops",
-  "start_url": "./",
+  "name": "EESI Elevators — Operations Console",
+  "short_name": "EESI",
+  "start_url": "/",
   "display": "standalone",
-  "background_color": "#060e1f",
-  "theme_color": "#04061a",
+  "background_color": "#0b1524",
+  "theme_color": "#0b1524",
   "icons": [
-    { "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
   ]
 }
