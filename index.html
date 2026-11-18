@@ -241,107 +241,6 @@ td{color:#e8f0ff!important}
 .chat-head small{color:var(--muted);font-size:12px}
 .msgr-msgs{flex:1;min-height:0;overflow:auto;padding:4px 0 6px}
 .msgr-row{display:flex;gap:8px;align-items:flex-end;margin:2px 0 16px;animation:msgIn .24s ease-out}
-@keyframes msgIn{from{opacity:0;transform:transla:not(.no-decor) nav.bottom button{padding-right:0}
-body:not(.no-decor) button:not(.text-button):not(.composer-btn):not(.composer-emoji):not(.story):not(.info-row):not(.thread-row):not(.msg-context-btn):not(.report-att-del)::after{
-  content:var(--deco-icon);position:absolute;top:3px;right:5px;font-size:10px;line-height:1;opacity:.85;pointer-events:none;filter:drop-shadow(0 1px 2px rgba(0,0,0,.35));
-}
-body:not(.no-decor) nav.bottom button:not(.active)::after{opacity:.45;top:4px;right:8px;font-size:9px}
-body:not(.no-decor) nav.bottom button.active::after{opacity:.95;top:4px;right:8px;font-size:10px}
-body:not(.no-decor) .msgr-icon::after{top:2px;right:2px;font-size:9px}
-body.no-decor button::after{content:none!important}
-
-.badge,.badge-role{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;margin-left:6px;background:rgba(47,140,255,.1)!important;border:1px solid rgba(47,140,255,.5)!important;color:#7fb8ff!important}
-.field{margin-bottom:12px;position:relative}
-label{display:block;margin-bottom:6px;color:#8ea6cc!important;text-transform:uppercase;font-size:11px;font-weight:600}
-input,select,textarea{width:100%;padding:11px 12px;font-size:16px!important;font-weight:500;touch-action:manipulation;transition:border-color .2s,box-shadow .22s;background:rgba(6,14,31,.8)!important;color:#e8f0ff!important;border:1px solid rgba(47,140,255,.25)!important;border-radius:10px!important}
-input:focus,select:focus,textarea:focus{outline:none;border-color:#2f8cff!important;box-shadow:0 0 0 3px rgba(47,140,255,.18)!important}
-textarea{resize:vertical;min-height:80px}
-.check-row{display:flex;gap:8px;align-items:center;padding:8px 0}
-.check-row input{width:auto}
-.tabs,.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
-
-nav.bottom{position:fixed;bottom:0;left:0;right:0;height:calc(68px + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);display:flex;z-index:30;backdrop-filter:blur(22px) saturate(150%);-webkit-backdrop-filter:blur(22px) saturate(150%);background:linear-gradient(180deg,#0c1d3d,#081429)!important;border-top:1px solid rgba(47,140,255,.25)!important}
-nav.bottom button{flex:1;min-height:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;position:relative;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;color:#7d93b8!important;font-size:11px;font-weight:600}
-nav.bottom button:hover:not(:disabled){background:transparent!important;box-shadow:none!important;transform:none!important}
-nav.bottom button span{font-size:22px}
-nav.bottom button.active{color:#fff!important;background:rgba(30,108,242,.35)!important;border-radius:999px!important}
-nav.bottom button.active::before{content:"";position:absolute;top:6px;width:30px;height:3px;border-radius:0 0 3px 3px;background:#2f8cff!important}
-@supports(padding:max(0px)){nav.bottom{padding-bottom:max(6px,env(safe-area-inset-bottom))}}
-
-.person{display:flex;align-items:center;gap:12px;width:100%;padding:12px;margin:6px 0;text-align:left}
-.avatar{width:44px;height:44px;flex:0 0 44px;border-radius:50%;object-fit:cover;background:#1e6cf2!important;color:#fff!important;border:2px solid rgba(47,140,255,.6)!important;font-weight:700}
-.initial{display:grid;place-items:center;font-weight:900;font-size:16px}
-.person-info{flex:1;min-width:0}
-.person-info b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:15px;font-weight:700}
-.person-group-title{font-size:11px;font-weight:800;color:var(--gold);text-transform:uppercase;margin:12px 0 6px;border-bottom:1px dashed rgba(255,215,0,.25);padding-bottom:4px}
-
-.cover{height:150px;display:grid;place-items:center;background:linear-gradient(135deg,var(--violet) 0%,var(--pink) 50%,var(--cyan) 100%);background-size:cover;background-position:center;border-radius:14px;color:#fff;overflow:hidden;position:relative}
-.photo-row{display:flex;gap:12px;align-items:center;position:relative;margin:-40px 10px 0}
-.photo{width:88px;height:88px;border-radius:50%;object-fit:cover;background:var(--panel);border:2px solid rgba(47,140,255,.4)!important}
-.photo-fields{flex:1;padding-top:40px}
-.map{width:100%;height:320px;border:0;border-radius:10px}
-
-table{width:100%;border-collapse:collapse;overflow:hidden}
-th,td{padding:9px 8px;border:1px solid rgba(47,140,255,.18);text-align:left;font-size:13px}
-th{background:rgba(47,140,255,.08)!important;color:#8ea6cc!important;text-transform:uppercase;font-size:11px;font-weight:600}
-td{color:#e8f0ff!important}
-.dtr-tabs{display:flex;gap:8px;margin:0 0 12px}
-.dtr-paper{background:#fff;color:#000;border:0;padding:8px;width:100%;max-width:1000px;aspect-ratio:17/11;margin:0 auto 12px;overflow:auto;border-radius:4px;box-shadow:0 12px 40px rgba(0,0,0,.45)}
-.dp-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:11px;font-weight:700;background:#fff!important;border-radius:0!important;box-shadow:none!important;border:1px solid #000!important}
-.dp-table th,.dp-table td{border:1px solid #000!important;padding:4px 3px;text-align:center;overflow-wrap:anywhere;color:#000!important;background:#fff!important}
-.dp-table .dp-sheet-title{font-size:19px!important;line-height:1.2;font-style:normal;padding:5px}
-.dp-col-head th{font-style:italic;font-size:11px!important}
-.dp-empty{padding:14px!important;font-weight:400}
-.dp-employee-sign{width:34%;min-width:210px;text-align:center;margin-top:4px;color:#000}
-.dp-employee-sign img{display:block;width:180px;height:65px;object-fit:contain;margin:0 auto;border:0}
-.dp-employee-name{font-weight:bold;font-size:13px;margin-top:2px;padding-bottom:4px;border-bottom:3px double #000;color:#000}
-.dp-employee-caption{font-weight:bold;font-style:italic;font-size:11px;margin-top:4px;color:#000}
-.dtr-actions{display:flex;gap:8px;max-width:1000px;margin:0 auto}
-.dtr-actions button{flex:1;white-space:normal}
-.dtr-sign{background:#fff;border-radius:6px;border:1px solid var(--border);max-width:100%}
-.person-picker{max-height:180px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;padding:10px;background:rgba(4,8,24,.7)}
-
-.chat-page .chat-ct{display:flex;flex-direction:column;height:calc(100dvh - 158px);padding:8px 14px 0}
-#chatBrowser,#chatCompose,#activeChat,#chatInfo{display:flex;flex-direction:column;flex:1;min-height:0}
-.msgr-head{display:flex;align-items:center;gap:10px;margin:0 0 12px;flex:none}
-.msgr-title{font-size:26px;font-weight:800;margin:0;flex:1;color:#fff!important}
-.msgr-icon{width:40px;height:40px;border-radius:50%!important;font-size:16px;display:grid;place-items:center;flex:none;padding:0;background:rgba(47,140,255,.1)!important;color:#7fb8ff!important;border:1px solid rgba(47,140,255,.3)!important;box-shadow:0 3px 10px rgba(0,0,0,.4)!important}
-.msgr-search,.composer-input{display:flex;align-items:center;background:rgba(6,14,31,.85)!important;border:1px solid rgba(47,140,255,.22)!important;border-radius:999px!important}
-.msgr-search{gap:9px;padding:10px 16px;margin-bottom:12px;flex:none}
-.msgr-search input{border:0!important;background:transparent!important;padding:0;flex:1;font-size:15px;outline:none;width:auto;box-shadow:none!important}
-.msgr-search span{opacity:.6;font-size:14px}
-.msgr-stories{display:flex;gap:14px;overflow-x:auto;padding:2px 0 12px;flex:none;scrollbar-width:none}
-.msgr-stories::-webkit-scrollbar{display:none}
-.story{flex:0 0 auto;width:70px;text-align:center;background:none!important;border:0!important;padding:0}
-.story .bubble-av{position:relative;width:60px;height:60px;margin:0 auto 6px;border-radius:50%;border:2px solid var(--cyan);display:grid;place-items:center;font-size:22px}
-.story .bubble-av .avatar{width:100%;height:100%;border:0}
-.story small{display:block;font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
-.story .presdot{position:absolute;right:2px;bottom:2px;width:14px;height:14px;border-radius:50%;background:var(--green);border:2px solid var(--void);animation:pulseDot 2s infinite}
-.msgr-chips{display:flex;gap:8px;overflow-x:auto;margin:0 0 4px;padding-bottom:6px;flex:none;scrollbar-width:none}
-.msgr-chips::-webkit-scrollbar{display:none}
-.msgr-list{flex:1;min-height:0;overflow:auto;margin-top:4px}
-.thread-row{display:flex;gap:12px;align-items:center;width:100%;padding:10px 8px;background:none!important;border:0!important;border-radius:10px;text-align:left}
-.thread-row:active{background:rgba(47,140,255,.1)!important}
-.thread-av{position:relative;flex:0 0 54px;display:block}
-.thread-av .avatar{width:54px;height:54px;font-size:21px}
-.thread-av .online-dot{position:absolute;right:0;bottom:0;width:14px;height:14px;border:2px solid var(--void);border-radius:50%;background:var(--green)}
-.thread-txt{flex:1;min-width:0}
-.thread-top{display:flex;align-items:baseline;gap:8px}
-.thread-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:15px;font-weight:500}
-.thread-row.is-unread .thread-name{font-weight:800}
-.thread-time{color:var(--muted);flex:none;font-size:10px}
-.thread-sub{display:flex;align-items:center;gap:6px;margin-top:2px}
-.thread-preview{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;color:var(--muted)}
-.thread-row.is-unread .thread-preview{font-weight:600}
-.msgr-dot{width:10px;height:10px;border-radius:50%;background:var(--cyan);flex:none}
-
-.chat-head{display:flex;align-items:center;gap:8px;padding:0 0 10px;border-bottom:1px solid var(--border);margin-bottom:8px;flex:none}
-.chat-head .thread-av{flex:0 0 38px}
-.chat-head .thread-av .avatar{width:38px;height:38px;font-size:15px}
-.chat-head b{display:block;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}
-.chat-head small{color:var(--muted);font-size:12px}
-.msgr-msgs{flex:1;min-height:0;overflow:auto;padding:4px 0 6px}
-.msgr-row{display:flex;gap:8px;align-items:flex-end;margin:2px 0 16px;animation:msgIn .24s ease-out}
 @keyframes msgIn{from{opacity:0;transform:translateY(8px) scale(.97)}to{opacity:1;transform:none}}
 .msgr-row.mine{flex-direction:row-reverse}
 .msgr-row .avatar{width:30px;height:30px;font-size:13px;flex:0 0 30px}
@@ -482,7 +381,6 @@ header,nav,.msgr-head,.chat-head,.page>h1.title,.tile,.stat,.chip,.tab,.filter{u
 .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .inline-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
 
-/* Decoration Band & Daily Verse Decor */
 section.page:not(#page-chat)>.ct{display:flex;flex-direction:column;min-height:calc(100dvh - 210px)}
 section.page:not(#page-chat)>.ct>.deco-band{margin-top:auto}
 .deco-band{position:relative;overflow:hidden;margin:16px 0 8px;border-radius:14px;border:1px solid rgba(47,140,255,.28);background:linear-gradient(135deg,var(--dg1),var(--dg2));padding:14px 14px 18px;min-height:150px;display:flex;flex-direction:column;justify-content:center;gap:12px;box-shadow:var(--sh)}
@@ -496,14 +394,12 @@ section.page:not(#page-chat)>.ct>.deco-band{margin-top:auto}
 @keyframes decoFloat{from{transform:translateY(0) rotate(-5deg)}to{transform:translateY(-7px) rotate(5deg)}}
 @media(prefers-reduced-motion:reduce){.deco-icons .d{animation:none}}
 
-/* Live Map */
 .live-tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0}
 .seg{display:inline-flex;border:1px solid rgba(47,140,255,.35);border-radius:10px;overflow:hidden;box-shadow:0 3px 10px rgba(0,0,0,.3)}
 .seg button{border:0!important;border-radius:0!important;margin:0!important;min-height:34px;box-shadow:none!important}
 .seg button.active{background:#1e6cf2!important;color:#fff!important}
 #liveMap{height:min(62vh,460px)!important;width:100%;border-radius:8px;z-index:0}
 
-/* Session schedule badges & PIN */
 .item.sess-now{border-color:#22c55e!important;box-shadow:0 0 0 1px #22c55e,0 0 22px rgba(34,197,94,.35)!important}
 .item.sess-soon{border-color:#f59e0b!important;box-shadow:0 0 0 1px #f59e0b,0 0 18px rgba(245,158,11,.3)!important}
 .sess-badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;margin-left:6px;color:#04110a;vertical-align:middle}
@@ -513,15 +409,14 @@ section.page:not(#page-chat)>.ct>.deco-band{margin-top:auto}
 .pin-dots span{width:14px;height:14px;border-radius:50%;border:2px solid var(--cyan);background:transparent}
 .pin-dots span.on{background:var(--cyan)}
 .pin-input{width:100%;text-align:center;font-size:24px;letter-spacing:.5em!important;padding:10px}
+   
 .pin-shake{animation:pinShake .4s}
 @keyframes pinShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
 
-/* Pull-to-reload */
 .ptr-banner{position:fixed;left:50%;top:calc(12px + env(safe-area-inset-top));transform:translate(-50%,-90px);z-index:250;padding:9px 18px;border-radius:999px;font-size:13px;font-weight:700;background:var(--panel);color:var(--text);border:1px solid var(--border-hot);box-shadow:0 8px 24px rgba(0,0,0,.45);backdrop-filter:blur(12px);pointer-events:none;transition:transform .2s ease,opacity .2s ease;opacity:0;display:flex;align-items:center;gap:8px;white-space:nowrap}
 .ptr-banner.visible{opacity:1}
 .ptr-banner.ready{background:#1e6cf2;color:#fff;border-color:#1e6cf2;box-shadow:0 6px 20px rgba(30,108,242,.5)}
 
-/* Compact & Responsive */
 body.compact header{padding:8px 10px;gap:6px}
 body.compact .ct{padding:10px}
 body.compact .title{font-size:17px;margin-bottom:10px}
@@ -837,6 +732,7 @@ body.font-normal-style *:not(svg):not(svg *){font-style:normal!important}
       <div class="grid">
         <div class="tile clickable admin-only hidden" onclick="go('admin')"><span class="ic">⚙️</span>Admin</div>
         <div class="tile clickable admin-only hidden" onclick="go('live-map')"><span class="ic">🗺️</span>Live Map</div>
+        <div class="tile clickable" onclick="go('units')"><span class="ic">🛗</span>Units</div>
         <div class="tile clickable" onclick="go('reports')"><span class="ic">📄</span>Reports</div>
         <div class="tile clickable" onclick="go('announcements')"><span class="ic">📢</span>Announcements</div>
         <div class="tile clickable" onclick="go('schedule')"><span class="ic">📅</span>Schedule</div>
@@ -899,6 +795,43 @@ body.font-normal-style *:not(svg):not(svg *){font-style:normal!important}
         <button class="btn" type="button" onclick="saveSchedule()">Save schedule</button>
       </div>
       <div id="scheduleList"></div>
+    </div></section>
+
+    <section class="page hidden" id="page-units"><div class="ct">
+      <div class="site-header">
+        <h1 class="title">🛗 Units</h1>
+        <button class="btn" type="button" id="toggleUnitFormBtn" style="font-size:20px;width:44px;padding:0;display:grid;place-items:center;" aria-label="Add unit">＋</button>
+      </div>
+
+      <div id="unitFormCard" class="card hidden">
+        <h2 id="unitFormTitle" style="margin-top:0">Add unit</h2>
+        <div class="field"><label for="unitSite">Work site</label><select id="unitSite" required><option value="">Select a work site</option></select></div>
+        <div class="row">
+          <div class="field"><label for="unitName">Unit name / No.</label><input id="unitName" placeholder="e.g. Passenger Elevator 1"></div>
+          <div class="field"><label for="unitType">Unit type</label><select id="unitType"><option value="elevator">Elevator</option><option value="escalator">Escalator</option><option value="moving-walkway">Moving Walkway</option><option value="dumbwaiter">Dumbwaiter</option></select></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="unitStatus">Status</label><select id="unitStatus"><option>Operational</option><option>Under Maintenance</option><option>Needs Repair</option><option>Shutdown</option></select></div>
+          <div class="field"><label for="unitBrand">Brand / Model</label><input id="unitBrand" placeholder="e.g. Mitsubishi / Kone"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="unitSerial">Serial / Permit No.</label><input id="unitSerial"></div>
+          <div class="field"><label for="unitCapacity">Floors / Capacity</label><input id="unitCapacity" placeholder="e.g. 12F / 1000kg"></div>
+        </div>
+        <div class="field"><label for="unitNotes">Notes</label><textarea id="unitNotes"></textarea></div>
+        <div class="inline-actions">
+          <button class="btn" type="button" onclick="saveUnit()">Save unit</button>
+          <button class="gray" type="button" onclick="cancelUnitForm()">Cancel</button>
+        </div>
+      </div>
+
+      <div class="tabs" id="unitsRegionTabs">
+        <button class="tab active" type="button" data-units-region="Luzon">Luzon</button>
+        <button class="tab" type="button" data-units-region="Visayas">Visayas</button>
+        <button class="tab" type="button" data-units-region="Mindanao">Mindanao</button>
+      </div>
+      <div id="unitsSetupHint" class="card warn hidden"></div>
+      <div id="unitsList"></div>
     </div></section>
 
     <section class="page hidden" id="page-reports">
@@ -1147,7 +1080,7 @@ body.font-normal-style *:not(svg):not(svg *){font-style:normal!important}
       </div>
       <div class="card">
         <h2 style="margin-top:0">Annual leave balance</h2>
-        <p class="muted">Approved leave for the current calendar year. Workdays are Monday to Friday; holidays are not excluded.</p>
+        <p class="muted">Approved leave for the current calendar year. Every day (including weekends and holidays) counts toward the selected leave.</p>
         <div id="leaveBalances"><p class="muted">Loading balances…</p></div>
         <div class="inline-actions">
           <button class="btn" type="button" onclick="go('leave')">Request leave</button>
@@ -1168,8 +1101,9 @@ body.font-normal-style *:not(svg):not(svg *){font-style:normal!important}
           </div>
           <div class="field"><label for="leaveReason">Reason</label><textarea id="leaveReason" maxlength="1000"></textarea></div>
           <button class="btn" type="button" onclick="submitLeaveRequest()">Submit request</button>
+          <p id="leaveDaysPreview" class="muted"></p>
           <p id="leaveFormStatus" class="muted" role="status"></p>
-          <p class="muted">Requests show calendar days and Monday–Friday workdays. Leave is deducted only after approval. Holidays are not excluded.</p>
+          <p class="muted">Every day from start date to end date (including weekends and holidays) counts toward your selected leave once approved.</p>
         </div>
         <div class="card">
           <h2 style="margin-top:0">My leave requests</h2>
@@ -1287,7 +1221,16 @@ body.font-normal-style *:not(svg):not(svg *){font-style:normal!important}
       <div class="ct">
         <h1 class="title">🗺️ Live employee locations</h1>
         <p class="muted">Administrators only. Refreshes every 15 seconds. Green dot = updated in the last 5 minutes, grey = stale.</p>
-        <div class="live-tools"><div class="seg"><button type="button" class="active" data-basemap="satellite" onclick="setBasemap('satellite')">Satellite</button><button type="button" data-basemap="terrain" onclick="setBasemap('terrain')">Terrain</button></div><button type="button" class="gray small-btn" onclick="fitLiveMapAll()">Fit all</button><button type="button" class="gray small-btn" onclick="loadLiveMap({ fit: false })">Refresh now</button></div><div class="card" style="padding:8px"><div id="liveMap"></div></div>
+        <div class="live-tools">
+          <div class="seg">
+            <button type="button" class="active" data-basemap="map" onclick="setBasemap('map')">Map</button>
+            <button type="button" data-basemap="satellite" onclick="setBasemap('satellite')">Satellite</button>
+            <button type="button" data-basemap="terrain" onclick="setBasemap('terrain')">Terrain</button>
+          </div>
+          <button type="button" class="gray small-btn" onclick="fitLiveMapAll()">Fit all</button>
+          <button type="button" class="gray small-btn" onclick="loadLiveMap({ fit: false })">Refresh now</button>
+        </div>
+        <div class="card" style="padding:8px"><div id="liveMap"></div></div>
         <p id="liveLocationStatus" class="muted"></p>
         <div id="liveLocationList"></div>
       </div>
@@ -1307,6 +1250,7 @@ body.font-normal-style *:not(svg):not(svg *){font-style:normal!important}
   <nav class="bottom">
     <button type="button" data-page="home" class="active" onclick="go('home')"><span>🏠</span>Home</button>
     <button type="button" data-page="schedule" onclick="go('schedule')"><span>📅</span>Schedule</button>
+    <button type="button" data-page="units" onclick="go('units')"><span>🛗</span>Units</button>
     <button type="button" data-page="reports" onclick="go('reports')"><span>📄</span>Reports</button>
     <button type="button" data-page="chat" onclick="go('chat')"><span>💬</span>Chat</button>
   </nav>
@@ -1402,7 +1346,6 @@ body.font-normal-style *:not(svg):not(svg *){font-style:normal!important}
     </div>
   </div>
 </div>
-
 <script>
 (function () {
   "use strict";
@@ -1415,11 +1358,7 @@ const $ = id => document.getElementById(id);
 const DAILY_VERSES = [
   { text: "The Lord is my shepherd; I shall not want.", reference: "Psalm 23:1" },
   { text: "Be strong and courageous. Do not be afraid.", reference: "Joshua 1:9" },
-  { text: "Trust in the Lord with all your heart.", reference: "Proverbs 3:5" },
-  { text: "I can do all things through Christ who strengthens me.", reference: "Philippians 4:13" },
-  { text: "Whatever you do, work at it with all your heart.", reference: "Colossians 3:23" },
-  { text: "The Lord will watch over your coming and going both now and forevermore.", reference: "Psalm 121:8" },
-  { text: "Commit to the Lord whatever you do, and he will establish your plans.", reference: "Proverbs 16:3" }
+  { text: "Trust in the Lord with all your heart.", reference: "Proverbs 3:5" }
 ];
 
 if (!window.supabase) {
@@ -1449,7 +1388,7 @@ const state = {
   announcements: [], pending: [], appNotifications: [], approvalNotifications: [],
   leaveRequests: [], pmsRecords: [],
   threads: [], unread: {}, previews: {}, chatFilter: "all", activeThread: null, messages: [],
-  sites: [], schedules: [], dtrs: [], notes: [], recs: [],
+  sites: [], units: [], schedules: [], dtrs: [], notes: [], recs: [],
   reports: [], reportType: "service",
   setupIssue: "", booted: false, blockedUsers: []
 };
@@ -1465,8 +1404,6 @@ let isRegistering = false;
 let realtimeChannel = null;
 let presenceChannel = null;
 let retryTimer = null;
-let liveRetryDelay = 15000;
-let lastOnlineKey = "";
 let dbReady = false;
 const timers = {};
 
@@ -1596,19 +1533,21 @@ function checkNetwork() {
   return true;
 }
 
-/* ==================== DAILY VERSE (WITH DAY/SESSION DECORATION) ==================== */
+/* ==================== DAILY VERSE (WITH DAILY/SESSION DECORATION) ==================== */
 function renderDailyVerseDecor() {
-  const decorEl = $("dailyVerseDecor");
-  if (!decorEl) return;
-  const theme = activeDecor() || DAILY_DECOR[new Date().getDay()];
-  if (!theme) return;
-  decorEl.style.setProperty("--dg1", theme.from);
-  decorEl.style.setProperty("--dg2", theme.to);
-  decorEl.innerHTML =
-    '<div class="deco-ribbon">' + esc(theme.logo + " " + theme.label + " " + theme.logo) + '</div>' +
-    '<div class="deco-icons">' +
-    theme.icons.map((ic, i) => '<span class="d" style="animation-delay:' + (i * 0.3) + 's">' + ic + '</span>').join("") +
-    '</div>';
+  const box = $("dailyVerseDecor");
+  if (!box) return;
+  const theme = activeDecor();
+  if (!theme) {
+    box.classList.add("hidden");
+    box.innerHTML = "";
+    return;
+  }
+  box.classList.remove("hidden");
+  box.style.setProperty("--dg1", theme.from);
+  box.style.setProperty("--dg2", theme.to);
+  box.innerHTML = '<div class="deco-ribbon">' + esc(theme.label) + '</div><div class="deco-icons">' +
+    theme.icons.map((ic, i) => '<span class="d" style="animation-delay:' + (i * 0.3) + 's">' + ic + '</span>').join("") + '</div>';
 }
 function showDailyVerse() {
   const today = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Manila" }).format(new Date());
@@ -1991,8 +1930,8 @@ function applyDisplaySettings() {
   $("settingTextSize").value = textSize; $("settingCompact").checked = compact;
 }
 window.resetDisplaySettings = function () {
-  ["eesi-font", "eesi-font-weight", "eesi-font-style", "eesi-text-size", "eesi-compact", "eesi-theme", "eesi-decor"].forEach(k => localStorage.removeItem(k));
-  applyDisplaySettings(); applyTheme("dark"); renderDecor(); toast("Display settings reset");
+  ["eesi-font", "eesi-font-weight", "eesi-font-style", "eesi-text-size", "eesi-compact", "eesi-theme"].forEach(k => localStorage.removeItem(k));
+  applyDisplaySettings(); applyTheme("dark"); toast("Display settings reset");
 };
 $("settingTextSize").addEventListener("change", () => { localStorage.setItem("eesi-text-size", $("settingTextSize").value); applyDisplaySettings(); });
 $("settingCompact").addEventListener("change", () => { localStorage.setItem("eesi-compact", $("settingCompact").checked ? "on" : "off"); applyDisplaySettings(); });
@@ -2222,7 +2161,7 @@ async function bootInner(session) {
   showDailyVerse();
 
   await Promise.all([
-    loadBlockedUsers(), loadProfiles(), loadRoles(), loadSites(), loadSchedules(), loadDtrs(),
+    loadBlockedUsers(), loadProfiles(), loadRoles(), loadSites(), loadUnits(), loadSchedules(), loadDtrs(),
     loadNotes(), loadRecs(), loadAnnouncements(), loadPending(), loadLeaveRequests(), loadPmsRecords()
   ]);
   await loadThreads(); await loadUnread();
@@ -2263,12 +2202,12 @@ window.signOut = signOut;
 function resetState() {
   Object.assign(state, {
     userId: null, email: null, role: null, profile: null, profiles: [], roles: {}, presence: {},
-    sites: [], schedules: [], dtrs: [], notes: [], recs: [], announcements: [], pending: [], leaveRequests: [], pmsRecords: [],
+    sites: [], units: [], schedules: [], dtrs: [], notes: [], recs: [], announcements: [], pending: [], leaveRequests: [], pmsRecords: [],
     threads: [], unread: {}, previews: {}, chatFilter: "all", activeThread: null, messages: [], setupIssue: "",
     appNotifications: [], approvalNotifications: [], blockedUsers: [], booted: false, reportType: "service"
   });
   appNotificationsLoaded = false; approvalNotificationsLoaded = false; announcementsLoaded = false; reportsLoaded = false;
-  editingAnnouncementId = null; editingReportId = null; editingExistingUrls = [];
+  editingAnnouncementId = null; editingReportId = null; editingExistingUrls = []; editingUnitId = null;
   clearPendingReportFiles(); renderReportAttachmentPreview();
   try { closeChat(); } catch (e) {}
   $("welcome").textContent = ""; $("roleLabel").textContent = ""; $("messages").innerHTML = "";
@@ -2322,6 +2261,7 @@ function go(p) {
   $("settingsMenu").classList.add("hidden");
   document.querySelectorAll("nav.bottom button").forEach(btn => btn.classList.toggle("active", btn.dataset.page === p));
   if (p === "profile") renderProfile();
+  if (p === "units") { renderUnitSiteOptions(); renderUnits(); }
   if (p === "reports") renderReports();
   if (p === "chat") { renderChatList(); renderMessages(); }
   if (p === "notices") { loadAppNotifications(); loadApprovalNotifications(); setTimeout(() => { if (page === "notices") markReportsSeen(); }, 1500); }
@@ -2358,7 +2298,7 @@ async function loadSites() {
   const { data, error } = await client.from("sites").select("id,name,address,city,region").order("name");
   if (error) return setupError("Could not load sites", error);
   state.sites = data || [];
-  renderSites(); renderDtrSiteOptions(); renderPmsSiteOptions(); renderPmsChecklist(); renderReportSites(); renderReportFilters(); renderReports(); renderPmsRecordsFilters();
+  renderSites(); renderUnitSiteOptions(); renderUnits(); renderDtrSiteOptions(); renderPmsSiteOptions(); renderPmsChecklist(); renderReportSites(); renderReportFilters(); renderReports(); renderPmsRecordsFilters();
 }
 
 let reportsLoaded = false;
@@ -2395,7 +2335,7 @@ async function loadReports() {
   const newReports = reportsLoaded ? (data || []).filter(r => !previousIds.has(String(r.id)) && String(r.created_by) !== String(state.userId)) : [];
   state.reports = data || [];
   reportsLoaded = true;
-  renderReports(); renderHome(); renderNotices();
+  renderReports(); renderUnits(); renderHome(); renderNotices();
   if (newReports.length > 0 && !isWithinSelfActionWindow()) {
     const r = newReports[0];
     const typeLbl = r.report_type === "delivery" ? "Delivery Report" : "Service Report";
@@ -2412,6 +2352,7 @@ async function loadPmsRecords() {
   state.pmsRecords = data || [];
   renderPmsRecordsFilters();
   renderPmsRecords();
+  renderUnits();
 }
 let appNotificationsLoaded = false, approvalNotificationsLoaded = false;
 async function loadAppNotifications() {
@@ -2434,7 +2375,7 @@ async function loadApprovalNotifications() {
 async function loadSchedules() {
   const { data, error } = await client.from("schedules").select("id,title,region,scheduled_date,scheduled_time,time_in,time_out,priority,notes,created_at").order("scheduled_date", { ascending: true });
   if (error) return setupError("Could not load schedules", error);
-  state.schedules = data || []; renderSchedules(); renderNotices();
+  state.schedules = data || []; renderSchedules(); renderNotices(); renderUnits();
 }
 async function loadDtrs() {
   const { data, error } = await client.from("dtr_entries").select("id,user_id,work_date,location,job,time_in,time_out,overtime_approved").order("work_date", { ascending: false });
@@ -2449,7 +2390,7 @@ async function loadNotes() {
 async function loadRecs() {
   const { data, error } = await client.from("recommendations").select("id,user_id,condition,part,reason,site,location:specific_location,created_at,recommendation_comments(id,user_id,comment,created_at)").order("created_at", { ascending: false });
   if (error) return setupError("Could not load recommendations", error);
-  state.recs = data || []; renderRecs();
+  state.recs = data || []; renderRecs(); renderUnits();
 }
 let announcementsLoaded = false;
 async function loadAnnouncements() {
@@ -2527,8 +2468,8 @@ async function loadMessages(threadId) {
 /* ==================== LIVE SYNC ==================== */
 const RELOADERS = {
   message_reactions: () => { if (state.activeThread) loadMessages(state.activeThread); },
-  profiles: () => loadProfiles(), user_roles: () => refreshOwnRole(), sites: () => loadSites(), schedules: () => loadSchedules(),
-  dtr_entries: () => loadDtrs(), notes: () => loadNotes(), announcements: () => loadAnnouncements(),
+  profiles: () => loadProfiles(), user_roles: () => refreshOwnRole(), sites: () => loadSites(), site_units: () => loadUnits(),
+  schedules: () => loadSchedules(), dtr_entries: () => loadDtrs(), notes: () => loadNotes(), announcements: () => loadAnnouncements(),
   recommendations: () => loadRecs(), recommendation_comments: () => loadRecs(), registration_requests: () => loadPending(),
   threads: () => loadThreads(), thread_members: () => { loadThreads().then(() => { if (state.activeThread) renderMessages(); }); },
   messages: () => handleIncomingMessage(), app_notifications: () => loadAppNotifications(), service_delivery_reports: () => loadReports(),
@@ -2536,6 +2477,9 @@ const RELOADERS = {
   leave_requests: () => loadLeaveRequests(), approval_notifications: () => loadApprovalNotifications(), user_blocks: () => loadBlockedUsers()
 };
 const LIVE_TABLES = Object.keys(RELOADERS);
+let lastOnlineKey = "";
+let liveRetryDelay = 15000;
+
 function queueReload(table) {
   clearTimeout(timers[table]);
   timers[table] = setTimeout(async () => {
@@ -2544,7 +2488,8 @@ function queueReload(table) {
     if (table !== "messages") { renderAll(); if (page === "admin") renderAdmin(); }
     if (!isWithinSelfActionWindow()) {
       if (table === "schedules") showBackgroundNotification("📅 New Schedule", "A new schedule has been added.", [300, 100, 300]);
-      else if (table === "recommendations" || table === "recommendation_comments") showBackgroundNotification("📌 New Recommendation", "A new recommendation or comment was added.", [200, 100, 200]);
+      else if (table === "recommendations" ||
+       table === "recommendation_comments") showBackgroundNotification("📌 New Recommendation", "A new recommendation or comment was added.", [200, 100, 200]);
       else if (table === "registration_requests" && isManager()) showBackgroundNotification("⏳ Pending Registration", "A new user is waiting for approval.", [200, 100, 200]);
     }
   }, 280);
@@ -2590,7 +2535,11 @@ function startLive() {
     lastOnlineKey = key;
     renderOnline(); renderMembers(); renderHome(); renderChatList();
   });
-  presence.subscribe(async status => { if (status === "SUBSCRIBED") await presence.track({ user_id: state.userId, name: state.profile?.full_name || state.email, online_at: new Date().toISOString() }); });
+  presence.subscribe(async status => {
+    if (status === "SUBSCRIBED") {
+      await presence.track({ user_id: state.userId, name: state.profile?.full_name || state.email, online_at: new Date().toISOString() });
+    }
+  });
   presenceChannel = presence; startCallListener();
 }
 function onlineIds() { const ids = new Set(); Object.values(state.presence).forEach(metas => (metas || []).forEach(m => { if (m.user_id) ids.add(m.user_id); })); return ids; }
@@ -2634,14 +2583,54 @@ document.addEventListener("visibilitychange", () => {
 });
 async function reloadEverything() {
   if (!state.userId) return;
-  await Promise.all([loadProfiles(), loadRoles(), loadSites(), loadSchedules(), loadDtrs(), loadNotes(), loadRecs(), loadAnnouncements(), loadPending(), loadThreads(), loadLeaveRequests(), loadReports(), loadPmsRecords()]);
+  await Promise.all([loadProfiles(), loadRoles(), loadSites(), loadUnits(), loadSchedules(), loadDtrs(), loadNotes(), loadRecs(), loadAnnouncements(), loadPending(), loadThreads(), loadLeaveRequests(), loadReports(), loadPmsRecords()]);
   await loadUnread(); renderAll(); if (state.activeThread) await loadMessages(state.activeThread);
 }
 
 /* ==================== RENDERERS ==================== */
 function renderAll() {
-  renderHome(); renderMembers(); renderOnline(); renderPending(); renderAnnouncements(); renderSchedules(); renderSites(); renderDtr(); renderNotes(); renderRecs(); renderNotices(); renderChatList(); renderLeave(); renderReports(); renderPmsRecords();
+  renderHome(); renderMembers(); renderOnline(); renderPending(); renderAnnouncements(); renderSchedules(); renderSites(); renderUnits(); renderDtr(); renderNotes(); renderRecs(); renderNotices(); renderChatList(); renderLeave(); renderReports(); renderPmsRecords();
 }
+
+let homeHolidayMonth = "all";
+window.setHomeHolidayMonth = function (val) {
+  homeHolidayMonth = val;
+  renderHome();
+};
+function phHolidays(year) {
+  const iso = d => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  const easter = easterSunday(year);
+  const maundy = new Date(easter.getTime() - 3 * 864e5);
+  const goodFri = new Date(easter.getTime() - 2 * 864e5);
+  const blackSat = new Date(easter.getTime() - 1 * 864e5);
+  const aug31 = new Date(year, 7, 31);
+  const heroesDay = new Date(year, 7, 31 - ((aug31.getDay() + 6) % 7));
+
+  return [
+    { date: `${year}-01-01`, name: "New Year's Day", kind: "Regular Holiday" },
+    { date: `${year}-02-25`, name: "EDSA People Power Revolution Anniversary", kind: "Special Holiday" },
+    { date: iso(maundy), name: "Maundy Thursday", kind: "Regular Holiday" },
+    { date: iso(goodFri), name: "Good Friday", kind: "Regular Holiday" },
+    { date: iso(blackSat), name: "Black Saturday", kind: "Special Non-Working Holiday" },
+    { date: `${year}-04-09`, name: "Araw ng Kagitingan (Day of Valor)", kind: "Regular Holiday" },
+    { date: `${year}-05-01`, name: "Labor Day", kind: "Regular Holiday" },
+    { date: `${year}-06-12`, name: "Independence Day", kind: "Regular Holiday" },
+    { date: `${year}-07-27`, name: "Iglesia ni Cristo Founding Anniversary", kind: "Special National Working Holiday" },
+    { date: `${year}-08-21`, name: "Ninoy Aquino Day", kind: "Special Non-Working Holiday" },
+    { date: iso(heroesDay), name: "National Heroes Day", kind: "Regular Holiday" },
+    { date: `${year}-09-08`, name: "Feast of the Nativity of the Blessed Virgin Mary", kind: "Special Working Holiday" },
+    { date: `${year}-10-31`, name: "All Saints' Day Eve", kind: "Special Non-Working Holiday" },
+    { date: `${year}-11-01`, name: "All Saints' Day", kind: "Special Non-Working Holiday" },
+    { date: `${year}-11-02`, name: "All Souls' Day", kind: "Special Non-Working Holiday" },
+    { date: `${year}-11-30`, name: "Bonifacio Day", kind: "Regular Holiday" },
+    { date: `${year}-12-08`, name: "Feast of the Immaculate Conception of Mary", kind: "Special Non-Working Holiday" },
+    { date: `${year}-12-24`, name: "Christmas Eve", kind: "Special Non-Working Holiday" },
+    { date: `${year}-12-25`, name: "Christmas Day", kind: "Regular Holiday" },
+    { date: `${year}-12-30`, name: "Rizal Day", kind: "Regular Holiday" },
+    { date: `${year}-12-31`, name: "Last Day of the Year", kind: "Special Non-Working Holiday" }
+  ].sort((a, b) => a.date.localeCompare(b.date));
+}
+
 function renderHome() {
   if (!state.userId) return;
   const online = onlineIds().size; const myDtr = state.dtrs.filter(d => d.user_id === state.userId).length;
@@ -2653,6 +2642,15 @@ function renderHome() {
   $("welcome").textContent = state.profile?.full_name || state.email || ""; $("roleLabel").textContent = roleLabel(state.role);
   updateAnnouncementTicker();
   const box = $("homeTimeline"); if (!box) return;
+
+  const now = new Date();
+  const year = now.getFullYear();
+  const currentMonth = now.getMonth();
+  const todayStr = localDateKey(now);
+  const allHolidays = phHolidays(year);
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+  const thisMonthHolidays = allHolidays.filter(h => Number(h.date.slice(5, 7)) - 1 === currentMonth);
   const items = [
     ...state.announcements.map(a => ({ date: a.created_at, icon: "📢", title: a.title || "Announcement", detail: a.body || "", label: "Announcement" })),
     ...visibleSchedules().filter(s => s.scheduled_date).map(s => ({ date: s.scheduled_date + "T" + (s.time_in || "00:00"), icon: "📅", title: s.title || "Schedule", detail: [s.region, s.time_in && s.time_out ? s.time_in + "–" + s.time_out : ""].filter(Boolean).join(" · "), label: "Schedule" })),
@@ -2667,11 +2665,41 @@ function renderHome() {
         detail: [profileName(r.created_by), site ? site.name : "", bodyText.slice(0, 140)].filter(Boolean).join(" · "),
         label: typeLbl
       };
-    })
+    }),
+    ...thisMonthHolidays.map(h => ({ date: h.date + "T00:00:00", icon: "🇵🇭", title: h.name, detail: h.kind, label: "PH Holiday" }))
   ].filter(item => item.date).sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 20);
-  const nextHtml = items.map(item => '<div class="item"><b>' + item.icon + ' ' + esc(item.title) + '</b><div class="muted">' + esc(item.label) + ' · ' + esc(fmtDate(item.date)) + '</div><div>' + esc(item.detail) + '</div></div>').join("") || '<p class="muted">No timeline items yet.</p>';
+
+  const activityHtml = items.map(item =>
+    '<div class="item"><b>' + item.icon + ' ' + esc(item.title) + '</b><div class="muted">' + esc(item.label) + ' · ' + esc(fmtDate(item.date)) + '</div><div>' + esc(item.detail) + '</div></div>'
+  ).join("") || '<p class="muted">No timeline items yet.</p>';
+
+  const monthOptions = '<option value="all"' + (homeHolidayMonth === "all" ? " selected" : "") + '>All Months (Jan–Dec ' + year + ')</option>' +
+    monthNames.map((m, idx) => '<option value="' + idx + '"' + (String(homeHolidayMonth) === String(idx) ? " selected" : "") + '>' + esc(m) + (idx === currentMonth ? " (Current)" : "") + '</option>').join("");
+
+  const monthsToShow = homeHolidayMonth === "all" ? monthNames.map((_, idx) => idx) : [Number(homeHolidayMonth)];
+  const holidayListHtml = monthsToShow.map(mIdx => {
+    const list = allHolidays.filter(h => Number(h.date.slice(5, 7)) - 1 === mIdx);
+    const isCurrent = mIdx === currentMonth;
+    const rows = list.map(h => {
+      const isToday = h.date === todayStr;
+      return '<div class="pv-row"><span><b>' + esc(fmtDay(h.date)) + '</b> — ' + esc(h.name) + (isToday ? ' <span class="sess-badge now">TODAY</span>' : '') + '</span><span class="muted">' + esc(h.kind) + '</span></div>';
+    }).join("") || '<div class="muted">No national holiday listed.</div>';
+    return '<div class="item' + (isCurrent ? ' sess-soon' : '') + '"><b>🇵🇭 ' + esc(monthNames[mIdx]) + ' ' + year + '</b>' + (isCurrent ? ' <span class="sess-badge soon">THIS MONTH</span>' : '') + '<div style="margin-top:6px;">' + rows + '</div></div>';
+  }).join("");
+
+  const nextHtml =
+    activityHtml +
+    '<div style="margin-top:14px;padding-top:12px;border-top:1px dashed var(--border);">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;">' +
+        '<h3 style="margin:0;">🇵🇭 Philippine Holidays (' + year + ')</h3>' +
+        '<select aria-label="Filter holiday month" style="width:auto;min-width:170px;padding:6px 10px;" onchange="setHomeHolidayMonth(this.value)">' + monthOptions + '</select>' +
+      '</div>' +
+      holidayListHtml +
+    '</div>';
+
   if (box.innerHTML !== nextHtml) box.innerHTML = nextHtml;
 }
+
 const SYSTEM_ANNOUNCEMENTS = [
   { title: "✨ GOOD VIBES", body: "Great teamwork builds great results. Stay positive, stay sharp, and have a safe, productive shift!" },
   { title: "🙌 GOOD VIBES", body: "Every safe job well done protects lives. Keep smiling and support your teammates today!" },
@@ -2695,7 +2723,7 @@ function updateAnnouncementTicker() {
   if (line === tickerKey) return;
   tickerKey = line;
   text.textContent = line;
-  text.style.animation = "marquee " + Math.max(25, Math.round(line.length * 0.14)) + "s linear infinite";
+  text.style.animation = "marquee " + Math.max(20, Math.round(line.length * 0.18)) + "s linear infinite";
 }
 function face(p) { const src = safeUrl(p?.avatar_url); const initial = esc(((p?.full_name || "?")[0] || "?").toUpperCase()); return src ? '<img class="avatar" src="' + esc(src) + '" alt="">' : '<span class="avatar initial">' + initial + '</span>'; }
 function memberRow(p) {
@@ -2750,6 +2778,237 @@ function renderSchedules() {
   }).join("") || '<p class="muted">No schedules assigned to you.</p>';
 }
 function renderSites() { const box = $("siteList"); if (!box) return; box.innerHTML = state.sites.map(s => '<div class="item"><b>' + esc(s.name) + '</b><div class="muted">' + esc([s.address, s.city, s.region].filter(Boolean).join(" · ")) + '</div><div class="inline-actions"><button class="gray small-btn" type="button" data-act="map" data-id="' + esc(s.id) + '">📍 Map</button>' + (isManager() ? '<button class="red small-btn" type="button" data-act="del-site" data-id="' + esc(s.id) + '">Delete</button>' : '') + '</div></div>').join("") || '<p class="muted">No sites yet.</p>'; }
+
+/* ==================== UNITS (3 REGIONS -> WORK SITES -> CONNECTED ALL) ==================== */
+let unitsRegion = "Luzon";
+let editingUnitId = null;
+
+async function loadUnits() {
+  const { data, error } = await client.from("site_units").select("id,site_id,unit_name,unit_type,status,brand_model,serial_no,capacity_floors,notes,created_by,created_at").order("unit_name");
+  if (error) {
+    if ($("unitsSetupHint")) {
+      $("unitsSetupHint").classList.remove("hidden");
+      $("unitsSetupHint").textContent = "Run the site_units SQL in Supabase to save units (" + error.message + ")";
+    }
+    return;
+  }
+  $("unitsSetupHint")?.classList.add("hidden");
+  state.units = data || [];
+  renderUnits();
+}
+
+function renderUnitSiteOptions() {
+  const sel = $("unitSite");
+  if (!sel) return;
+  const cur = sel.value;
+  const grouped = ["Luzon", "Visayas", "Mindanao"].map(reg => {
+    const list = state.sites.filter(s => s.region === reg);
+    if (!list.length) return "";
+    return '<optgroup label="' + esc(reg) + '">' + list.map(s => '<option value="' + esc(s.id) + '">' + esc(s.name) + (s.city ? " (" + esc(s.city) + ")" : "") + '</option>').join("") + '</optgroup>';
+  }).join("");
+  const other = state.sites.filter(s => !["Luzon", "Visayas", "Mindanao"].includes(s.region));
+  const otherHtml = other.map(s => '<option value="' + esc(s.id) + '">' + esc(s.name) + '</option>').join("");
+  sel.innerHTML = '<option value="">Select a work site</option>' + grouped + otherHtml;
+  if (state.sites.some(s => String(s.id) === cur)) sel.value = cur;
+}
+
+document.querySelectorAll("[data-units-region]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    unitsRegion = btn.dataset.unitsRegion;
+    document.querySelectorAll("[data-units-region]").forEach(b => b.classList.toggle("active", b === btn));
+    renderUnits();
+  });
+});
+
+$("toggleUnitFormBtn")?.addEventListener("click", () => {
+  const card = $("unitFormCard");
+  if (!card) return;
+  const opening = card.classList.contains("hidden");
+  if (opening) {
+    editingUnitId = null;
+    $("unitFormTitle").textContent = "Add unit";
+    renderUnitSiteOptions();
+    const firstInRegion = state.sites.find(s => s.region === unitsRegion);
+    if (firstInRegion) $("unitSite").value = firstInRegion.id;
+  }
+  card.classList.toggle("hidden");
+  if (opening) card.scrollIntoView({ behavior: "smooth" });
+});
+
+window.openAddUnitForSite = function (siteId) {
+  editingUnitId = null;
+  $("unitFormTitle").textContent = "Add unit";
+  ["unitName", "unitBrand", "unitSerial", "unitCapacity", "unitNotes"].forEach(id => { if ($(id)) $(id).value = ""; });
+  $("unitType").value = "elevator";
+  $("unitStatus").value = "Operational";
+  renderUnitSiteOptions();
+  $("unitSite").value = siteId;
+  $("unitFormCard").classList.remove("hidden");
+  $("unitFormCard").scrollIntoView({ behavior: "smooth" });
+};
+
+window.editUnit = function (unitId) {
+  const u = state.units.find(x => String(x.id) === String(unitId));
+  if (!u) return;
+  editingUnitId = u.id;
+  $("unitFormTitle").textContent = "Edit unit";
+  renderUnitSiteOptions();
+  $("unitSite").value = u.site_id;
+  $("unitName").value = u.unit_name || "";
+  $("unitType").value = u.unit_type || "elevator";
+  $("unitStatus").value = u.status || "Operational";
+  $("unitBrand").value = u.brand_model || "";
+  $("unitSerial").value = u.serial_no || "";
+  $("unitCapacity").value = u.capacity_floors || "";
+  $("unitNotes").value = u.notes || "";
+  $("unitFormCard").classList.remove("hidden");
+  $("unitFormCard").scrollIntoView({ behavior: "smooth" });
+};
+
+window.cancelUnitForm = function () {
+  editingUnitId = null;
+  ["unitName", "unitBrand", "unitSerial", "unitCapacity", "unitNotes"].forEach(id => { if ($(id)) $(id).value = ""; });
+  $("unitFormCard")?.classList.add("hidden");
+};
+
+window.saveUnit = async function () {
+  if (!checkNetwork()) return;
+  const siteId = $("unitSite").value;
+  const unitName = $("unitName").value.trim();
+  if (!siteId || !unitName) return toast("Select a work site and enter a unit name");
+  const payload = {
+    site_id: siteId,
+    unit_name: unitName,
+    unit_type: $("unitType").value,
+    status: $("unitStatus").value,
+    brand_model: $("unitBrand").value.trim() || null,
+    serial_no: $("unitSerial").value.trim() || null,
+    capacity_floors: $("unitCapacity").value.trim() || null,
+    notes: $("unitNotes").value.trim() || null
+  };
+  const q = editingUnitId
+    ? client.from("site_units").update(payload).eq("id", editingUnitId)
+    : client.from("site_units").insert({ ...payload, created_by: state.userId });
+  const { error } = await q;
+  if (error) return toast("Could not save unit: " + error.message);
+  window.cancelUnitForm();
+  suppressNotifications();
+  await loadUnits();
+  toast("Unit saved");
+};
+
+window.deleteUnit = async function (unitId) {
+  if (!confirm("Delete this unit?")) return;
+  const { error } = await client.from("site_units").delete().eq("id", unitId);
+  if (error) return toast("Delete failed: " + error.message);
+  suppressNotifications();
+  await loadUnits();
+  toast("Unit deleted");
+};
+
+window.openUnitReport = function (siteId, unitName) {
+  state.reportType = "service";
+  document.querySelectorAll("#reportTypeTabs [data-report-type]").forEach(x => x.classList.toggle("active", x.dataset.reportType === "service"));
+  $("reportContent").classList.remove("hidden");
+  $("pmsReportContent").classList.add("hidden");
+  $("searchView").classList.add("hidden");
+  renderReportSites();
+  $("reportSite").value = siteId;
+  if (!$("reportDate").value) $("reportDate").value = new Date().toISOString().slice(0, 10);
+  if (unitName) $("reportTitle").value = unitName + " — ";
+  go("reports");
+  if (!isAdmin()) {
+    $("reportFormCard")?.classList.remove("hidden");
+    $("reportFormCard")?.scrollIntoView({ behavior: "smooth" });
+  }
+};
+
+window.openUnitPms = function (siteId, region, unitType) {
+  if (isManager()) {
+    $("pmsRecordsTab")?.click();
+    setTimeout(() => {
+      if ($("pmsRecordsSite")) { $("pmsRecordsSite").value = siteId; renderPmsRecords(); }
+    }, 80);
+    go("reports");
+    return;
+  }
+  state.reportType = "checklist";
+  document.querySelectorAll("#reportTypeTabs [data-report-type]").forEach(x => x.classList.toggle("active", x.dataset.reportType === "checklist"));
+  $("reportContent").classList.add("hidden");
+  $("searchView").classList.add("hidden");
+  $("pmsReportContent").classList.remove("hidden");
+  $("pmsRecordsView").classList.add("hidden");
+  $("pmsChecklistView").classList.remove("hidden");
+  pmsRegion = region || "Luzon";
+  pmsUnit = (unitType === "escalator" || unitType === "moving-walkway") ? "escalator" : "elevator";
+  pmsSiteId = siteId;
+  document.querySelectorAll("[data-pms-region]").forEach(x => x.classList.toggle("active", x.dataset.pmsRegion === pmsRegion));
+  document.querySelectorAll("[data-pms-unit]").forEach(x => x.classList.toggle("active", x.dataset.pmsUnit === pmsUnit));
+  go("reports");
+  openPmsChecklist();
+};
+
+window.openSiteOnMap = function (siteId) {
+  const s = state.sites.find(x => String(x.id) === String(siteId));
+  if (!s) return;
+  go("sites");
+  $("siteMapCard").classList.remove("hidden");
+  $("siteMapTitle").textContent = s.name;
+  $("siteMapFrame").src = `https://maps.google.com/maps?q=${encodeURIComponent([s.name, s.address, s.city].filter(Boolean).join(", "))}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+  $("siteMapCard").scrollIntoView({ behavior: "smooth" });
+};
+
+function renderUnits() {
+  const box = $("unitsList");
+  if (!box) return;
+  const sites = state.sites.filter(s => s.region === unitsRegion);
+  box.innerHTML = sites.map(site => {
+    const siteUnits = state.units.filter(u => String(u.site_id) === String(site.id));
+    const siteReports = state.reports.filter(r => String(r.site_id) === String(site.id));
+    const sitePms = state.pmsRecords.filter(r => String(r.site_id) === String(site.id));
+    const siteRecs = state.recs.filter(r => (r.site || "").trim().toLowerCase() === (site.name || "").trim().toLowerCase());
+    const siteSchedules = visibleSchedules().filter(s => (s.title || "").toLowerCase().includes((site.name || "").toLowerCase()));
+
+    const unitsHtml = siteUnits.map(u => {
+      const canManage = isManager() || String(u.created_by) === String(state.userId);
+      const statusBadge = u.status === "Operational" ? "now" : (u.status === "Needs Repair" || u.status === "Shutdown" ? "" : "soon");
+      const badgeStyle = (u.status === "Needs Repair" || u.status === "Shutdown") ? ' style="background:var(--red);color:#fff;"' : "";
+      const specs = [u.unit_type, u.brand_model, u.serial_no ? "S/N: " + u.serial_no : "", u.capacity_floors].filter(Boolean).join(" · ");
+      return '<div class="item" style="margin-top:8px;">' +
+        '<b>🛗 ' + esc(u.unit_name) + '</b> <span class="sess-badge ' + statusBadge + '"' + badgeStyle + '>' + esc(u.status || "Operational") + '</span>' +
+        '<div class="muted">' + esc(specs) + '</div>' +
+        (u.notes ? '<div style="margin-top:4px">' + esc(u.notes) + '</div>' : '') +
+        '<div class="inline-actions">' +
+          '<button class="gray small-btn" type="button" onclick="openUnitPms(\'' + esc(site.id) + '\',\'' + esc(site.region) + '\',\'' + esc(u.unit_type) + '\')">✅ PMS</button>' +
+          '<button class="gray small-btn" type="button" onclick="openUnitReport(\'' + esc(site.id) + '\',\'' + esc(u.unit_name) + '\')">📄 Report</button>' +
+          (canManage ? '<button class="btn small-btn" type="button" onclick="editUnit(\'' + esc(u.id) + '\')">Edit</button><button class="red small-btn" type="button" onclick="deleteUnit(\'' + esc(u.id) + '\')">Delete</button>' : '') +
+        '</div>' +
+      '</div>';
+    }).join("") || '<p class="muted" style="margin:8px 0;">No units added for this site yet.</p>';
+
+    const latestReport = siteReports[0];
+    const latestPms = sitePms[0];
+    const connectedHtml =
+      '<div class="muted" style="margin-top:8px;padding-top:8px;border-top:1px dashed var(--border);font-size:12px;">' +
+        '<div><b>Connected:</b> ' + siteUnits.length + ' unit(s) · ' + siteReports.length + ' report(s) · ' + sitePms.length + ' PMS · ' + siteRecs.length + ' rec(s) · ' + siteSchedules.length + ' schedule(s)</div>' +
+        (latestReport ? '<div>Latest report: <b>' + esc(latestReport.title) + '</b> (' + esc(fmtDay(latestReport.report_date)) + ')</div>' : '') +
+        (latestPms ? '<div>Latest PMS: <b>' + esc((latestPms.unit_type || "").toUpperCase()) + '</b> — ' + latestPms.items_passed + '/' + latestPms.items_total + ' passed (' + esc(fmtDay(latestPms.checklist_date)) + ')</div>' : '') +
+      '</div>';
+
+    return '<div class="card">' +
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">' +
+        '<div><h2 style="margin:0 0 4px;">' + esc(site.name) + '</h2>' +
+        '<div class="muted">' + esc([site.address, site.city, site.region].filter(Boolean).join(" · ")) + '</div></div>' +
+        '<button class="gray small-btn" type="button" onclick="openSiteOnMap(\'' + esc(site.id) + '\')">📍 Map</button>' +
+      '</div>' +
+      unitsHtml +
+      '<div class="inline-actions"><button class="btn small-btn" type="button" onclick="openAddUnitForSite(\'' + esc(site.id) + '\')">＋ Add Unit</button>' +
+      '<button class="gray small-btn" type="button" onclick="openUnitReport(\'' + esc(site.id) + '\',\'\')">📄 New Report</button></div>' +
+      connectedHtml +
+    '</div>';
+  }).join("") || '<p class="muted">No work sites in ' + esc(unitsRegion) + ' yet. Add sites from the Sites page.</p>';
+}
+
 function dtrOwn() { return isManager() ? state.dtrs : state.dtrs.filter(d => String(d.user_id) === String(state.userId)); }
 function employeeDisplayName(uid) { return String((uid ? profileName(uid) : (state.profile?.full_name || profileOf(state.userId)?.full_name)) || "").trim().toUpperCase(); }
 function renderDtr() {
@@ -2919,11 +3178,10 @@ function renderChatList() {
   const peopleRow = $("chatPeopleRow");
   if (peopleRow) {
     const online = onlineIds();
-    const rowHtml = state.profiles.filter(p => String(p.user_id) !== String(state.userId)).slice(0, 20).map(p => {
+    peopleRow.innerHTML = state.profiles.filter(p => String(p.user_id) !== String(state.userId)).slice(0, 20).map(p => {
       const on = online.has(p.user_id);
       return '<button class="story" type="button" data-act="open-dm" data-id="' + esc(p.user_id) + '"><span class="bubble-av">' + face(p) + (on ? '<span class="presdot"></span>' : '') + '</span><small>' + esc((p.full_name || "").split(" ")[0]) + '</small></button>';
     }).join("");
-    if (peopleRow.innerHTML !== rowHtml) peopleRow.innerHTML = rowHtml;
   }
   const q = ($("chatSearch")?.value || "").trim().toLowerCase(); const filter = state.chatFilter || "all";
   let list = state.threads.filter(t => { const hidden = isHidden(t); if (filter === "archived") return hidden; if (hidden) return false; if (filter === "unread") return (state.unread[t.id] || 0) > 0; if (filter === "groups") return t.kind === "group"; return true; }).filter(t => !q || threadTitle(t).toLowerCase().includes(q));
@@ -2931,7 +3189,7 @@ function renderChatList() {
     const pa = getPref(a.id).pinned ? 1 : 0, pb = getPref(b.id).pinned ? 1 : 0; if (pa !== pb) return pb - pa;
     return ((state.previews[b.id]?.created_at) || b.created_at || "").localeCompare((state.previews[a.id]?.created_at) || a.created_at || "");
   });
-  const listHtml = list.map(t => {
+  box.innerHTML = list.map(t => {
     const title = threadTitle(t), preview = state.previews[t.id], unread = state.unread[t.id] || 0;
     const lastTime = preview?.created_at ? new Date(preview.created_at).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) : "";
     let previewText = "No messages yet";
@@ -2944,7 +3202,6 @@ function renderChatList() {
     const isOnline = other && onlineIds().has(other.user_id);
     return '<button class="thread-row' + (unread ? ' is-unread' : '') + '" type="button" data-act="open-thread" data-id="' + esc(t.id) + '"><span class="thread-av">' + threadAvatar(t) + (isDirect && isOnline ? '<span class="online-dot"></span>' : '') + '</span><span class="thread-txt"><span class="thread-top"><span class="thread-name">' + esc(title) + '</span><span class="thread-time">' + esc(lastTime) + '</span></span><span class="thread-sub"><span class="thread-preview">' + esc(previewText) + '</span>' + (unread ? '<span class="msgr-dot"></span>' : '') + '</span></span></button>';
   }).join("") || '<p class="muted" style="padding:20px;text-align:center;">No chats yet. Tap the pencil to start one.</p>';
-  if (box.innerHTML !== listHtml) box.innerHTML = listHtml;
 }
 function updateSendBtn() { const input = $("messageText"), btn = $("sendBtn"); if (!input || !btn) return; btn.textContent = editingMessageId ? "✓" : (input.value.trim().length > 0 ? "➤" : "👍"); }
 window.openCompose = function () {
@@ -3610,35 +3867,69 @@ async function submitReport() {
 }
 $("submitReportButton")?.addEventListener("click", submitReport);
 
-/* ==================== LEAVE ==================== */
-function workdaysBetween(a, b) { if (!a || !b) return 0; let d = new Date(a + "T00:00:00"), end = new Date(b + "T00:00:00"), n = 0; while (d <= end) { const w = d.getDay(); if (w !== 0 && w !== 6) n++; d.setDate(d.getDate() + 1); } return n; }
-function calendarDays(a, b) { if (!a || !b) return 0; return Math.round((new Date(b + "T00:00:00") - new Date(a + "T00:00:00")) / 86400000) + 1; }
+/* ==================== LEAVE (EVERY DAY COUNTS) ==================== */
+function leaveDaysCount(a, b) {
+  if (!a || !b) return 0;
+  const start = new Date(a + "T00:00:00");
+  const end = new Date(b + "T00:00:00");
+  if (isNaN(start) || isNaN(end) || end < start) return 0;
+  return Math.round((end - start) / 86400000) + 1;
+}
+function updateLeaveDaysPreview() {
+  const el = $("leaveDaysPreview");
+  if (!el) return;
+  const start = $("leaveStart")?.value;
+  const end = $("leaveEnd")?.value;
+  const typeEl = $("leaveType");
+  const typeLabel = typeEl ? typeEl.options[typeEl.selectedIndex].text : "leave";
+  if (!start || !end) { el.textContent = ""; return; }
+  const days = leaveDaysCount(start, end);
+  if (!days) { el.textContent = "End date must be on or after start date."; return; }
+  el.textContent = "Total: " + days + " day(s) will count toward " + typeLabel + ".";
+}
+["leaveStart", "leaveEnd", "leaveType"].forEach(id => $(id)?.addEventListener("change", updateLeaveDaysPreview));
+
 window.submitLeaveRequest = async function () {
   const start = $("leaveStart").value, end = $("leaveEnd").value;
   if (!start || !end) return toast("Choose both dates");
-  if (new Date(end) < new Date(start)) return toast("End date must be after start");
-  const { error } = await client.from("leave_requests").insert({ user_id: state.userId, leave_type: $("leaveType").value, start_date: start, end_date: end, calendar_days: calendarDays(start, end), workdays: workdaysBetween(start, end), reason: $("leaveReason").value.trim() || null, status: "pending" });
+  const days = leaveDaysCount(start, end);
+  if (!days) return toast("End date must be after start");
+  const { error } = await client.from("leave_requests").insert({
+    user_id: state.userId, leave_type: $("leaveType").value, start_date: start, end_date: end,
+    calendar_days: days, workdays: days, reason: $("leaveReason").value.trim() || null, status: "pending"
+  });
   if (error) { $("leaveFormStatus").textContent = "Failed: " + error.message; return; }
-  $("leaveReason").value = ""; $("leaveFormStatus").textContent = "Request submitted."; suppressNotifications(); await loadLeaveRequests(); toast("Leave request submitted");
+  $("leaveReason").value = "";
+  $("leaveFormStatus").textContent = "Request submitted (" + days + " day(s)).";
+  updateLeaveDaysPreview();
+  suppressNotifications(); await loadLeaveRequests(); toast("Leave request submitted");
 };
 function renderLeave() {
   const mine = state.leaveRequests.filter(r => String(r.user_id) === String(state.userId));
   if ($("myLeaveRequests")) {
-    $("myLeaveRequests").innerHTML = mine.map(r => '<div class="item"><b>' + esc(r.leave_type) + '</b> <span class="badge">' + esc(r.status) + '</span><div class="muted">' + esc(fmtDay(r.start_date)) + ' – ' + esc(fmtDay(r.end_date)) + ' · ' + r.calendar_days + ' cal / ' + r.workdays + ' work</div>' + (r.reason ? '<div>' + esc(r.reason) + '</div>' : '') + '</div>').join("") || '<p class="muted">No requests yet.</p>';
+    $("myLeaveRequests").innerHTML = mine.map(r => {
+      const days = r.calendar_days || leaveDaysCount(r.start_date, r.end_date) || r.workdays || 0;
+      return '<div class="item"><b>' + esc(r.leave_type) + '</b> <span class="badge">' + esc(r.status) + '</span><div class="muted">' + esc(fmtDay(r.start_date)) + ' – ' + esc(fmtDay(r.end_date)) + ' · ' + days + ' day(s)</div>' + (r.reason ? '<div>' + esc(r.reason) + '</div>' : '') + '</div>';
+    }).join("") || '<p class="muted">No requests yet.</p>';
   }
   if ($("leaveReviewList")) {
     const pending = state.leaveRequests.filter(r => r.status === "pending" && String(r.user_id) !== String(state.userId));
-    $("leaveReviewList").innerHTML = pending.map(r => '<div class="item"><b>' + esc(profileName(r.user_id)) + '</b> — ' + esc(r.leave_type) + '<div class="muted">' + esc(fmtDay(r.start_date)) + ' – ' + esc(fmtDay(r.end_date)) + '</div>' + (r.reason ? '<div>' + esc(r.reason) + '</div>' : '') + '<div class="inline-actions"><button class="green small-btn" type="button" data-act="leave-approve" data-id="' + esc(r.id) + '">Approve</button><button class="red small-btn" type="button" data-act="leave-reject" data-id="' + esc(r.id) + '">Reject</button></div></div>').join("") || '<p class="muted">Nothing to review.</p>';
+    $("leaveReviewList").innerHTML = pending.map(r => {
+      const days = r.calendar_days || leaveDaysCount(r.start_date, r.end_date) || r.workdays || 0;
+      return '<div class="item"><b>' + esc(profileName(r.user_id)) + '</b> — ' + esc(r.leave_type) + '<div class="muted">' + esc(fmtDay(r.start_date)) + ' – ' + esc(fmtDay(r.end_date)) + ' · ' + days + ' day(s)</div>' + (r.reason ? '<div>' + esc(r.reason) + '</div>' : '') + '<div class="inline-actions"><button class="green small-btn" type="button" data-act="leave-approve" data-id="' + esc(r.id) + '">Approve</button><button class="red small-btn" type="button" data-act="leave-reject" data-id="' + esc(r.id) + '">Reject</button></div></div>';
+    }).join("") || '<p class="muted">Nothing to review.</p>';
   }
 }
 function renderLeaveBalances() {
   const box = $("leaveBalances"); if (!box) return;
-  const year = new Date().getFullYear();
-  const approved = state.leaveRequests.filter(r => String(r.user_id) === String(state.userId) && r.status === "approved" && new Date(r.start_date).getFullYear() === year);
+  const year = String(new Date().getFullYear());
+  const approved = state.leaveRequests.filter(r =>
+    String(r.user_id) === String(state.userId) && r.status === "approved" && String(r.start_date || "").startsWith(year)
+  );
   const types = { sick: 15, emergency: 5, vacation: 15 };
   box.innerHTML = Object.keys(types).map(t => {
-    const used = approved.filter(r => r.leave_type === t).reduce((s, r) => s + (r.workdays || 0), 0);
-    return '<div class="pv-row"><span>' + esc(t[0].toUpperCase() + t.slice(1)) + '</span><span>' + Math.max(0, types[t] - used) + ' / ' + types[t] + ' left</span></div>';
+    const used = approved.filter(r => r.leave_type === t).reduce((s, r) => s + (r.calendar_days || leaveDaysCount(r.start_date, r.end_date) || r.workdays || 0), 0);
+    return '<div class="pv-row"><span>' + esc(t[0].toUpperCase() + t.slice(1)) + '</span><span>' + Math.max(0, types[t] - used) + ' / ' + types[t] + ' left (' + used + ' used)</span></div>';
   }).join("");
 }
 window.refreshLeaveBalances = async function () { await loadLeaveRequests(); toast("Balances refreshed"); };
@@ -3792,7 +4083,7 @@ function renderPmsRecords() {
 ["pmsRecordsTeam", "pmsRecordsLocation", "pmsRecordsSite"].forEach(id => $(id)?.addEventListener("change", renderPmsRecords));
 $("closePmsRecordOverlay")?.addEventListener("click", () => $("pmsRecordOverlay").classList.add("hidden"));
 
-/* ==================== LIVE MAP / LOCATION ==================== */
+/* ==================== LIVE MAP (GOOGLE MAPS STYLE SAME AS WORK SITE MAP) ==================== */
 let locationWatchId = null;
 window.startEmployeeLocationSharing = function () {
   if (!navigator.geolocation) { $("locationStatus").classList.remove("hidden"); $("locationStatus").textContent = "This device cannot share location."; return; }
@@ -3808,6 +4099,98 @@ window.startEmployeeLocationSharing = function () {
     await client.from("employee_locations").upsert({ user_id: state.userId, latitude, longitude, updated_at: new Date().toISOString() }, { onConflict: "user_id" });
   }, err => { $("locationStatus").textContent = "Location error: " + err.message; }, { enableHighAccuracy: true, maximumAge: 0, timeout: 20000 });
 };
+
+let liveMapInstance = null, liveMapLayer = null, liveBase = null, liveLabels = null;
+let liveFitted = false, liveBusy = false, liveLastPoints = [];
+const liveMarkers = new Map();
+const LIVE_REFRESH_MS = 15000, LIVE_STALE_MS = 5 * 60 * 1000;
+const BASEMAPS = {
+  map: {
+    url: "https://mt{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}",
+    opts: { subdomains: ["0", "1", "2", "3"], maxZoom: 20, maxNativeZoom: 20, attribution: "Map data &copy; Google" }
+  },
+  satellite: {
+    url: "https://mt{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}",
+    opts: { subdomains: ["0", "1", "2", "3"], maxZoom: 20, maxNativeZoom: 20, attribution: "Imagery &copy; Google" }
+  },
+  terrain: {
+    url: "https://mt{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}",
+    opts: { subdomains: ["0", "1", "2", "3"], maxZoom: 20, maxNativeZoom: 20, attribution: "Terrain &copy; Google" }
+  }
+};
+function setBasemap(name) {
+  if (!liveMapInstance || !BASEMAPS[name]) return;
+  if (liveBase) liveMapInstance.removeLayer(liveBase);
+  if (liveLabels) { liveMapInstance.removeLayer(liveLabels); liveLabels = null; }
+  const b = BASEMAPS[name];
+  liveBase = L.tileLayer(b.url, b.opts).addTo(liveMapInstance);
+  localStorage.setItem("eesi-basemap", name);
+  document.querySelectorAll("[data-basemap]").forEach(btn => btn.classList.toggle("active", btn.dataset.basemap === name));
+}
+function ensureLiveMap() {
+  if (liveMapInstance || !window.L) return liveMapInstance;
+  liveMapInstance = L.map("liveMap").setView([12.8797, 121.774], 6);
+  liveMapLayer = L.layerGroup().addTo(liveMapInstance);
+  const saved = localStorage.getItem("eesi-basemap");
+  setBasemap(BASEMAPS[saved] ? saved : "map");
+  return liveMapInstance;
+}
+function fitLiveMap(points) {
+  if (!liveMapInstance || !points.length) return;
+  if (points.length === 1) liveMapInstance.setView(points[0], 16);
+  else liveMapInstance.fitBounds(points, { padding: [30, 30], maxZoom: 16 });
+}
+window.focusLiveEmployee = function (userId) {
+  const m = liveMarkers.get(userId);
+  if (!m || !liveMapInstance) return;
+  liveMapInstance.setView(m.getLatLng(), 17, { animate: true });
+  m.openPopup();
+  $("liveMap")?.scrollIntoView({ behavior: "smooth", block: "center" });
+};
+async function loadLiveMap(opts = {}) {
+  if (!$("liveMap") || !isAdmin() || liveBusy) return;
+  liveBusy = true;
+  try {
+    const { data, error } = await client.from("employee_locations").select("user_id,latitude,longitude,updated_at");
+    if (error) throw error;
+    if (!window.L) { $("liveLocationStatus").textContent = "Map library is still loading. Try again in a moment."; return; }
+    const map = ensureLiveMap();
+    const rows = (data || []).filter(r => Number.isFinite(+r.latitude) && Number.isFinite(+r.longitude));
+    const now = Date.now(), seen = new Set(), points = [], items = [];
+    rows.forEach(row => {
+      const p = profileOf(row.user_id), name = p ? p.full_name : "Member";
+      const fresh = now - new Date(row.updated_at).getTime() <= LIVE_STALE_MS;
+      const ll = [+row.latitude, +row.longitude];
+      const color = fresh ? "#22c55e" : "#94a3b8";
+      const popup = "<b>" + esc(name) + "</b><br>" + esc(fmtDate(row.updated_at)) + (fresh ? "" : " (stale)");
+      seen.add(row.user_id); points.push(ll); items.push({ row, name, fresh });
+      let m = liveMarkers.get(row.user_id);
+      if (!m) {
+        m = L.circleMarker(ll, { radius: 9, color: "#ffffff", weight: 2, fillColor: color, fillOpacity: 1 }).bindPopup(popup).addTo(liveMapLayer);
+        liveMarkers.set(row.user_id, m);
+      } else {
+        m.setLatLng(ll); m.setStyle({ fillColor: color }); m.setPopupContent(popup);
+      }
+    });
+    for (const [id, m] of liveMarkers) if (!seen.has(id)) { liveMapLayer.removeLayer(m); liveMarkers.delete(id); }
+    map.invalidateSize();
+    liveLastPoints = points;
+    if (opts.fit || !liveFitted) { fitLiveMap(points); liveFitted = points.length > 0; }
+    const freshCount = items.filter(i => i.fresh).length;
+    $("liveLocationStatus").textContent = rows.length + " location(s), " + freshCount + " updated in the last 5 minutes. Last refresh " + new Date().toLocaleTimeString() + ".";
+    $("liveLocationList").innerHTML = items.map(({ row, name, fresh }) =>
+      '<div class="item" style="display:flex;justify-content:space-between;align-items:center;gap:8px;"><div><b>' + esc(name) + '</b> <span class="sess-badge ' + (fresh ? "now" : "") + '"' + (fresh ? "" : ' style="background:#94a3b8;"') + '>' + (fresh ? "LIVE" : "STALE") + '</span>' +
+      '<div class="muted">' + esc(fmtDate(row.updated_at)) + '</div></div>' +
+      '<div class="inline-actions" style="margin-top:0"><button class="gray small-btn" type="button" onclick="focusLiveEmployee(\'' + esc(row.user_id) + '\')">📍 Focus</button><a href="https://www.google.com/maps?q=' + encodeURIComponent(row.latitude + "," + row.longitude) + '" target="_blank" rel="noopener">Open</a></div></div>'
+    ).join("") || '<p class="muted">No location data yet.</p>';
+  } catch (err) {
+    $("liveLocationStatus").textContent = "Could not load locations: " + err.message;
+  } finally { liveBusy = false; }
+}
+window.loadLiveMap = loadLiveMap;
+window.setBasemap = setBasemap;
+window.fitLiveMapAll = () => fitLiveMap(liveLastPoints);
+setInterval(() => { if (page === "live-map" && isAdmin()) loadLiveMap(); }, LIVE_REFRESH_MS);
 
 /* ==================== DECORATION ==================== */
 const DECOR = {
@@ -3875,83 +4258,6 @@ function renderDecor() {
 }
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", renderDecor); else renderDecor();
 window.renderDecor = renderDecor;
-
-/* ==================== LIVE MAP ==================== */
-let liveMapInstance = null, liveMapLayer = null, liveBase = null, liveLabels = null;
-let liveFitted = false, liveBusy = false, liveLastPoints = [];
-const liveMarkers = new Map();
-const LIVE_REFRESH_MS = 15000, LIVE_STALE_MS = 5 * 60 * 1000;
-const LABELS_URL = "https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}";
-const BASEMAPS = {
-  satellite: { url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", opts: { maxZoom: 19, maxNativeZoom: 19, attribution: "Imagery &copy; Esri, Maxar, Earthstar Geographics" }, labels: true },
-  terrain: { url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}", opts: { maxZoom: 19, maxNativeZoom: 13, attribution: "Terrain &copy; Esri" }, labels: false }
-};
-function setBasemap(name) {
-  if (!liveMapInstance || !BASEMAPS[name]) return;
-  if (liveBase) liveMapInstance.removeLayer(liveBase);
-  if (liveLabels) { liveMapInstance.removeLayer(liveLabels); liveLabels = null; }
-  const b = BASEMAPS[name];
-  liveBase = L.tileLayer(b.url, b.opts).addTo(liveMapInstance);
-  if (b.labels) liveLabels = L.tileLayer(LABELS_URL, { maxZoom: 19, maxNativeZoom: 19 }).addTo(liveMapInstance);
-  localStorage.setItem("eesi-basemap", name);
-  document.querySelectorAll("[data-basemap]").forEach(btn => btn.classList.toggle("active", btn.dataset.basemap === name));
-}
-function ensureLiveMap() {
-  if (liveMapInstance || !window.L) return liveMapInstance;
-  liveMapInstance = L.map("liveMap").setView([12.8797, 121.774], 6);
-  liveMapLayer = L.layerGroup().addTo(liveMapInstance);
-  setBasemap(localStorage.getItem("eesi-basemap") || "satellite");
-  return liveMapInstance;
-}
-function fitLiveMap(points) {
-  if (!liveMapInstance || !points.length) return;
-  if (points.length === 1) liveMapInstance.setView(points[0], 16);
-  else liveMapInstance.fitBounds(points, { padding: [30, 30], maxZoom: 16 });
-}
-async function loadLiveMap(opts = {}) {
-  if (!$("liveMap") || !isAdmin() || liveBusy) return;
-  liveBusy = true;
-  try {
-    const { data, error } = await client.from("employee_locations").select("user_id,latitude,longitude,updated_at");
-    if (error) throw error;
-    if (!window.L) { $("liveLocationStatus").textContent = "Map library is still loading. Try again in a moment."; return; }
-    const map = ensureLiveMap();
-    const rows = (data || []).filter(r => Number.isFinite(+r.latitude) && Number.isFinite(+r.longitude));
-    const now = Date.now(), seen = new Set(), points = [], items = [];
-    rows.forEach(row => {
-      const p = profileOf(row.user_id), name = p ? p.full_name : "Member";
-      const fresh = now - new Date(row.updated_at).getTime() <= LIVE_STALE_MS;
-      const ll = [+row.latitude, +row.longitude];
-      const color = fresh ? "#22c55e" : "#94a3b8";
-      const popup = "<b>" + esc(name) + "</b><br>" + esc(fmtDate(row.updated_at)) + (fresh ? "" : " (stale)");
-      seen.add(row.user_id); points.push(ll); items.push({ row, name, fresh });
-      let m = liveMarkers.get(row.user_id);
-      if (!m) {
-        m = L.circleMarker(ll, { radius: 9, color: "#ffffff", weight: 2, fillColor: color, fillOpacity: 1 }).bindPopup(popup).addTo(liveMapLayer);
-        liveMarkers.set(row.user_id, m);
-      } else {
-        m.setLatLng(ll); m.setStyle({ fillColor: color }); m.setPopupContent(popup);
-      }
-    });
-    for (const [id, m] of liveMarkers) if (!seen.has(id)) { liveMapLayer.removeLayer(m); liveMarkers.delete(id); }
-    map.invalidateSize();
-    liveLastPoints = points;
-    if (opts.fit || !liveFitted) { fitLiveMap(points); liveFitted = points.length > 0; }
-    const freshCount = items.filter(i => i.fresh).length;
-    $("liveLocationStatus").textContent = rows.length + " location(s), " + freshCount + " updated in the last 5 minutes. Last refresh " + new Date().toLocaleTimeString() + ".";
-    $("liveLocationList").innerHTML = items.map(({ row, name, fresh }) =>
-      '<div class="item" style="display:flex;justify-content:space-between;align-items:center;gap:8px;"><div><b>' + esc(name) + '</b> <span class="sess-badge ' + (fresh ? "now" : "") + '"' + (fresh ? "" : ' style="background:#94a3b8;"') + '>' + (fresh ? "LIVE" : "STALE") + '</span>' +
-      '<div class="muted">' + esc(fmtDate(row.updated_at)) + '</div></div>' +
-      '<a href="https://www.google.com/maps?q=' + encodeURIComponent(row.latitude + "," + row.longitude) + '" target="_blank" rel="noopener">Open</a></div>'
-    ).join("") || '<p class="muted">No location data yet.</p>';
-  } catch (err) {
-    $("liveLocationStatus").textContent = "Could not load locations: " + err.message;
-  } finally { liveBusy = false; }
-}
-window.loadLiveMap = loadLiveMap;
-window.setBasemap = setBasemap;
-window.fitLiveMapAll = () => fitLiveMap(liveLastPoints);
-setInterval(() => { if (page === "live-map" && isAdmin()) loadLiveMap(); }, LIVE_REFRESH_MS);
 
 /* ==================== WEATHER + CLOCK ==================== */
 let clockTimer = null;
@@ -4207,6 +4513,16 @@ function runSearch() {
       const hay = ((sObj?.name || "") + " " + (r.unit_type || "") + " " + (r.details || "")).toLowerCase();
       if (q && !hay.includes(q)) return;
       hits.push({ kind: "PMS (" + r.unit_type + ")", title: sObj ? sObj.name : "Site", date: fmtDay(r.checklist_date), body: r.items_passed + "/" + r.items_total + " passed" });
+    });
+  }
+  if (!type) {
+    state.units.forEach(u => {
+      if (equip && !String(u.unit_type || "").includes(equip)) return;
+      if (site && String(u.site_id) !== site) return;
+      const sObj = state.sites.find(s => String(s.id) === String(u.site_id));
+      const hay = ((u.unit_name || "") + " " + (u.unit_type || "") + " " + (u.brand_model || "") + " " + (u.serial_no || "") + " " + (u.notes || "") + " " + (sObj?.name || "")).toLowerCase();
+      if (q && !hay.includes(q)) return;
+      hits.push({ kind: "Unit (" + u.status + ")", title: u.unit_name + (sObj ? " — " + sObj.name : ""), date: fmtDate(u.created_at), body: [u.unit_type, u.brand_model, u.capacity_floors, u.notes].filter(Boolean).join(" · ") });
     });
   }
   if (!type || type === "rec") {
