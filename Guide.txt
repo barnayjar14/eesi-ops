@@ -1,0 +1,23 @@
+
+## 1) Supabase
+1. Create a project → copy `Project URL` and `anon key`.
+2. SQL Editor → paste `supabase/schema.sql` → Run.
+3. Authentication → Providers → enable **Email**, optional **Google** / **Facebook**.
+   - For OAuth set redirect URL to your Netlify domain: `https://YOUR-SITE.netlify.app`
+4. Storage → confirm buckets: `avatars, covers, reports, chat, signatures`.
+5. First signed-up user automatically becomes **admin** (via trigger).
+
+## 2) Netlify
+1. New site → **Import from GitHub** → pick this repo.
+2. Build command: *(empty)* — Publish directory: `.`
+3. Site settings → **Environment** → add:
+   - `SUPABASE_URL`
+   - `SUPABASE_ANON_KEY`
+4. Deploy. Then update `config.js` (or use a build step to inject values).
+
+## 3) PWA install
+Open on mobile → "Add to Home Screen". App-lock PIN, notifications,
+and offline shell are handled by `sw.js` + `manifest.webmanifest`.
+
+## 4) Local dev
+Any static server works, e.g. `npx serve .` — ensure `/config.js` is filled.
