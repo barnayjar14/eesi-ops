@@ -1,337 +1,299 @@
--- ============================================
--- EESI ELEVATORS - Supabase Database Schema
--- Run this in Supabase SQL Editor
--- ============================================
+-- EESI Elevators — Supabase schema
+create extension if not exists "pgcrypto";
 
--- Enable UUID extension
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+-- ===== Helpers =====
+create or replace function public.my_role() returns text language sql stable as $$
+  select coalesce((select role from public.profiles where id = auth.uid()), 'technician');
+$$;
+create or replace function public.is_manager() returns boolean language sql stable as $$
+  select public.my_role() in ('admin','manager');
+$$;
+create or replace function public.is_admin() returns boolean language sql stable as $$
+  select public.my_role() = 'admin';
+$$;
 
--- ============================================
--- 1. PROFILES TABLE (extends auth.users)
--- ============================================
-CREATE TABLE public.profiles (
-  id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
-  full_name TEXT,
-  id_number TEXT,
-  address TEXT,
-  team TEXT,
-  contact TEXT,
-  area TEXT CHECK (area IN ('Visayas', 'Luzon', 'Mindanao')),
-  designation TEXT CHECK (designation IN ('Technician', 'Selective Representative', 'Admin')),
-  status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected')),
-  avatar_url TEXT,
-  cover_url TEXT,
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW()
+-- ===== Tables =====
+create table if not exists public.profiles (
+  id uuid primary key references auth.users(id) on delete cascade,
+  email text, name text, id_no text, address text, team text, phone text,
+  area text,
+  role text default 'technician' check (role in ('technician','representative','manager','admin')),
+  status text default 'pending' check (status in ('pending','approved','rejected')),
+  avatar_url text, cover_url text,
+  last_seen timestamptz default now(),
+  last_lat double precision, last_lng double precision,
+  created_at timestamptz default now()
 );
 
--- ============================================
--- 2. SITES TABLE
--- ============================================
-CREATE TABLE public.sites (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  name TEXT NOT NULL,
-  address TEXT,
-  area TEXT CHECK (area IN ('Visayas', 'Luzon', 'Mindanao')),
-  city TEXT,
-  latitude DOUBLE PRECISION,
-  longitude DOUBLE PRECISION,
-  status TEXT DEFAULT 'active',
-  created_by UUID REFERENCES public.profiles(id),
-  created_at TIMESTAMPTZ DEFAULT NOW()
+create table if not exists public.sites (
+  id uuid primary key default gen_random_uuid(),
+  name text not null, address text, region text, city text,
+  created_by uuid references public.profiles(id) on delete set null,
+  created_at timestamptz default now()
 );
 
--- ============================================
--- 3. SCHEDULES TABLE
--- ============================================
-CREATE TABLE public.schedules (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  region TEXT NOT NULL,
-  job_site TEXT NOT NULL,
-  site_id UUID REFERENCES public.sites(id),
-  schedule_date DATE NOT NULL,
-  priority TEXT DEFAULT 'Normal' CHECK (priority IN ('Normal', 'High', 'Urgent')),
-  time_in TIME,
-  time_out TIME,
-  notes TEXT,
-  created_by UUID REFERENCES public.profiles(id),
-  created_at TIMESTAMPTZ DEFAULT NOW()
+create table if not exists public.units (
+  id uuid primary key default gen_random_uuid(),
+  site_id uuid references public.sites(id) on delete cascade,
+  name text, type text, status text, brand text, serial text, capacity text, notes text,
+  region text,
+  created_by uuid references public.profiles(id) on delete set null,
+  created_at timestamptz default now()
 );
 
--- ============================================
--- 4. SCHEDULE_PERSONNEL (many-to-many)
--- ============================================
-CREATE TABLE public.schedule_personnel (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  schedule_id UUID REFERENCES public.schedules(id) ON DELETE CASCADE,
-  user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
-  UNIQUE(schedule_id, user_id)
+create table if not exists public.reports (
+  id uuid primary key default gen_random_uuid(),
+  kind text not null check (kind in ('service','delivery')),
+  site_id uuid references public.sites(id) on delete set null,
+  date date not null, title text, details text,
+  photos jsonb default '[]'::jsonb,
+  region text,
+  user_id uuid references public.profiles(id) on delete set null,
+  user_name text,
+  created_at timestamptz default now()
 );
 
--- ============================================
--- 5. SERVICE REPORTS
--- ============================================
-CREATE TABLE public.service_reports (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  site_id UUID REFERENCES public.sites(id),
-  report_date DATE NOT NULL,
-  title TEXT NOT NULL,
-  details TEXT,
-  equipment_type TEXT CHECK (equipment_type IN ('Elevator', 'Escalator / Moving walkway')),
-  submitted_by UUID REFERENCES public.profiles(id),
-  status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected')),
-  created_at TIMESTAMPTZ DEFAULT NOW()
+create table if not exists public.pms_records (
+  id uuid primary key default gen_random_uuid(),
+  site_id uuid references public.sites(id) on delete set null,
+  date date not null,
+  unit_type text check (unit_type in ('elevator','escalator')),
+  checklist jsonb default '{}'::jsonb,
+  region text,
+  user_id uuid references public.profiles(id) on delete set null,
+  user_name text,
+  created_at timestamptz default now()
 );
 
--- ============================================
--- 6. REPORT PHOTOS
--- ============================================
-CREATE TABLE public.report_photos (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  report_id UUID REFERENCES public.service_reports(id) ON DELETE CASCADE,
-  photo_url TEXT NOT NULL,
-  created_at TIMESTAMPTZ DEFAULT NOW()
+create table if not exists public.dtr_entries (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references public.profiles(id) on delete cascade,
+  user_name text,
+  date date not null,
+  location text, job text, time_in time, time_out time,
+  hours numeric(6,2),
+  overtime_approved boolean default false,
+  created_at timestamptz default now()
 );
 
--- ============================================
--- 7. DELIVERY REPORTS
--- ============================================
-CREATE TABLE public.delivery_reports (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  site_id UUID REFERENCES public.sites(id),
-  report_date DATE NOT NULL,
-  items JSONB,
-  delivered_by UUID REFERENCES public.profiles(id),
-  status TEXT DEFAULT 'pending',
-  created_at TIMESTAMPTZ DEFAULT NOW()
+create table if not exists public.dtr_signatures (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references public.profiles(id) on delete cascade,
+  date date not null,
+  signature_url text,
+  created_at timestamptz default now(),
+  unique(user_id, date)
 );
 
--- ============================================
--- 8. PMS CHECKLISTS
--- ============================================
-CREATE TABLE public.pms_checklists (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  site_id UUID REFERENCES public.sites(id),
-  checklist_date DATE NOT NULL,
-  items JSONB NOT NULL, -- Array of {label, checked}
-  completed_by UUID REFERENCES public.profiles(id),
-  created_at TIMESTAMPTZ DEFAULT NOW()
+create table if not exists public.announcements (
+  id uuid primary key default gen_random_uuid(),
+  title text, body text,
+  user_id uuid references public.profiles(id) on delete set null,
+  user_name text,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
 );
 
--- ============================================
--- 9. DTR (Daily Time Record)
--- ============================================
-CREATE TABLE public.dtr_entries (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
-  entry_date DATE NOT NULL,
-  work_location TEXT,
-  work_description TEXT,
-  time_in TIME,
-  time_out TIME,
-  overtime NUMERIC DEFAULT 0,
-  signature_url TEXT,
-  approved_by UUID REFERENCES public.profiles(id),
-  status TEXT DEFAULT 'pending',
-  created_at TIMESTAMPTZ DEFAULT NOW()
+create table if not exists public.schedules (
+  id uuid primary key default gen_random_uuid(),
+  region text, title text, date date,
+  priority text default 'Normal',
+  time_in time, time_out time, notes text,
+  assignees uuid[] default '{}'::uuid[],
+  created_by uuid references public.profiles(id) on delete set null,
+  created_at timestamptz default now()
 );
 
--- ============================================
--- 10. NOTES & RECOMMENDATIONS
--- ============================================
-CREATE TABLE public.notes (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
-  title TEXT NOT NULL,
-  content TEXT,
-  created_at TIMESTAMPTZ DEFAULT NOW()
+create table if not exists public.notes (
+  id uuid primary key default gen_random_uuid(),
+  title text, body text,
+  user_id uuid references public.profiles(id) on delete set null,
+  user_name text,
+  created_at timestamptz default now()
 );
 
-CREATE TABLE public.recommendations (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
-  site_id UUID REFERENCES public.sites(id),
-  condition TEXT CHECK (condition IN ('Good', 'Fair', 'Needs Replacement')),
-  part TEXT,
-  reason TEXT,
-  specific_location TEXT,
-  created_at TIMESTAMPTZ DEFAULT NOW()
+create table if not exists public.recommendations (
+  id uuid primary key default gen_random_uuid(),
+  condition text, part text, reason text, site text, location text,
+  user_id uuid references public.profiles(id) on delete set null,
+  user_name text,
+  created_at timestamptz default now()
 );
 
--- ============================================
--- 11. ANNOUNCEMENTS
--- ============================================
-CREATE TABLE public.announcements (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  title TEXT NOT NULL,
-  message TEXT NOT NULL,
-  author_id UUID REFERENCES public.profiles(id),
-  created_at TIMESTAMPTZ DEFAULT NOW()
+create table if not exists public.leave_requests (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references public.profiles(id) on delete cascade,
+  user_name text,
+  type text check (type in ('sick','emergency','vacation')),
+  start_date date, end_date date,
+  days int,
+  reason text,
+  status text default 'pending' check (status in ('pending','approved','rejected')),
+  reviewed_by uuid references public.profiles(id) on delete set null,
+  created_at timestamptz default now()
 );
 
--- ============================================
--- 12. LEAVE REQUESTS
--- ============================================
-CREATE TABLE public.leave_requests (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
-  leave_type TEXT CHECK (leave_type IN ('Sick leave', 'Emergency leave', 'Vacation leave')),
-  start_date DATE NOT NULL,
-  end_date DATE NOT NULL,
-  reason TEXT,
-  status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected')),
-  reviewed_by UUID REFERENCES public.profiles(id),
-  created_at TIMESTAMPTZ DEFAULT NOW()
+create table if not exists public.notifications (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references public.profiles(id) on delete cascade,
+  title text, body text, link text,
+  read boolean default false,
+  created_at timestamptz default now()
 );
 
--- ============================================
--- 13. CHAT MESSAGES
--- ============================================
-CREATE TABLE public.conversations (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  is_group BOOLEAN DEFAULT FALSE,
-  group_name TEXT,
-  created_by UUID REFERENCES public.profiles(id),
-  created_at TIMESTAMPTZ DEFAULT NOW()
+create table if not exists public.conversations (
+  id uuid primary key default gen_random_uuid(),
+  kind text check (kind in ('dm','group')),
+  name text,
+  members uuid[] default '{}'::uuid[],
+  created_by uuid references public.profiles(id) on delete set null,
+  last_message text, last_at timestamptz default now(),
+  archived_by uuid[] default '{}'::uuid[],
+  created_at timestamptz default now()
 );
 
-CREATE TABLE public.conversation_members (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  conversation_id UUID REFERENCES public.conversations(id) ON DELETE CASCADE,
-  user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
-  UNIQUE(conversation_id, user_id)
+create table if not exists public.messages (
+  id uuid primary key default gen_random_uuid(),
+  conversation_id uuid references public.conversations(id) on delete cascade,
+  user_id uuid references public.profiles(id) on delete set null,
+  user_name text,
+  body text,
+  attachment_url text, attachment_type text,
+  reply_to uuid references public.messages(id) on delete set null,
+  reactions jsonb default '{}'::jsonb,
+  pinned boolean default false,
+  edited boolean default false,
+  deleted boolean default false,
+  created_at timestamptz default now()
 );
 
-CREATE TABLE public.messages (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  conversation_id UUID REFERENCES public.conversations(id) ON DELETE CASCADE,
-  sender_id UUID REFERENCES public.profiles(id),
-  content TEXT NOT NULL,
-  reply_to UUID REFERENCES public.messages(id),
-  created_at TIMESTAMPTZ DEFAULT NOW()
+create table if not exists public.chat_reads (
+  conversation_id uuid references public.conversations(id) on delete cascade,
+  user_id uuid references public.profiles(id) on delete cascade,
+  last_read_at timestamptz default now(),
+  primary key (conversation_id, user_id)
 );
 
--- ============================================
--- 14. NOTIFICATIONS
--- ============================================
-CREATE TABLE public.notifications (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
-  title TEXT NOT NULL,
-  message TEXT,
-  icon TEXT,
-  is_read BOOLEAN DEFAULT FALSE,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
+-- ===== New-user trigger =====
+create or replace function public.handle_new_user() returns trigger language plpgsql security definer as $$
+declare
+  v_count int;
+  v_role text := coalesce(new.raw_user_meta_data->>'role','technician');
+  v_status text := 'pending';
+begin
+  select count(*) into v_count from public.profiles;
+  if v_count = 0 then
+    v_role := 'admin';
+    v_status := 'approved';
+  end if;
+  insert into public.profiles (id, email, name, id_no, address, team, phone, area, role, status)
+  values (
+    new.id, new.email,
+    coalesce(new.raw_user_meta_data->>'name', new.email),
+    new.raw_user_meta_data->>'id_no',
+    new.raw_user_meta_data->>'address',
+    new.raw_user_meta_data->>'team',
+    new.raw_user_meta_data->>'phone',
+    new.raw_user_meta_data->>'area',
+    v_role, v_status
+  ) on conflict (id) do nothing;
+  return new;
+end;
+$$;
+drop trigger if exists on_auth_user_created on auth.users;
+create trigger on_auth_user_created after insert on auth.users
+for each row execute function public.handle_new_user();
 
--- ============================================
--- 15. LIVE LOCATIONS
--- ============================================
-CREATE TABLE public.user_locations (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
-  latitude DOUBLE PRECISION,
-  longitude DOUBLE PRECISION,
-  updated_at TIMESTAMPTZ DEFAULT NOW()
-);
+-- ===== RLS =====
+do $$ declare t text; begin
+  foreach t in array array[
+    'profiles','sites','units','reports','pms_records','dtr_entries','dtr_signatures',
+    'announcements','schedules','notes','recommendations','leave_requests',
+    'notifications','conversations','messages','chat_reads'
+  ] loop
+    execute format('alter table public.%I enable row level security;', t);
+  end loop;
+end $$;
 
--- ============================================
--- ROW LEVEL SECURITY (RLS)
--- ============================================
-ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.sites ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.schedules ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.service_reports ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.dtr_entries ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.notes ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.recommendations ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.announcements ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.leave_requests ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.messages ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.notifications ENABLE ROW LEVEL SECURITY;
+-- Profiles
+create policy "profiles_read_all" on public.profiles for select to authenticated using (true);
+create policy "profiles_insert_self" on public.profiles for insert to authenticated with check (id = auth.uid());
+create policy "profiles_update_self" on public.profiles for update to authenticated using (id = auth.uid()) with check (id = auth.uid());
+create policy "profiles_update_admin" on public.profiles for update to authenticated using (public.is_admin());
+create policy "profiles_delete_admin" on public.profiles for delete to authenticated using (public.is_admin());
 
--- Profiles: users can read approved profiles, update own
-CREATE POLICY "Public profiles are viewable" ON public.profiles FOR SELECT USING (status = 'approved');
-CREATE POLICY "Users can update own profile" ON public.profiles FOR UPDATE USING (auth.uid() = id);
-CREATE POLICY "Users can insert own profile" ON public.profiles FOR INSERT WITH CHECK (auth.uid() = id);
-
--- Sites: all approved users can view
-CREATE POLICY "Sites viewable by approved users" ON public.sites FOR SELECT USING (EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND status = 'approved'));
-CREATE POLICY "Admins can manage sites" ON public.sites FOR ALL USING (EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND designation = 'Admin'));
-
--- Service Reports
-CREATE POLICY "Users can view reports" ON public.service_reports FOR SELECT USING (EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND status = 'approved'));
-CREATE POLICY "Users can create reports" ON public.service_reports FOR INSERT WITH CHECK (auth.uid() = submitted_by);
+-- Generic read-all + insert-own + update-own + admin delete for most tables
+do $$
+declare t text;
+begin
+  foreach t in array array['sites','units','reports','pms_records','announcements','schedules','notes','recommendations'] loop
+    execute format('create policy "%I_read" on public.%I for select to authenticated using (true);', t, t);
+    execute format('create policy "%I_insert" on public.%I for insert to authenticated with check (true);', t, t);
+    execute format('create policy "%I_update_own_or_manager" on public.%I for update to authenticated using (public.is_manager());', t, t);
+    execute format('create policy "%I_delete_own_or_manager" on public.%I for delete to authenticated using (public.is_manager());', t, t);
+  end loop;
+end $$;
 
 -- DTR
-CREATE POLICY "Users can view own DTR" ON public.dtr_entries FOR SELECT USING (user_id = auth.uid());
-CREATE POLICY "Users can create own DTR" ON public.dtr_entries FOR INSERT WITH CHECK (user_id = auth.uid());
+create policy "dtr_read" on public.dtr_entries for select to authenticated using (true);
+create policy "dtr_insert_own" on public.dtr_entries for insert to authenticated with check (user_id = auth.uid());
+create policy "dtr_update_own_or_manager" on public.dtr_entries for update to authenticated using (user_id = auth.uid() or public.is_manager());
+create policy "dtr_delete_own_or_manager" on public.dtr_entries for delete to authenticated using (user_id = auth.uid() or public.is_manager());
 
--- Notes & Recs
-CREATE POLICY "Users manage own notes" ON public.notes FOR ALL USING (user_id = auth.uid());
-CREATE POLICY "Users manage own recs" ON public.recommendations FOR ALL USING (user_id = auth.uid());
+create policy "sig_read" on public.dtr_signatures for select to authenticated using (true);
+create policy "sig_upsert_own" on public.dtr_signatures for insert to authenticated with check (user_id = auth.uid());
+create policy "sig_update_own" on public.dtr_signatures for update to authenticated using (user_id = auth.uid());
 
--- Announcements: all can view, admins can create
-CREATE POLICY "Announcements viewable" ON public.announcements FOR SELECT USING (true);
-CREATE POLICY "Admins post announcements" ON public.announcements FOR INSERT WITH CHECK (EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND designation = 'Admin'));
-
--- Leave
-CREATE POLICY "Users view own leave" ON public.leave_requests FOR SELECT USING (user_id = auth.uid());
-CREATE POLICY "Users create own leave" ON public.leave_requests FOR INSERT WITH CHECK (user_id = auth.uid());
-
--- Messages: members of conversation
-CREATE POLICY "Members view messages" ON public.messages FOR SELECT USING (
-  EXISTS (SELECT 1 FROM public.conversation_members WHERE conversation_id = messages.conversation_id AND user_id = auth.uid())
-);
-CREATE POLICY "Members send messages" ON public.messages FOR INSERT WITH CHECK (sender_id = auth.uid());
+-- Leaves
+create policy "leave_read_own_or_manager" on public.leave_requests for select to authenticated using (user_id = auth.uid() or public.is_manager());
+create policy "leave_insert_own" on public.leave_requests for insert to authenticated with check (user_id = auth.uid());
+create policy "leave_update_own_pending_or_manager" on public.leave_requests for update to authenticated using ((user_id = auth.uid() and status = 'pending') or public.is_manager());
 
 -- Notifications
-CREATE POLICY "Users view own notifications" ON public.notifications FOR SELECT USING (user_id = auth.uid());
+create policy "notif_read" on public.notifications for select to authenticated using (user_id = auth.uid() or user_id is null or public.is_manager());
+create policy "notif_update_own" on public.notifications for update to authenticated using (user_id = auth.uid() or user_id is null);
+create policy "notif_insert" on public.notifications for insert to authenticated with check (true);
 
--- ============================================
--- FUNCTIONS & TRIGGERS
--- ============================================
+-- Chat
+create policy "conv_read_members" on public.conversations for select to authenticated using (auth.uid() = any(members) or public.is_manager());
+create policy "conv_insert" on public.conversations for insert to authenticated with check (auth.uid() = created_by);
+create policy "conv_update_members" on public.conversations for update to authenticated using (auth.uid() = any(members));
 
--- Auto-create profile on signup
-CREATE OR REPLACE FUNCTION public.handle_new_user()
-RETURNS TRIGGER AS $$
-BEGIN
-  INSERT INTO public.profiles (id, full_name, email)
-  VALUES (
-    NEW.id,
-    COALESCE(NEW.raw_user_meta_data->>'full_name', ''),
-    NEW.email
-  );
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+create policy "msg_read" on public.messages for select to authenticated using (true);
+create policy "msg_insert_own" on public.messages for insert to authenticated with check (user_id = auth.uid());
+create policy "msg_update_own_or_pin" on public.messages for update to authenticated using (user_id = auth.uid() or public.is_manager());
+create policy "msg_delete_own_or_admin" on public.messages for delete to authenticated using (user_id = auth.uid() or public.is_admin());
 
-CREATE TRIGGER on_auth_user_created
-  AFTER INSERT ON auth.users
-  FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+create policy "reads_own" on public.chat_reads for all to authenticated using (user_id = auth.uid()) with check (user_id = auth.uid());
 
--- Update updated_at timestamp
-CREATE OR REPLACE FUNCTION public.update_updated_at()
-RETURNS TRIGGER AS $$
-BEGIN
-  NEW.updated_at = NOW();
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
+-- ===== Storage buckets =====
+insert into storage.buckets (id, name, public) values
+  ('avatars','avatars',true),
+  ('covers','covers',true),
+  ('reports','reports',true),
+  ('chat','chat',true),
+  ('signatures','signatures',true)
+on conflict (id) do nothing;
 
-CREATE TRIGGER update_profiles_updated_at
-  BEFORE UPDATE ON public.profiles
-  FOR EACH ROW EXECUTE FUNCTION public.update_updated_at();
+drop policy if exists "storage_read_all" on storage.objects;
+create policy "storage_read_all" on storage.objects for select to authenticated using (true);
+drop policy if exists "storage_write_auth" on storage.objects;
+create policy "storage_write_auth" on storage.objects for insert to authenticated with check (true);
+drop policy if exists "storage_update_auth" on storage.objects;
+create policy "storage_update_auth" on storage.objects for update to authenticated using (true);
+drop policy if exists "storage_delete_auth" on storage.objects;
+create policy "storage_delete_auth" on storage.objects for delete to authenticated using (true);
 
--- ============================================
--- STORAGE BUCKETS (create via Supabase Dashboard)
--- ============================================
--- Create these buckets in Supabase > Storage:
--- 1. "avatars" - public, for profile pictures
--- 2. "reports" - private, for report photos
--- 3. "signatures" - private, for DTR signatures
-
--- ============================================
--- SEED DATA (optional demo data)
--- ============================================
--- Insert via Supabase dashboard after creating admin user
+-- ===== Realtime =====
+do $$ begin
+  alter publication supabase_realtime add table public.messages;
+exception when others then null; end $$;
+do $$ begin
+  alter publication supabase_realtime add table public.conversations;
+exception when others then null; end $$;
+do $$ begin
+  alter publication supabase_realtime add table public.notifications;
+exception when others then null; end $$;
+do $$ begin
+  alter publication supabase_realtime add table public.announcements;
+exception when others then null; end $$;
